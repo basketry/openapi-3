@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/schemas/v3.0/schema.json",
   "openapi": "3.0.1",
   "info": {
     "title": "Basketry Example",
@@ -18,12 +19,15 @@
       "get": {
         "summary": "Only has a summary",
         "operationId": "getGizmos",
+        "deprecated": true,
         "parameters": [
           {
             "name": "search",
             "in": "query",
             "schema": {
+              "deprecated": true,
               "type": "string",
+              "default": "ASDF",
               "x-metaString": "bar",
               "x-metaNumber": 1234,
               "x-metaBoolean": true,
@@ -526,7 +530,7 @@
             "required": ["buzz"],
             "type": "object",
             "properties": {
-              "fiz": { "type": "number" },
+              "fiz": { "type": "number", "const": 123456 },
               "buzz": { "type": "number" }
             }
           },
