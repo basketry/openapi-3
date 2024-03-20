@@ -9,11 +9,11 @@ import {
   decodeRange,
   encodeRange,
   Enum,
+  EnumValue,
   HttpMethod,
   HttpParameter,
   HttpPath,
   Interface,
-  Literal,
   Meta,
   Method,
   OAuth2Flow,
@@ -23,11 +23,13 @@ import {
   PrimitiveValue,
   Property,
   ReturnType,
+  Scalar,
   SecurityOption,
   SecurityScheme,
   Service,
   Type,
   TypedValue,
+  Union,
   ValidationRule,
   Violation,
 } from 'basketry';
@@ -49,6 +51,7 @@ export class OAS3Parser {
   private readonly ruleFactories: ValidationRuleFactory[] = factories;
   private enums: Enum[];
   private anonymousTypes: Type[];
+  private unions: Union[] = [];
 
   parse(): Service {
     this.enums = [];
@@ -66,10 +69,16 @@ export class OAS3Parser {
       {},
     );
 
+    const unionsByName = this.unions.reduce(
+      (acc, item) => ({ ...acc, [item.name.value]: item }),
+      {},
+    );
+
     this.schema.info.title.loc;
 
     return {
-      basketry: '1',
+      kind: 'Service',
+      basketry: '1.1-rc',
       sourcePath: relative(process.cwd(), this.sourcePath),
       title: {
         value: pascal(this.schema.info.title.value),
@@ -82,7 +91,7 @@ export class OAS3Parser {
       interfaces,
       types: Object.keys(typesByName).map((name) => typesByName[name]),
       enums: Object.keys(enumsByName).map((name) => enumsByName[name]),
-      unions: [],
+      unions: Object.keys(unionsByName).map((name) => unionsByName[name]),
       loc: range(this.schema),
       meta: this.parseMeta(this.schema),
     };
@@ -110,7 +119,8 @@ export class OAS3Parser {
 
   private parseInterfaces(): Interface[] {
     return this.parserInterfaceNames().map((name) => ({
-      name: singular(name),
+      kind: 'Interface',
+      name: { value: singular(name) },
       methods: this.parseMethods(name),
       protocols: {
         http: this.parseHttpProtocol(name),
@@ -121,11 +131,11 @@ export class OAS3Parser {
   private parseResponseCode(
     verb: string,
     operation: OAS3.OperationNode,
-  ): Literal<number> {
+  ): Scalar<number> {
     const primary = this.parsePrimaryResponseKey(operation);
 
     if (typeof primary?.value === 'number') {
-      return primary as Literal<number>;
+      return primary as Scalar<number>;
     } else if (primary?.value === 'default') {
       const res = operation.responses.read(primary.value);
       if (res && this.resolve(res, OAS3.ResponseNode)?.content?.keys?.length) {
@@ -162,6 +172,7 @@ export class OAS3Parser {
       const commonParameters = pathItem.parameters || [];
 
       const httpPath: HttpPath = {
+        kind: 'HttpPath',
         path: { value: path, loc: keyLoc },
         methods: [],
         loc,
@@ -180,6 +191,7 @@ export class OAS3Parser {
         const methodName = operation.operationId?.value || 'unknown';
 
         const httpMethod: HttpMethod = {
+          kind: 'HttpMethod',
           name: {
             value: methodName,
             loc: operation.operationId
@@ -201,6 +213,7 @@ export class OAS3Parser {
 
         if (body) {
           httpMethod.parameters.push({
+            kind: 'HttpParameter',
             name: body.name,
             in: { value: 'body' },
             loc: body.loc,
@@ -240,6 +253,7 @@ export class OAS3Parser {
             resolved.schema?.nodeType === 'ArraySchema'
           ) {
             httpMethod.parameters.push({
+              kind: 'HttpParameter',
               name: { value: name.value, loc: range(name) },
               in: { value: locationValue, loc: range(location) },
               array: this.parseArrayStyle(resolved),
@@ -247,6 +261,7 @@ export class OAS3Parser {
             });
           } else {
             httpMethod.parameters.push({
+              kind: 'HttpParameter',
               name: { value: name.value, loc: range(name) },
               in: { value: locationValue, loc: range(location) },
               loc: range(resolved),
@@ -350,6 +365,7 @@ export class OAS3Parser {
         ? range(operation.operationId)
         : undefined;
       methods.push({
+        kind: 'Method',
         name: {
           value: operation.operationId?.value || 'UNNAMED',
           loc: nameLoc,
@@ -371,7 +387,7 @@ export class OAS3Parser {
   private parseDescription(
     summary: OAS3.LiteralNode<string> | undefined,
     description: OAS3.LiteralNode<string> | undefined,
-  ): Literal<string> | Literal<string>[] | undefined {
+  ): Scalar<string> | Scalar<string>[] | undefined {
     if (summary && description)
       return [
         { value: summary.value, loc: range(summary) },
@@ -385,7 +401,7 @@ export class OAS3Parser {
 
   private parseDescriptionOnly(
     description: OAS3.LiteralNode<string> | undefined,
-  ): Literal<string> | undefined {
+  ): Scalar<string> | undefined {
     if (description)
       return { value: description.value, loc: range(description) };
     return;
@@ -430,10 +446,11 @@ export class OAS3Parser {
 
   private parseHttpSecurity(
     definition: OAS3.HttpSecuritySchemeNode,
-    name: Literal<string>,
+    name: Scalar<string>,
     loc: string,
   ): SecurityScheme {
     return {
+      kind: 'BasicScheme',
       type: { value: 'basic', loc: range(definition.type) },
       name,
       loc,
@@ -443,10 +460,11 @@ export class OAS3Parser {
 
   private parseApiKeySecurity(
     definition: OAS3.ApiKeySecuritySchemeNode,
-    name: Literal<string>,
+    name: Scalar<string>,
     loc: string,
   ): SecurityScheme {
     return {
+      kind: 'ApiKeyScheme',
       type: { value: 'apiKey', loc: range(definition.type) },
       name,
       description: this.parseDescriptionOnly(definition.description),
@@ -459,10 +477,11 @@ export class OAS3Parser {
 
   private parseOAuth2Security(
     definition: OAS3.OAuth2SecuritySchemeNode,
-    name: Literal<string>,
+    name: Scalar<string>,
     loc: string,
   ): SecurityScheme {
     return {
+      kind: 'OAuth2Scheme',
       type: { value: 'oauth2', loc: range(definition.type) },
       name,
       description: this.parseDescriptionOnly(definition.description),
@@ -474,12 +493,13 @@ export class OAS3Parser {
 
   private *parseOAuth2Flows(
     flows: OAS3.OAuthFlowsNode,
-    name: Literal<string>,
+    name: Scalar<string>,
     loc: string,
   ): Iterable<OAuth2Flow> {
     if (flows.authorizationCode) {
       const flow = flows.authorizationCode;
       yield {
+        kind: 'OAuth2AuthorizationCodeFlow',
         type: {
           value: 'authorizationCode',
           loc: flows.keyRange('authorizationCode'),
@@ -494,6 +514,7 @@ export class OAS3Parser {
     if (flows.clientCredentials) {
       const flow = flows.clientCredentials;
       yield {
+        kind: 'OAuth2ClientCredentialsFlow',
         type: {
           value: 'clientCredentials',
           loc: flows.keyRange('clientCredentials'),
@@ -507,6 +528,7 @@ export class OAS3Parser {
     if (flows.implicit) {
       const flow = flows.implicit;
       yield {
+        kind: 'OAuth2ImplicitFlow',
         type: {
           value: 'implicit',
           loc: flows.keyRange('implicit'),
@@ -520,6 +542,7 @@ export class OAS3Parser {
     if (flows.password) {
       const flow = flows.password;
       yield {
+        kind: 'OAuth2PasswordFlow',
         type: {
           value: 'password',
           loc: flows.keyRange('password'),
@@ -534,6 +557,7 @@ export class OAS3Parser {
 
   private parseScopes(scopes: OAS3.StringMappingNode): OAuth2Scope[] {
     return scopes.keys.map((k) => ({
+      kind: 'OAuth2Scope',
       name: {
         value: k,
         loc: scopes.keyRange(k),
@@ -569,7 +593,7 @@ export class OAS3Parser {
     return bodyParam ? [bodyParam, ...nonBodyParams] : nonBodyParams;
   }
 
-  private parseBodyParamName(operation: OAS3.OperationNode): Literal<string> {
+  private parseBodyParamName(operation: OAS3.OperationNode): Scalar<string> {
     const meta = this.parseMeta(operation);
 
     const value = meta?.find(
@@ -600,17 +624,20 @@ export class OAS3Parser {
 
     if (x.isPrimitive) {
       return {
+        kind: 'Parameter',
         name: { value: param.name.value, loc: range(param.name) },
         description: this.parseDescription(undefined, param.description),
         typeName: x.typeName,
         isPrimitive: x.isPrimitive,
         isArray: x.isArray,
+        default: x.default,
         rules: this.parseRules(resolved, param.required?.value),
         loc: range(param),
         meta: this.parseMeta(param),
       };
     } else {
       return {
+        kind: 'Parameter',
         name: { value: param.name.value, loc: range(param.name) },
         description: this.parseDescription(undefined, param.description),
         typeName: x.typeName,
@@ -626,7 +653,7 @@ export class OAS3Parser {
   private parseRequestBody(
     bodyOrRef: OAS3.RefNode | OAS3.RequestBodyNode | undefined,
     methodName: string,
-    paramName: Literal<string>,
+    paramName: Scalar<string>,
   ): Parameter | undefined {
     if (!bodyOrRef) return;
 
@@ -642,6 +669,7 @@ export class OAS3Parser {
 
     if (x.isPrimitive) {
       return {
+        kind: 'Parameter',
         name: paramName,
         description: this.parseDescription(undefined, body.description),
         typeName: x.typeName,
@@ -653,6 +681,7 @@ export class OAS3Parser {
       };
     } else {
       return {
+        kind: 'Parameter',
         name: paramName,
         description: this.parseDescription(undefined, body.description),
         typeName: x.typeName,
@@ -689,7 +718,7 @@ export class OAS3Parser {
     localName: string,
     parentName: string,
   ): {
-    enumValues?: Literal<string>[];
+    enumValues?: Scalar<string>[];
     rules: ValidationRule[];
     loc: string;
   } & TypedValue {
@@ -725,9 +754,11 @@ export class OAS3Parser {
           };
 
           this.enums.push({
+            kind: 'Enum',
             name: name,
-            values: schema.enum.map((n) => ({
-              value: n.value,
+            values: schema.enum.map<EnumValue>((n) => ({
+              kind: 'EnumValue',
+              content: { value: n.value, loc: encodeRange(n.loc) },
               loc: range(n),
             })),
             loc: schema.propRange('enum')!,
@@ -763,9 +794,11 @@ export class OAS3Parser {
         if (schemaOrRef.enum) {
           const enumName = camel(`${parentName}_${singular(localName)}`);
           this.enums.push({
+            kind: 'Enum',
             name: { value: enumName },
-            values: schemaOrRef.enum.map((n) => ({
-              value: n.value,
+            values: schemaOrRef.enum.map<EnumValue>((n) => ({
+              kind: 'EnumValue',
+              content: { value: n.value, loc: encodeRange(n.loc) },
               loc: range(n),
             })),
             loc: schemaOrRef.propRange('enum')!,
@@ -781,6 +814,8 @@ export class OAS3Parser {
           return {
             ...this.parseStringName(schemaOrRef),
             isArray: false,
+            default: toScalar(schemaOrRef.default),
+            constant: toScalar(schemaOrRef.const),
             rules,
             loc: range(schemaOrRef),
           };
@@ -790,6 +825,8 @@ export class OAS3Parser {
         return {
           ...this.parseNumberName(schemaOrRef),
           isArray: false,
+          default: toScalar(schemaOrRef.default),
+          constant: toScalar(schemaOrRef.const),
           rules,
           loc: range(schemaOrRef),
         };
@@ -803,6 +840,8 @@ export class OAS3Parser {
           },
           isPrimitive: true,
           isArray: false,
+          default: toScalar(schemaOrRef.default),
+          constant: toScalar(schemaOrRef.const),
           rules,
           loc: range(schemaOrRef),
         };
@@ -833,23 +872,36 @@ export class OAS3Parser {
 
       case 'ObjectSchema':
         const typeName = { value: camel(`${parentName}_${localName}`) };
-        this.anonymousTypes.push({
-          name: typeName,
-          properties: this.parseProperties(
-            schemaOrRef.properties,
-            schemaOrRef.required,
-            schemaOrRef.allOf,
-            typeName.value,
-          ),
-          description: schemaOrRef.description
-            ? {
-                value: schemaOrRef.description.value,
-                loc: range(schemaOrRef.description),
-              }
-            : undefined,
-          rules: this.parseObjectRules(schemaOrRef),
-          loc: range(schemaOrRef),
-        });
+        if (schemaOrRef.oneOf) {
+          this.unions.push({
+            kind: 'Union',
+            name: typeName,
+            members: schemaOrRef.oneOf.map((subDef) =>
+              this.parseType(subDef, localName, parentName),
+            ),
+            loc: range(schemaOrRef),
+            meta: this.parseMeta(schemaOrRef),
+          });
+        } else {
+          this.anonymousTypes.push({
+            kind: 'Type',
+            name: typeName,
+            properties: this.parseProperties(
+              schemaOrRef.properties,
+              schemaOrRef.required,
+              schemaOrRef.allOf,
+              typeName.value,
+            ),
+            description: schemaOrRef.description
+              ? {
+                  value: schemaOrRef.description.value,
+                  loc: range(schemaOrRef.description),
+                }
+              : undefined,
+            rules: this.parseObjectRules(schemaOrRef),
+            loc: range(schemaOrRef),
+          });
+        }
 
         return {
           typeName,
@@ -989,7 +1041,7 @@ export class OAS3Parser {
 
   private parsePrimaryResponseKey(
     operation: OAS3.OperationNode,
-  ): Literal<number> | Literal<'default'> | undefined {
+  ): Scalar<number> | Scalar<'default'> | undefined {
     const hasDefault =
       typeof operation.responses.read('default') !== 'undefined';
     const code = operation.responses.keys.filter((c) => c.startsWith('2'))[0]; // TODO: sort
@@ -1046,11 +1098,14 @@ export class OAS3Parser {
 
     if (!schemaOrRef) return;
 
-    return this.parseType(
-      schemaOrRef,
-      'response',
-      name || operation.operationId?.value || '',
-    );
+    return {
+      kind: 'ReturnType',
+      ...this.parseType(
+        schemaOrRef,
+        'response',
+        name || operation.operationId?.value || '',
+      ),
+    };
   }
 
   private getSchemas(): OAS3.SchemaIndexNode | undefined {
@@ -1090,6 +1145,7 @@ export class OAS3Parser {
 
     return definitions.map(([name, node, nameLoc, defLoc]) => {
       return {
+        kind: 'Type',
         name: { value: name, loc: nameLoc },
         description: node.description
           ? {
@@ -1142,17 +1198,21 @@ export class OAS3Parser {
         const x = this.parseType(prop, name, parentName || '');
         if (x.isPrimitive) {
           props.push({
+            kind: 'Property',
             name: { value: name, loc: properties?.keyRange(name) },
             description: this.parseDescriptionOnly(resolvedProp.description),
             typeName: x.typeName,
             isPrimitive: x.isPrimitive,
             isArray: x.isArray,
+            default: x.default,
+            constant: x.constant,
             rules: this.parseRules(resolvedProp, requiredSet.has(name)),
             loc: range(resolvedProp),
             meta: this.parseMeta(resolvedProp),
           });
         } else {
           props.push({
+            kind: 'Property',
             name: { value: name, loc: properties?.keyRange(name) },
             description: this.parseDescriptionOnly(resolvedProp.description),
             typeName: x.typeName,
@@ -1181,7 +1241,14 @@ export class OAS3Parser {
   ): ValidationRule[] {
     const schema = this.parseSchema(def);
     if (!schema) {
-      return required ? [{ id: 'required' }] : [];
+      return required
+        ? [
+            {
+              kind: 'ValidationRule',
+              id: 'required',
+            },
+          ]
+        : [];
     }
 
     const localRules = this.ruleFactories
@@ -1189,7 +1256,15 @@ export class OAS3Parser {
       .filter((x): x is ValidationRule => !!x);
 
     if (schema.nodeType !== 'ArraySchema' || !schema.items)
-      return required ? [{ id: 'required' }, ...localRules] : localRules;
+      return required
+        ? [
+            {
+              kind: 'ValidationRule',
+              id: 'required',
+            },
+            ...localRules,
+          ]
+        : localRules;
 
     const itemsSchema = OAS3.resolveSchema(this.schema.node, schema.items);
     if (!itemsSchema) return [];
@@ -1200,7 +1275,15 @@ export class OAS3Parser {
 
     const rules = [...localRules, ...itemRules];
 
-    return required ? [{ id: 'required' }, ...rules] : rules;
+    return required
+      ? [
+          {
+            kind: 'ValidationRule',
+            id: 'required',
+          },
+          ...rules,
+        ]
+      : rules;
   }
 
   private parseObjectRules(def: OAS3.SchemaNodeUnion): ObjectValidationRule[] {
@@ -1248,6 +1331,7 @@ export interface ObjectValidationRuleFactory {
 const stringMaxLengthFactory: ValidationRuleFactory = (def) => {
   if (OAS3.isString(def) && typeof def.maxLength?.value === 'number') {
     return {
+      kind: 'ValidationRule',
       id: 'string-max-length',
       length: { value: def.maxLength.value, loc: range(def.maxLength) },
       loc: def.propRange('maxLength')!,
@@ -1260,6 +1344,7 @@ const stringMaxLengthFactory: ValidationRuleFactory = (def) => {
 const stringMinLengthFactory: ValidationRuleFactory = (def) => {
   if (OAS3.isString(def) && typeof def.minLength?.value === 'number') {
     return {
+      kind: 'ValidationRule',
       id: 'string-min-length',
       length: { value: def.minLength.value, loc: range(def.minLength) },
       loc: def.propRange('minLength')!,
@@ -1272,6 +1357,7 @@ const stringMinLengthFactory: ValidationRuleFactory = (def) => {
 const stringPatternFactory: ValidationRuleFactory = (def) => {
   if (OAS3.isString(def) && typeof def.pattern?.value === 'string') {
     return {
+      kind: 'ValidationRule',
       id: 'string-pattern',
       pattern: { value: def.pattern.value, loc: range(def.pattern) },
       loc: def.propRange('pattern')!,
@@ -1284,6 +1370,7 @@ const stringPatternFactory: ValidationRuleFactory = (def) => {
 const stringFormatFactory: ValidationRuleFactory = (def) => {
   if (OAS3.isString(def) && typeof def.format?.value === 'string') {
     return {
+      kind: 'ValidationRule',
       id: 'string-format',
       format: { value: def.format.value, loc: range(def.format) },
       loc: def.propRange('format')!,
@@ -1296,6 +1383,7 @@ const stringFormatFactory: ValidationRuleFactory = (def) => {
 const stringEnumFactory: ValidationRuleFactory = (def) => {
   if (OAS3.isString(def) && Array.isArray(def.enum)) {
     return {
+      kind: 'ValidationRule',
       id: 'string-enum',
       values: def.enum.map((n) => ({ value: n.value, loc: range(n) })),
       loc: def.propRange('enum')!,
@@ -1308,6 +1396,7 @@ const stringEnumFactory: ValidationRuleFactory = (def) => {
 const numberMultipleOfFactory: ValidationRuleFactory = (def) => {
   if (OAS3.isNumber(def) && typeof def.multipleOf?.value === 'number') {
     return {
+      kind: 'ValidationRule',
       id: 'number-multiple-of',
       value: { value: def.multipleOf.value, loc: range(def.multipleOf) },
       loc: def.propRange('multipleOf')!,
@@ -1320,6 +1409,7 @@ const numberMultipleOfFactory: ValidationRuleFactory = (def) => {
 const numberGreaterThanFactory: ValidationRuleFactory = (def) => {
   if (OAS3.isNumber(def) && typeof def.minimum?.value === 'number') {
     return {
+      kind: 'ValidationRule',
       id: def.exclusiveMinimum?.value ? 'number-gt' : 'number-gte',
       value: { value: def.minimum.value, loc: range(def.minimum) },
       loc: def.propRange('minimum')!,
@@ -1332,6 +1422,7 @@ const numberGreaterThanFactory: ValidationRuleFactory = (def) => {
 const numberLessThanFactory: ValidationRuleFactory = (def) => {
   if (OAS3.isNumber(def) && typeof def.maximum?.value === 'number') {
     return {
+      kind: 'ValidationRule',
       id: def.exclusiveMinimum?.value ? 'number-lt' : 'number-lte',
       value: { value: def.maximum.value, loc: range(def.maximum) },
       loc: def.propRange('maximum')!,
@@ -1344,6 +1435,7 @@ const numberLessThanFactory: ValidationRuleFactory = (def) => {
 const arrayMinItemsFactory: ValidationRuleFactory = (def) => {
   if (OAS3.isArray(def) && typeof def.minItems?.value === 'number') {
     return {
+      kind: 'ValidationRule',
       id: 'array-min-items',
       min: { value: def.minItems.value, loc: range(def.minItems) },
       loc: def.propRange('minItems')!,
@@ -1356,6 +1448,7 @@ const arrayMinItemsFactory: ValidationRuleFactory = (def) => {
 const arrayMaxItemsFactory: ValidationRuleFactory = (def) => {
   if (OAS3.isArray(def) && typeof def.maxItems?.value === 'number') {
     return {
+      kind: 'ValidationRule',
       id: 'array-max-items',
       max: { value: def.maxItems.value, loc: range(def.maxItems) },
       loc: def.propRange('maxItems')!,
@@ -1368,6 +1461,7 @@ const arrayMaxItemsFactory: ValidationRuleFactory = (def) => {
 const arrayUniqueItemsFactory: ValidationRuleFactory = (def) => {
   if (OAS3.isArray(def) && def.uniqueItems) {
     return {
+      kind: 'ValidationRule',
       id: 'array-unique-items',
       required: true,
       loc: def.propRange('uniqueItems')!,
@@ -1380,6 +1474,7 @@ const arrayUniqueItemsFactory: ValidationRuleFactory = (def) => {
 const objectMinPropertiesFactory: ObjectValidationRuleFactory = (def) => {
   if (OAS3.isObject(def) && typeof def.minProperties?.value === 'number') {
     return {
+      kind: 'ObjectValidationRule',
       id: 'object-min-properties',
       min: {
         value: def.minProperties.value,
@@ -1395,6 +1490,7 @@ const objectMinPropertiesFactory: ObjectValidationRuleFactory = (def) => {
 const objectMaxPropertiesFactory: ObjectValidationRuleFactory = (def) => {
   if (OAS3.isObject(def) && typeof def.maxProperties?.value === 'number') {
     return {
+      kind: 'ObjectValidationRule',
       id: 'object-max-properties',
       max: {
         value: def.maxProperties.value,
@@ -1416,6 +1512,7 @@ const objectAdditionalPropertiesFactory: ObjectValidationRuleFactory = (
     def.additionalProperties.value === false
   ) {
     return {
+      kind: 'ObjectValidationRule',
       id: 'object-additional-properties',
       forbidden: true,
       loc: def.propRange('additionalProperties')!,
@@ -1470,7 +1567,7 @@ type MirrorUndefined<Input, Output> = Exclude<
 function literal<
   Primitive extends string | number | boolean | null,
   Node extends OAS3.LiteralNode<Primitive> | undefined,
->(node: Node): MirrorUndefined<Node, Literal<Primitive>> {
+>(node: Node): MirrorUndefined<Node, Scalar<Primitive>> {
   if (!node) return undefined as any;
   return {
     value: node.value,
@@ -1496,4 +1593,15 @@ class EmptyObject implements AST.ASTNode {
   isLiteral(): this is AST.LiteralNode {
     throw new Error('Method not implemented.');
   }
+}
+
+function toScalar<T extends string | number | boolean | null>(
+  node: OAS3.LiteralNode<T> | undefined,
+): Scalar<T> | undefined {
+  if (!node) return undefined;
+
+  return {
+    value: node.value,
+    loc: encodeRange(node.loc),
+  };
 }

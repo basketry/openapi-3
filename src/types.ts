@@ -886,6 +886,10 @@ export class StringSchemaNode extends SchemaNode {
     return this.getLiteral<string>('default');
   }
 
+  get const() {
+    return this.getLiteral<string>('const');
+  }
+
   get minLength() {
     return this.getLiteral<number>('minLength');
   }
@@ -917,6 +921,10 @@ export class NumberSchemaNode extends SchemaNode {
 
   get default() {
     return this.getLiteral<number>('default');
+  }
+
+  get const() {
+    return this.getLiteral<number>('const');
   }
 
   get multipleOf() {
@@ -954,6 +962,10 @@ export class BooleanSchemaNode extends SchemaNode {
 
   get default() {
     return this.getLiteral<boolean>('default');
+  }
+
+  get const() {
+    return this.getLiteral<boolean>('const');
   }
 }
 
