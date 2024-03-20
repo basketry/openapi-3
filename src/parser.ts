@@ -14,7 +14,6 @@ import {
   HttpParameter,
   HttpPath,
   Interface,
-  Literal,
   Meta,
   Method,
   OAuth2Flow,
@@ -132,11 +131,11 @@ export class OAS3Parser {
   private parseResponseCode(
     verb: string,
     operation: OAS3.OperationNode,
-  ): Literal<number> {
+  ): Scalar<number> {
     const primary = this.parsePrimaryResponseKey(operation);
 
     if (typeof primary?.value === 'number') {
-      return primary as Literal<number>;
+      return primary as Scalar<number>;
     } else if (primary?.value === 'default') {
       const res = operation.responses.read(primary.value);
       if (res && this.resolve(res, OAS3.ResponseNode)?.content?.keys?.length) {
@@ -388,7 +387,7 @@ export class OAS3Parser {
   private parseDescription(
     summary: OAS3.LiteralNode<string> | undefined,
     description: OAS3.LiteralNode<string> | undefined,
-  ): Literal<string> | Literal<string>[] | undefined {
+  ): Scalar<string> | Scalar<string>[] | undefined {
     if (summary && description)
       return [
         { value: summary.value, loc: range(summary) },
@@ -402,7 +401,7 @@ export class OAS3Parser {
 
   private parseDescriptionOnly(
     description: OAS3.LiteralNode<string> | undefined,
-  ): Literal<string> | undefined {
+  ): Scalar<string> | undefined {
     if (description)
       return { value: description.value, loc: range(description) };
     return;
@@ -447,7 +446,7 @@ export class OAS3Parser {
 
   private parseHttpSecurity(
     definition: OAS3.HttpSecuritySchemeNode,
-    name: Literal<string>,
+    name: Scalar<string>,
     loc: string,
   ): SecurityScheme {
     return {
@@ -461,7 +460,7 @@ export class OAS3Parser {
 
   private parseApiKeySecurity(
     definition: OAS3.ApiKeySecuritySchemeNode,
-    name: Literal<string>,
+    name: Scalar<string>,
     loc: string,
   ): SecurityScheme {
     return {
@@ -478,7 +477,7 @@ export class OAS3Parser {
 
   private parseOAuth2Security(
     definition: OAS3.OAuth2SecuritySchemeNode,
-    name: Literal<string>,
+    name: Scalar<string>,
     loc: string,
   ): SecurityScheme {
     return {
@@ -494,7 +493,7 @@ export class OAS3Parser {
 
   private *parseOAuth2Flows(
     flows: OAS3.OAuthFlowsNode,
-    name: Literal<string>,
+    name: Scalar<string>,
     loc: string,
   ): Iterable<OAuth2Flow> {
     if (flows.authorizationCode) {
@@ -594,7 +593,7 @@ export class OAS3Parser {
     return bodyParam ? [bodyParam, ...nonBodyParams] : nonBodyParams;
   }
 
-  private parseBodyParamName(operation: OAS3.OperationNode): Literal<string> {
+  private parseBodyParamName(operation: OAS3.OperationNode): Scalar<string> {
     const meta = this.parseMeta(operation);
 
     const value = meta?.find(
@@ -654,7 +653,7 @@ export class OAS3Parser {
   private parseRequestBody(
     bodyOrRef: OAS3.RefNode | OAS3.RequestBodyNode | undefined,
     methodName: string,
-    paramName: Literal<string>,
+    paramName: Scalar<string>,
   ): Parameter | undefined {
     if (!bodyOrRef) return;
 
@@ -719,7 +718,7 @@ export class OAS3Parser {
     localName: string,
     parentName: string,
   ): {
-    enumValues?: Literal<string>[];
+    enumValues?: Scalar<string>[];
     rules: ValidationRule[];
     loc: string;
   } & TypedValue {
@@ -1042,7 +1041,7 @@ export class OAS3Parser {
 
   private parsePrimaryResponseKey(
     operation: OAS3.OperationNode,
-  ): Literal<number> | Literal<'default'> | undefined {
+  ): Scalar<number> | Scalar<'default'> | undefined {
     const hasDefault =
       typeof operation.responses.read('default') !== 'undefined';
     const code = operation.responses.keys.filter((c) => c.startsWith('2'))[0]; // TODO: sort
@@ -1568,7 +1567,7 @@ type MirrorUndefined<Input, Output> = Exclude<
 function literal<
   Primitive extends string | number | boolean | null,
   Node extends OAS3.LiteralNode<Primitive> | undefined,
->(node: Node): MirrorUndefined<Node, Literal<Primitive>> {
+>(node: Node): MirrorUndefined<Node, Scalar<Primitive>> {
   if (!node) return undefined as any;
   return {
     value: node.value,
