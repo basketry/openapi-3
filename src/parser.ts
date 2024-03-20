@@ -30,6 +30,7 @@ import {
   Service,
   Type,
   TypedValue,
+  Union,
   ValidationRule,
   Violation,
 } from 'basketry';
@@ -51,6 +52,7 @@ export class OAS3Parser {
   private readonly ruleFactories: ValidationRuleFactory[] = factories;
   private enums: Enum[];
   private anonymousTypes: Type[];
+  private unions: Union[] = [];
 
   parse(): Service {
     this.enums = [];
@@ -64,6 +66,11 @@ export class OAS3Parser {
     );
 
     const enumsByName = this.enums.reduce(
+      (acc, item) => ({ ...acc, [item.name.value]: item }),
+      {},
+    );
+
+    const unionsByName = this.unions.reduce(
       (acc, item) => ({ ...acc, [item.name.value]: item }),
       {},
     );
@@ -85,7 +92,7 @@ export class OAS3Parser {
       interfaces,
       types: Object.keys(typesByName).map((name) => typesByName[name]),
       enums: Object.keys(enumsByName).map((name) => enumsByName[name]),
-      unions: [],
+      unions: Object.keys(unionsByName).map((name) => unionsByName[name]),
       loc: range(this.schema),
       meta: this.parseMeta(this.schema),
     };
@@ -866,24 +873,36 @@ export class OAS3Parser {
 
       case 'ObjectSchema':
         const typeName = { value: camel(`${parentName}_${localName}`) };
-        this.anonymousTypes.push({
-          kind: 'Type',
-          name: typeName,
-          properties: this.parseProperties(
-            schemaOrRef.properties,
-            schemaOrRef.required,
-            schemaOrRef.allOf,
-            typeName.value,
-          ),
-          description: schemaOrRef.description
-            ? {
-                value: schemaOrRef.description.value,
-                loc: range(schemaOrRef.description),
-              }
-            : undefined,
-          rules: this.parseObjectRules(schemaOrRef),
-          loc: range(schemaOrRef),
-        });
+        if (schemaOrRef.oneOf) {
+          this.unions.push({
+            kind: 'Union',
+            name: typeName,
+            members: schemaOrRef.oneOf.map((subDef) =>
+              this.parseType(subDef, localName, parentName),
+            ),
+            loc: range(schemaOrRef),
+            meta: this.parseMeta(schemaOrRef),
+          });
+        } else {
+          this.anonymousTypes.push({
+            kind: 'Type',
+            name: typeName,
+            properties: this.parseProperties(
+              schemaOrRef.properties,
+              schemaOrRef.required,
+              schemaOrRef.allOf,
+              typeName.value,
+            ),
+            description: schemaOrRef.description
+              ? {
+                  value: schemaOrRef.description.value,
+                  loc: range(schemaOrRef.description),
+                }
+              : undefined,
+            rules: this.parseObjectRules(schemaOrRef),
+            loc: range(schemaOrRef),
+          });
+        }
 
         return {
           typeName,
