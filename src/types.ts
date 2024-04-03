@@ -1001,7 +1001,7 @@ export class ArraySchemaNode extends SchemaNode {
 function isObjectSchemaOrRef(
   node: RefNode | SchemaNodeUnion | undefined,
 ): node is ObjectSchemaNode | RefNode {
-  return node?.nodeType === 'StringSchema' || node?.nodeType === 'Ref';
+  return node?.nodeType === 'ObjectSchema' || node?.nodeType === 'Ref';
 }
 
 // Done
