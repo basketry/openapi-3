@@ -2116,6 +2116,22 @@
       "properties": [
         {
           "kind": "Property",
+          "name": { "value": "id", "loc": "512;29;33;15118;15122" },
+          "typeName": { "value": "string", "loc": "540;40;48;16019;16027" },
+          "isPrimitive": true,
+          "isArray": false,
+          "rules": [
+            {
+              "kind": "ValidationRule",
+              "id": "string-max-length",
+              "length": { "value": 30, "loc": "540;28;30;16007;16009" },
+              "loc": "540;15;30;15994;16009"
+            }
+          ],
+          "loc": "540;13;50;15992;16029"
+        },
+        {
+          "kind": "Property",
           "name": { "value": "name", "loc": "521;11;17;15361;15367" },
           "typeName": { "value": "string", "loc": "524;21;29;15459;15467" },
           "isPrimitive": true,
