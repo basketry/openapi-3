@@ -1143,30 +1143,66 @@ export class OAS3Parser {
       )
       .filter(([, node]) => node.nodeType === 'ObjectSchema');
 
-    return definitions.map(([name, node, nameLoc, defLoc]) => {
-      return {
-        kind: 'Type',
-        name: { value: name, loc: nameLoc },
-        description: node.description
-          ? {
-              value: node.description.value,
-              loc: range(node.description),
-            }
-          : undefined,
-        properties:
-          node.nodeType === 'ObjectSchema'
-            ? this.parseProperties(
-                node.properties,
-                node.required,
-                node.allOf,
-                name,
-              )
-            : [],
-        rules: this.parseObjectRules(node),
-        loc: defLoc,
-        meta: this.parseMeta(node),
-      };
+    const types: Type[] = [];
+
+    for (const [name, node, nameLoc, defLoc] of definitions) {
+      if (node.nodeType !== 'ObjectSchema') continue;
+
+      if (node.oneOf) {
+        this.parseAsUnion(name, node, node.oneOf, nameLoc);
+      } else {
+        types.push(this.parseAsType(name, node, nameLoc, defLoc));
+      }
+    }
+
+    return types;
+  }
+
+  private parseAsUnion(
+    name: string,
+    node: OAS3.ObjectSchemaNode,
+    oneOf: (OAS3.RefNode | OAS3.ObjectSchemaNode)[],
+    nameLoc: string | undefined,
+  ): void {
+    const members = oneOf.map((subDef) => this.parseType(subDef, name, ''));
+
+    this.unions.push({
+      kind: 'Union',
+      name: { value: name, loc: nameLoc },
+      members,
+      loc: range(node),
+      meta: this.parseMeta(node),
     });
+  }
+
+  private parseAsType(
+    name: string,
+    node: OAS3.SchemaNodeUnion,
+    nameLoc: string | undefined,
+    defLoc: string,
+  ): Type {
+    return {
+      kind: 'Type',
+      name: { value: name, loc: nameLoc },
+      description: node.description
+        ? {
+            value: node.description.value,
+            loc: range(node.description),
+          }
+        : undefined,
+      properties:
+        node.nodeType === 'ObjectSchema'
+          ? this.parseProperties(
+              node.properties,
+              node.required,
+              node.allOf,
+              name,
+            )
+          : [],
+      rules: this.parseObjectRules(node),
+      loc: defLoc,
+      meta: this.parseMeta(node),
+    };
   }
 
   private parseProperties(
