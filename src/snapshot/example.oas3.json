@@ -537,7 +537,27 @@
           "size": { "$ref": "#/components/schemas/productSize" }
         }
       },
-      "id": { "maxLength": 30, "type": "string" }
+      "id": { "maxLength": 30, "type": "string" },
+      "topLevelUnion": {
+        "oneOf": [
+          { "$ref": "#/components/schemas/partA" },
+          { "$ref": "#/components/schemas/partB" }
+        ]
+      },
+      "partA": {
+        "type": "object",
+        "properties": {
+          "a": { "type": "string" },
+          "b": { "type": "string" }
+        }
+      },
+      "partB": {
+        "type": "object",
+        "properties": {
+          "c": { "type": "string" },
+          "d": { "type": "string" }
+        }
+      }
     },
     "responses": {
       "gizmo": {
