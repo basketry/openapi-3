@@ -1660,6 +1660,38 @@
       "properties": [
         {
           "kind": "Property",
+          "name": { "value": "g" },
+          "typeName": { "value": "string" },
+          "isPrimitive": true,
+          "isArray": false,
+          "rules": []
+        },
+        {
+          "kind": "Property",
+          "name": { "value": "h" },
+          "typeName": { "value": "string" },
+          "isPrimitive": true,
+          "isArray": false,
+          "rules": []
+        },
+        {
+          "kind": "Property",
+          "name": { "value": "e" },
+          "typeName": { "value": "string" },
+          "isPrimitive": true,
+          "isArray": false,
+          "rules": []
+        },
+        {
+          "kind": "Property",
+          "name": { "value": "f" },
+          "typeName": { "value": "string" },
+          "isPrimitive": true,
+          "isArray": false,
+          "rules": []
+        },
+        {
+          "kind": "Property",
           "name": { "value": "c" },
           "typeName": { "value": "string" },
           "isPrimitive": true,
@@ -1669,6 +1701,68 @@
         {
           "kind": "Property",
           "name": { "value": "d" },
+          "typeName": { "value": "string" },
+          "isPrimitive": true,
+          "isArray": false,
+          "rules": []
+        }
+      ],
+      "rules": []
+    },
+    {
+      "kind": "Type",
+      "name": { "value": "partC" },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": { "value": "g" },
+          "typeName": { "value": "string" },
+          "isPrimitive": true,
+          "isArray": false,
+          "rules": []
+        },
+        {
+          "kind": "Property",
+          "name": { "value": "h" },
+          "typeName": { "value": "string" },
+          "isPrimitive": true,
+          "isArray": false,
+          "rules": []
+        },
+        {
+          "kind": "Property",
+          "name": { "value": "e" },
+          "typeName": { "value": "string" },
+          "isPrimitive": true,
+          "isArray": false,
+          "rules": []
+        },
+        {
+          "kind": "Property",
+          "name": { "value": "f" },
+          "typeName": { "value": "string" },
+          "isPrimitive": true,
+          "isArray": false,
+          "rules": []
+        }
+      ],
+      "rules": []
+    },
+    {
+      "kind": "Type",
+      "name": { "value": "partD" },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": { "value": "g" },
+          "typeName": { "value": "string" },
+          "isPrimitive": true,
+          "isArray": false,
+          "rules": []
+        },
+        {
+          "kind": "Property",
+          "name": { "value": "h" },
           "typeName": { "value": "string" },
           "isPrimitive": true,
           "isArray": false,
