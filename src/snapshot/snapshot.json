@@ -16,64 +16,64 @@
             [
               {
                 "kind": "OAuth2Scheme",
-                "type": { "value": "oauth2", "loc": "618;17;25;18119;18127" },
+                "type": { "value": "oauth2", "loc": "627;17;25;18447;18455" },
                 "name": {
                   "value": "oauth2Auth",
-                  "loc": "617;7;19;18087;18099"
+                  "loc": "626;7;19;18415;18427"
                 },
                 "flows": [
                   {
                     "kind": "OAuth2ImplicitFlow",
                     "type": {
                       "value": "implicit",
-                      "loc": "620;11;21;18158;18168"
+                      "loc": "629;11;21;18486;18496"
                     },
                     "authorizationUrl": {
                       "value": "https://example.com/auth",
-                      "loc": "621;33;59;18204;18230"
+                      "loc": "630;33;59;18532;18558"
                     },
                     "scopes": [
                       {
                         "kind": "OAuth2Scope",
                         "name": {
                           "value": "read:gizmos",
-                          "loc": "623;15;28;18270;18283"
+                          "loc": "632;15;28;18598;18611"
                         },
                         "description": {
                           "value": "Access gizmo data",
-                          "loc": "623;30;49;18285;18304"
+                          "loc": "632;30;49;18613;18632"
                         },
-                        "loc": "623;15;49;18270;18304"
+                        "loc": "632;15;49;18598;18632"
                       },
                       {
                         "kind": "OAuth2Scope",
                         "name": {
                           "value": "write:gizmos",
-                          "loc": "624;15;29;18320;18334"
+                          "loc": "633;15;29;18648;18662"
                         },
                         "description": {
                           "value": "Write gizmo data",
-                          "loc": "624;31;49;18336;18354"
+                          "loc": "633;31;49;18664;18682"
                         },
-                        "loc": "624;15;49;18320;18354"
+                        "loc": "633;15;49;18648;18682"
                       },
                       {
                         "kind": "OAuth2Scope",
                         "name": {
                           "value": "admin:gizmos",
-                          "loc": "625;15;29;18370;18384"
+                          "loc": "634;15;29;18698;18712"
                         },
                         "description": {
                           "value": "Manage gizmos",
-                          "loc": "625;31;46;18386;18401"
+                          "loc": "634;31;46;18714;18729"
                         },
-                        "loc": "625;15;46;18370;18401"
+                        "loc": "634;15;46;18698;18729"
                       }
                     ],
-                    "loc": "617;7;629;8;18087;18445"
+                    "loc": "626;7;638;8;18415;18773"
                   }
                 ],
-                "loc": "617;7;629;8;18087;18445"
+                "loc": "626;7;638;8;18415;18773"
               }
             ]
           ],
@@ -145,64 +145,64 @@
             [
               {
                 "kind": "OAuth2Scheme",
-                "type": { "value": "oauth2", "loc": "618;17;25;18119;18127" },
+                "type": { "value": "oauth2", "loc": "627;17;25;18447;18455" },
                 "name": {
                   "value": "oauth2Auth",
-                  "loc": "617;7;19;18087;18099"
+                  "loc": "626;7;19;18415;18427"
                 },
                 "flows": [
                   {
                     "kind": "OAuth2ImplicitFlow",
                     "type": {
                       "value": "implicit",
-                      "loc": "620;11;21;18158;18168"
+                      "loc": "629;11;21;18486;18496"
                     },
                     "authorizationUrl": {
                       "value": "https://example.com/auth",
-                      "loc": "621;33;59;18204;18230"
+                      "loc": "630;33;59;18532;18558"
                     },
                     "scopes": [
                       {
                         "kind": "OAuth2Scope",
                         "name": {
                           "value": "read:gizmos",
-                          "loc": "623;15;28;18270;18283"
+                          "loc": "632;15;28;18598;18611"
                         },
                         "description": {
                           "value": "Access gizmo data",
-                          "loc": "623;30;49;18285;18304"
+                          "loc": "632;30;49;18613;18632"
                         },
-                        "loc": "623;15;49;18270;18304"
+                        "loc": "632;15;49;18598;18632"
                       },
                       {
                         "kind": "OAuth2Scope",
                         "name": {
                           "value": "write:gizmos",
-                          "loc": "624;15;29;18320;18334"
+                          "loc": "633;15;29;18648;18662"
                         },
                         "description": {
                           "value": "Write gizmo data",
-                          "loc": "624;31;49;18336;18354"
+                          "loc": "633;31;49;18664;18682"
                         },
-                        "loc": "624;15;49;18320;18354"
+                        "loc": "633;15;49;18648;18682"
                       },
                       {
                         "kind": "OAuth2Scope",
                         "name": {
                           "value": "admin:gizmos",
-                          "loc": "625;15;29;18370;18384"
+                          "loc": "634;15;29;18698;18712"
                         },
                         "description": {
                           "value": "Manage gizmos",
-                          "loc": "625;31;46;18386;18401"
+                          "loc": "634;31;46;18714;18729"
                         },
-                        "loc": "625;15;46;18370;18401"
+                        "loc": "634;15;46;18698;18729"
                       }
                     ],
-                    "loc": "617;7;629;8;18087;18445"
+                    "loc": "626;7;638;8;18415;18773"
                   }
                 ],
-                "loc": "617;7;629;8;18087;18445"
+                "loc": "626;7;638;8;18415;18773"
               }
             ]
           ],
@@ -260,64 +260,64 @@
             [
               {
                 "kind": "OAuth2Scheme",
-                "type": { "value": "oauth2", "loc": "618;17;25;18119;18127" },
+                "type": { "value": "oauth2", "loc": "627;17;25;18447;18455" },
                 "name": {
                   "value": "oauth2Auth",
-                  "loc": "617;7;19;18087;18099"
+                  "loc": "626;7;19;18415;18427"
                 },
                 "flows": [
                   {
                     "kind": "OAuth2ImplicitFlow",
                     "type": {
                       "value": "implicit",
-                      "loc": "620;11;21;18158;18168"
+                      "loc": "629;11;21;18486;18496"
                     },
                     "authorizationUrl": {
                       "value": "https://example.com/auth",
-                      "loc": "621;33;59;18204;18230"
+                      "loc": "630;33;59;18532;18558"
                     },
                     "scopes": [
                       {
                         "kind": "OAuth2Scope",
                         "name": {
                           "value": "read:gizmos",
-                          "loc": "623;15;28;18270;18283"
+                          "loc": "632;15;28;18598;18611"
                         },
                         "description": {
                           "value": "Access gizmo data",
-                          "loc": "623;30;49;18285;18304"
+                          "loc": "632;30;49;18613;18632"
                         },
-                        "loc": "623;15;49;18270;18304"
+                        "loc": "632;15;49;18598;18632"
                       },
                       {
                         "kind": "OAuth2Scope",
                         "name": {
                           "value": "write:gizmos",
-                          "loc": "624;15;29;18320;18334"
+                          "loc": "633;15;29;18648;18662"
                         },
                         "description": {
                           "value": "Write gizmo data",
-                          "loc": "624;31;49;18336;18354"
+                          "loc": "633;31;49;18664;18682"
                         },
-                        "loc": "624;15;49;18320;18354"
+                        "loc": "633;15;49;18648;18682"
                       },
                       {
                         "kind": "OAuth2Scope",
                         "name": {
                           "value": "admin:gizmos",
-                          "loc": "625;15;29;18370;18384"
+                          "loc": "634;15;29;18698;18712"
                         },
                         "description": {
                           "value": "Manage gizmos",
-                          "loc": "625;31;46;18386;18401"
+                          "loc": "634;31;46;18714;18729"
                         },
-                        "loc": "625;15;46;18370;18401"
+                        "loc": "634;15;46;18698;18729"
                       }
                     ],
-                    "loc": "617;7;629;8;18087;18445"
+                    "loc": "626;7;638;8;18415;18773"
                   }
                 ],
-                "loc": "617;7;629;8;18087;18445"
+                "loc": "626;7;638;8;18415;18773"
               }
             ]
           ],
@@ -438,17 +438,17 @@
             [
               {
                 "kind": "ApiKeyScheme",
-                "type": { "value": "apiKey", "loc": "611;31;39;17919;17927" },
+                "type": { "value": "apiKey", "loc": "620;31;39;18247;18255" },
                 "name": {
                   "value": "apiKeyAuth",
-                  "loc": "611;7;19;17895;17907"
+                  "loc": "620;7;19;18223;18235"
                 },
                 "parameter": {
                   "value": "x-apikey",
-                  "loc": "611;49;59;17937;17947"
+                  "loc": "620;49;59;18265;18275"
                 },
-                "in": { "value": "header", "loc": "611;67;75;17955;17963" },
-                "loc": "611;7;77;17895;17965"
+                "in": { "value": "header", "loc": "620;67;75;18283;18291" },
+                "loc": "620;7;77;18223;18293"
               }
             ]
           ],
@@ -470,17 +470,17 @@
             [
               {
                 "kind": "ApiKeyScheme",
-                "type": { "value": "apiKey", "loc": "611;31;39;17919;17927" },
+                "type": { "value": "apiKey", "loc": "620;31;39;18247;18255" },
                 "name": {
                   "value": "apiKeyAuth",
-                  "loc": "611;7;19;17895;17907"
+                  "loc": "620;7;19;18223;18235"
                 },
                 "parameter": {
                   "value": "x-apikey",
-                  "loc": "611;49;59;17937;17947"
+                  "loc": "620;49;59;18265;18275"
                 },
-                "in": { "value": "header", "loc": "611;67;75;17955;17963" },
-                "loc": "611;7;77;17895;17965"
+                "in": { "value": "header", "loc": "620;67;75;18283;18291" },
+                "loc": "620;7;77;18223;18293"
               }
             ]
           ],
@@ -494,17 +494,17 @@
             [
               {
                 "kind": "ApiKeyScheme",
-                "type": { "value": "apiKey", "loc": "611;31;39;17919;17927" },
+                "type": { "value": "apiKey", "loc": "620;31;39;18247;18255" },
                 "name": {
                   "value": "apiKeyAuth",
-                  "loc": "611;7;19;17895;17907"
+                  "loc": "620;7;19;18223;18235"
                 },
                 "parameter": {
                   "value": "x-apikey",
-                  "loc": "611;49;59;17937;17947"
+                  "loc": "620;49;59;18265;18275"
                 },
-                "in": { "value": "header", "loc": "611;67;75;17955;17963" },
-                "loc": "611;7;77;17895;17965"
+                "in": { "value": "header", "loc": "620;67;75;18283;18291" },
+                "loc": "620;7;77;18223;18293"
               }
             ]
           ],
@@ -541,17 +541,17 @@
             [
               {
                 "kind": "ApiKeyScheme",
-                "type": { "value": "apiKey", "loc": "611;31;39;17919;17927" },
+                "type": { "value": "apiKey", "loc": "620;31;39;18247;18255" },
                 "name": {
                   "value": "apiKeyAuth",
-                  "loc": "611;7;19;17895;17907"
+                  "loc": "620;7;19;18223;18235"
                 },
                 "parameter": {
                   "value": "x-apikey",
-                  "loc": "611;49;59;17937;17947"
+                  "loc": "620;49;59;18265;18275"
                 },
-                "in": { "value": "header", "loc": "611;67;75;17955;17963" },
-                "loc": "611;7;77;17895;17965"
+                "in": { "value": "header", "loc": "620;67;75;18283;18291" },
+                "loc": "620;7;77;18223;18293"
               }
             ]
           ],
@@ -595,17 +595,17 @@
             [
               {
                 "kind": "ApiKeyScheme",
-                "type": { "value": "apiKey", "loc": "611;31;39;17919;17927" },
+                "type": { "value": "apiKey", "loc": "620;31;39;18247;18255" },
                 "name": {
                   "value": "apiKeyAuth",
-                  "loc": "611;7;19;17895;17907"
+                  "loc": "620;7;19;18223;18235"
                 },
                 "parameter": {
                   "value": "x-apikey",
-                  "loc": "611;49;59;17937;17947"
+                  "loc": "620;49;59;18265;18275"
                 },
-                "in": { "value": "header", "loc": "611;67;75;17955;17963" },
-                "loc": "611;7;77;17895;17965"
+                "in": { "value": "header", "loc": "620;67;75;18283;18291" },
+                "loc": "620;7;77;18223;18293"
               }
             ]
           ],
@@ -741,17 +741,17 @@
             [
               {
                 "kind": "ApiKeyScheme",
-                "type": { "value": "apiKey", "loc": "611;31;39;17919;17927" },
+                "type": { "value": "apiKey", "loc": "620;31;39;18247;18255" },
                 "name": {
                   "value": "apiKeyAuth",
-                  "loc": "611;7;19;17895;17907"
+                  "loc": "620;7;19;18223;18235"
                 },
                 "parameter": {
                   "value": "x-apikey",
-                  "loc": "611;49;59;17937;17947"
+                  "loc": "620;49;59;18265;18275"
                 },
-                "in": { "value": "header", "loc": "611;67;75;17955;17963" },
-                "loc": "611;7;77;17895;17965"
+                "in": { "value": "header", "loc": "620;67;75;18283;18291" },
+                "loc": "620;7;77;18223;18293"
               }
             ]
           ],
@@ -888,17 +888,17 @@
             [
               {
                 "kind": "ApiKeyScheme",
-                "type": { "value": "apiKey", "loc": "611;31;39;17919;17927" },
+                "type": { "value": "apiKey", "loc": "620;31;39;18247;18255" },
                 "name": {
                   "value": "apiKeyAuth",
-                  "loc": "611;7;19;17895;17907"
+                  "loc": "620;7;19;18223;18235"
                 },
                 "parameter": {
                   "value": "x-apikey",
-                  "loc": "611;49;59;17937;17947"
+                  "loc": "620;49;59;18265;18275"
                 },
-                "in": { "value": "header", "loc": "611;67;75;17955;17963" },
-                "loc": "611;7;77;17895;17965"
+                "in": { "value": "header", "loc": "620;67;75;18283;18291" },
+                "loc": "620;7;77;18223;18293"
               }
             ]
           ],
@@ -1791,99 +1791,99 @@
             [
               {
                 "kind": "BasicScheme",
-                "type": { "value": "basic", "loc": "609;30;36;17791;17797" },
-                "name": { "value": "basicAuth", "loc": "609;7;18;17768;17779" },
-                "loc": "609;7;57;17768;17818"
+                "type": { "value": "basic", "loc": "618;30;36;18119;18125" },
+                "name": { "value": "basicAuth", "loc": "618;7;18;18096;18107" },
+                "loc": "618;7;57;18096;18146"
               }
             ],
             [
               {
                 "kind": "BasicScheme",
-                "type": { "value": "basic", "loc": "610;41;47;17860;17866" },
+                "type": { "value": "basic", "loc": "619;41;47;18188;18194" },
                 "name": {
                   "value": "alternate-basic-auth",
-                  "loc": "610;7;29;17826;17848"
+                  "loc": "619;7;29;18154;18176"
                 },
-                "loc": "610;7;68;17826;17887"
+                "loc": "619;7;68;18154;18215"
               }
             ],
             [
               {
                 "kind": "ApiKeyScheme",
-                "type": { "value": "apiKey", "loc": "611;31;39;17919;17927" },
+                "type": { "value": "apiKey", "loc": "620;31;39;18247;18255" },
                 "name": {
                   "value": "apiKeyAuth",
-                  "loc": "611;7;19;17895;17907"
+                  "loc": "620;7;19;18223;18235"
                 },
                 "parameter": {
                   "value": "x-apikey",
-                  "loc": "611;49;59;17937;17947"
+                  "loc": "620;49;59;18265;18275"
                 },
-                "in": { "value": "header", "loc": "611;67;75;17955;17963" },
-                "loc": "611;7;77;17895;17965"
+                "in": { "value": "header", "loc": "620;67;75;18283;18291" },
+                "loc": "620;7;77;18223;18293"
               }
             ],
             [
               {
                 "kind": "OAuth2Scheme",
-                "type": { "value": "oauth2", "loc": "618;17;25;18119;18127" },
+                "type": { "value": "oauth2", "loc": "627;17;25;18447;18455" },
                 "name": {
                   "value": "oauth2Auth",
-                  "loc": "617;7;19;18087;18099"
+                  "loc": "626;7;19;18415;18427"
                 },
                 "flows": [
                   {
                     "kind": "OAuth2ImplicitFlow",
                     "type": {
                       "value": "implicit",
-                      "loc": "620;11;21;18158;18168"
+                      "loc": "629;11;21;18486;18496"
                     },
                     "authorizationUrl": {
                       "value": "https://example.com/auth",
-                      "loc": "621;33;59;18204;18230"
+                      "loc": "630;33;59;18532;18558"
                     },
                     "scopes": [
                       {
                         "kind": "OAuth2Scope",
                         "name": {
                           "value": "read:gizmos",
-                          "loc": "623;15;28;18270;18283"
+                          "loc": "632;15;28;18598;18611"
                         },
                         "description": {
                           "value": "Access gizmo data",
-                          "loc": "623;30;49;18285;18304"
+                          "loc": "632;30;49;18613;18632"
                         },
-                        "loc": "623;15;49;18270;18304"
+                        "loc": "632;15;49;18598;18632"
                       },
                       {
                         "kind": "OAuth2Scope",
                         "name": {
                           "value": "write:gizmos",
-                          "loc": "624;15;29;18320;18334"
+                          "loc": "633;15;29;18648;18662"
                         },
                         "description": {
                           "value": "Write gizmo data",
-                          "loc": "624;31;49;18336;18354"
+                          "loc": "633;31;49;18664;18682"
                         },
-                        "loc": "624;15;49;18320;18354"
+                        "loc": "633;15;49;18648;18682"
                       },
                       {
                         "kind": "OAuth2Scope",
                         "name": {
                           "value": "admin:gizmos",
-                          "loc": "625;15;29;18370;18384"
+                          "loc": "634;15;29;18698;18712"
                         },
                         "description": {
                           "value": "Manage gizmos",
-                          "loc": "625;31;46;18386;18401"
+                          "loc": "634;31;46;18714;18729"
                         },
-                        "loc": "625;15;46;18370;18401"
+                        "loc": "634;15;46;18698;18729"
                       }
                     ],
-                    "loc": "617;7;629;8;18087;18445"
+                    "loc": "626;7;638;8;18415;18773"
                   }
                 ],
-                "loc": "617;7;629;8;18087;18445"
+                "loc": "626;7;638;8;18415;18773"
               }
             ]
           ],
@@ -1900,117 +1900,117 @@
             [
               {
                 "kind": "BasicScheme",
-                "type": { "value": "basic", "loc": "609;30;36;17791;17797" },
-                "name": { "value": "basicAuth", "loc": "609;7;18;17768;17779" },
-                "loc": "609;7;57;17768;17818"
+                "type": { "value": "basic", "loc": "618;30;36;18119;18125" },
+                "name": { "value": "basicAuth", "loc": "618;7;18;18096;18107" },
+                "loc": "618;7;57;18096;18146"
               },
               {
                 "kind": "ApiKeyScheme",
-                "type": { "value": "apiKey", "loc": "611;31;39;17919;17927" },
+                "type": { "value": "apiKey", "loc": "620;31;39;18247;18255" },
                 "name": {
                   "value": "apiKeyAuth",
-                  "loc": "611;7;19;17895;17907"
+                  "loc": "620;7;19;18223;18235"
                 },
                 "parameter": {
                   "value": "x-apikey",
-                  "loc": "611;49;59;17937;17947"
+                  "loc": "620;49;59;18265;18275"
                 },
-                "in": { "value": "header", "loc": "611;67;75;17955;17963" },
-                "loc": "611;7;77;17895;17965"
+                "in": { "value": "header", "loc": "620;67;75;18283;18291" },
+                "loc": "620;7;77;18223;18293"
               }
             ],
             [
               {
                 "kind": "BasicScheme",
-                "type": { "value": "basic", "loc": "609;30;36;17791;17797" },
-                "name": { "value": "basicAuth", "loc": "609;7;18;17768;17779" },
-                "loc": "609;7;57;17768;17818"
+                "type": { "value": "basic", "loc": "618;30;36;18119;18125" },
+                "name": { "value": "basicAuth", "loc": "618;7;18;18096;18107" },
+                "loc": "618;7;57;18096;18146"
               },
               {
                 "kind": "ApiKeyScheme",
-                "type": { "value": "apiKey", "loc": "613;17;25;18014;18022" },
+                "type": { "value": "apiKey", "loc": "622;17;25;18342;18350" },
                 "name": {
                   "value": "alternateApiKeyAuth",
-                  "loc": "612;7;28;17973;17994"
+                  "loc": "621;7;28;18301;18322"
                 },
                 "parameter": {
                   "value": "apikey",
-                  "loc": "614;17;25;18040;18048"
+                  "loc": "623;17;25;18368;18376"
                 },
-                "in": { "value": "query", "loc": "615;15;22;18064;18071" },
-                "loc": "612;7;616;8;17973;18079"
+                "in": { "value": "query", "loc": "624;15;22;18392;18399" },
+                "loc": "621;7;625;8;18301;18407"
               }
             ],
             [
               {
                 "kind": "BasicScheme",
-                "type": { "value": "basic", "loc": "610;41;47;17860;17866" },
+                "type": { "value": "basic", "loc": "619;41;47;18188;18194" },
                 "name": {
                   "value": "alternate-basic-auth",
-                  "loc": "610;7;29;17826;17848"
+                  "loc": "619;7;29;18154;18176"
                 },
-                "loc": "610;7;68;17826;17887"
+                "loc": "619;7;68;18154;18215"
               },
               {
                 "kind": "OAuth2Scheme",
-                "type": { "value": "oauth2", "loc": "618;17;25;18119;18127" },
+                "type": { "value": "oauth2", "loc": "627;17;25;18447;18455" },
                 "name": {
                   "value": "oauth2Auth",
-                  "loc": "617;7;19;18087;18099"
+                  "loc": "626;7;19;18415;18427"
                 },
                 "flows": [
                   {
                     "kind": "OAuth2ImplicitFlow",
                     "type": {
                       "value": "implicit",
-                      "loc": "620;11;21;18158;18168"
+                      "loc": "629;11;21;18486;18496"
                     },
                     "authorizationUrl": {
                       "value": "https://example.com/auth",
-                      "loc": "621;33;59;18204;18230"
+                      "loc": "630;33;59;18532;18558"
                     },
                     "scopes": [
                       {
                         "kind": "OAuth2Scope",
                         "name": {
                           "value": "read:gizmos",
-                          "loc": "623;15;28;18270;18283"
+                          "loc": "632;15;28;18598;18611"
                         },
                         "description": {
                           "value": "Access gizmo data",
-                          "loc": "623;30;49;18285;18304"
+                          "loc": "632;30;49;18613;18632"
                         },
-                        "loc": "623;15;49;18270;18304"
+                        "loc": "632;15;49;18598;18632"
                       },
                       {
                         "kind": "OAuth2Scope",
                         "name": {
                           "value": "write:gizmos",
-                          "loc": "624;15;29;18320;18334"
+                          "loc": "633;15;29;18648;18662"
                         },
                         "description": {
                           "value": "Write gizmo data",
-                          "loc": "624;31;49;18336;18354"
+                          "loc": "633;31;49;18664;18682"
                         },
-                        "loc": "624;15;49;18320;18354"
+                        "loc": "633;15;49;18648;18682"
                       },
                       {
                         "kind": "OAuth2Scope",
                         "name": {
                           "value": "admin:gizmos",
-                          "loc": "625;15;29;18370;18384"
+                          "loc": "634;15;29;18698;18712"
                         },
                         "description": {
                           "value": "Manage gizmos",
-                          "loc": "625;31;46;18386;18401"
+                          "loc": "634;31;46;18714;18729"
                         },
-                        "loc": "625;15;46;18370;18401"
+                        "loc": "634;15;46;18698;18729"
                       }
                     ],
-                    "loc": "617;7;629;8;18087;18445"
+                    "loc": "626;7;638;8;18415;18773"
                   }
                 ],
-                "loc": "617;7;629;8;18087;18445"
+                "loc": "626;7;638;8;18415;18773"
               }
             ]
           ],
@@ -2355,50 +2355,97 @@
         {
           "kind": "Property",
           "name": { "value": "a", "loc": "550;11;14;16274;16277" },
-          "typeName": { "value": "string", "loc": "550;26;34;16289;16297" },
-          "isPrimitive": true,
+          "typeName": {
+            "value": "singleValueEnum",
+            "loc": "562;7;24;16649;16666"
+          },
+          "isPrimitive": false,
           "isArray": false,
-          "rules": [],
-          "loc": "550;16;36;16279;16299"
+          "rules": [
+            {
+              "kind": "ValidationRule",
+              "id": "string-enum",
+              "values": [
+                { "value": "the value", "loc": "564;18;29;16713;16724" }
+              ],
+              "loc": "564;9;30;16704;16725"
+            }
+          ],
+          "loc": "562;26;565;8;16668;16733"
         },
         {
           "kind": "Property",
-          "name": { "value": "b", "loc": "551;11;14;16311;16314" },
-          "typeName": { "value": "string", "loc": "551;26;34;16326;16334" },
+          "name": { "value": "b", "loc": "551;11;14;16341;16344" },
+          "typeName": {
+            "value": "multiValueEnum",
+            "loc": "566;7;23;16741;16757"
+          },
+          "isPrimitive": false,
+          "isArray": false,
+          "rules": [
+            {
+              "kind": "ValidationRule",
+              "id": "string-enum",
+              "values": [
+                { "value": "the value", "loc": "568;18;29;16804;16815" },
+                { "value": "another value", "loc": "568;31;46;16817;16832" }
+              ],
+              "loc": "568;9;47;16795;16833"
+            }
+          ],
+          "loc": "566;25;569;8;16759;16841"
+        },
+        {
+          "kind": "Property",
+          "name": { "value": "const", "loc": "552;11;18;16407;16414" },
+          "typeName": { "value": "string", "loc": "552;30;38;16426;16434" },
           "isPrimitive": true,
           "isArray": false,
-          "rules": [],
-          "loc": "551;16;36;16316;16336"
+          "constant": {
+            "value": "the only value",
+            "loc": "552;49;65;16445;16461"
+          },
+          "rules": [
+            {
+              "kind": "ValidationRule",
+              "id": "string-enum",
+              "values": [
+                { "value": "the only value", "loc": "552;49;65;16445;16461" }
+              ],
+              "loc": "552;40;66;16436;16462"
+            }
+          ],
+          "loc": "552;20;68;16416;16464"
         }
       ],
       "rules": [],
-      "loc": "547;7;553;8;16203;16354"
+      "loc": "547;7;554;8;16203;16482"
     },
     {
       "kind": "Type",
-      "name": { "value": "partB", "loc": "554;7;14;16362;16369" },
+      "name": { "value": "partB", "loc": "555;7;14;16490;16497" },
       "properties": [
         {
           "kind": "Property",
-          "name": { "value": "c", "loc": "557;11;14;16433;16436" },
-          "typeName": { "value": "string", "loc": "557;26;34;16448;16456" },
+          "name": { "value": "c", "loc": "558;11;14;16561;16564" },
+          "typeName": { "value": "string", "loc": "558;26;34;16576;16584" },
           "isPrimitive": true,
           "isArray": false,
           "rules": [],
-          "loc": "557;16;36;16438;16458"
+          "loc": "558;16;36;16566;16586"
         },
         {
           "kind": "Property",
-          "name": { "value": "d", "loc": "558;11;14;16470;16473" },
-          "typeName": { "value": "string", "loc": "558;26;34;16485;16493" },
+          "name": { "value": "d", "loc": "559;11;14;16598;16601" },
+          "typeName": { "value": "string", "loc": "559;26;34;16613;16621" },
           "isPrimitive": true,
           "isArray": false,
           "rules": [],
-          "loc": "558;16;36;16475;16495"
+          "loc": "559;16;36;16603;16623"
         }
       ],
       "rules": [],
-      "loc": "554;7;560;8;16362;16513"
+      "loc": "555;7;561;8;16490;16641"
     },
     {
       "kind": "Type",
@@ -2696,6 +2743,38 @@
         }
       ],
       "loc": "507;42;78;14971;15007"
+    },
+    {
+      "kind": "Enum",
+      "name": { "value": "singleValueEnum", "loc": "562;7;24;16649;16666" },
+      "values": [
+        {
+          "kind": "EnumValue",
+          "content": { "value": "the value", "loc": "564;18;29;16713;16724" },
+          "loc": "564;18;29;16713;16724"
+        }
+      ],
+      "loc": "564;9;30;16704;16725"
+    },
+    {
+      "kind": "Enum",
+      "name": { "value": "multiValueEnum", "loc": "566;7;23;16741;16757" },
+      "values": [
+        {
+          "kind": "EnumValue",
+          "content": { "value": "the value", "loc": "568;18;29;16804;16815" },
+          "loc": "568;18;29;16804;16815"
+        },
+        {
+          "kind": "EnumValue",
+          "content": {
+            "value": "another value",
+            "loc": "568;31;46;16817;16832"
+          },
+          "loc": "568;31;46;16817;16832"
+        }
+      ],
+      "loc": "568;9;47;16795;16833"
     }
   ],
   "unions": [
@@ -2708,44 +2787,44 @@
           "isPrimitive": false,
           "isArray": false,
           "rules": [],
-          "loc": "547;16;553;8;16212;16354"
+          "loc": "547;16;554;8;16212;16482"
         },
         {
-          "typeName": { "value": "partB", "loc": "554;7;14;16362;16369" },
+          "typeName": { "value": "partB", "loc": "555;7;14;16490;16497" },
           "isPrimitive": false,
           "isArray": false,
           "rules": [],
-          "loc": "554;16;560;8;16371;16513"
+          "loc": "555;16;561;8;16499;16641"
         }
       ],
       "loc": "541;24;546;8;16054;16195"
     }
   ],
-  "loc": "1;1;638;2;0;18626",
+  "loc": "1;1;647;2;0;18954",
   "meta": [
     {
-      "key": { "value": "metaString", "loc": "632;3;17;18459;18473" },
-      "value": { "value": "bar", "loc": "632;19;24;18475;18480" }
+      "key": { "value": "metaString", "loc": "641;3;17;18787;18801" },
+      "value": { "value": "bar", "loc": "641;19;24;18803;18808" }
     },
     {
-      "key": { "value": "metaNumber", "loc": "633;3;17;18484;18498" },
-      "value": { "value": 1234, "loc": "633;19;23;18500;18504" }
+      "key": { "value": "metaNumber", "loc": "642;3;17;18812;18826" },
+      "value": { "value": 1234, "loc": "642;19;23;18828;18832" }
     },
     {
-      "key": { "value": "metaBoolean", "loc": "634;3;18;18508;18523" },
-      "value": { "value": true, "loc": "634;20;24;18525;18529" }
+      "key": { "value": "metaBoolean", "loc": "643;3;18;18836;18851" },
+      "value": { "value": true, "loc": "643;20;24;18853;18857" }
     },
     {
-      "key": { "value": "metaNull", "loc": "635;3;15;18533;18545" },
-      "value": { "value": null, "loc": "635;17;21;18547;18551" }
+      "key": { "value": "metaNull", "loc": "644;3;15;18861;18873" },
+      "value": { "value": null, "loc": "644;17;21;18875;18879" }
     },
     {
-      "key": { "value": "metaObject", "loc": "636;3;17;18555;18569" },
-      "value": { "value": { "foo": "bar" }, "loc": "636;19;35;18571;18587" }
+      "key": { "value": "metaObject", "loc": "645;3;17;18883;18897" },
+      "value": { "value": { "foo": "bar" }, "loc": "645;19;35;18899;18915" }
     },
     {
-      "key": { "value": "metaArray", "loc": "637;3;16;18591;18604" },
-      "value": { "value": [{ "foo": "bar" }], "loc": "637;18;36;18606;18624" }
+      "key": { "value": "metaArray", "loc": "646;3;16;18919;18932" },
+      "value": { "value": [{ "foo": "bar" }], "loc": "646;18;36;18934;18952" }
     }
   ]
 }

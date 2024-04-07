@@ -547,8 +547,9 @@
       "partA": {
         "type": "object",
         "properties": {
-          "a": { "type": "string" },
-          "b": { "type": "string" }
+          "a": { "$ref": "#/components/schemas/singleValueEnum" },
+          "b": { "$ref": "#/components/schemas/multiValueEnum" },
+          "const": { "type": "string", "enum": ["the only value"] }
         }
       },
       "partB": {
@@ -557,6 +558,14 @@
           "c": { "type": "string" },
           "d": { "type": "string" }
         }
+      },
+      "singleValueEnum": {
+        "type": "string",
+        "enum": ["the value"]
+      },
+      "multiValueEnum": {
+        "type": "string",
+        "enum": ["the value", "another value"]
       }
     },
     "responses": {
