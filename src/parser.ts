@@ -792,24 +792,35 @@ export class OAS3Parser {
       // case 'StringParameter':
       case 'StringSchema':
         if (schemaOrRef.enum) {
-          const enumName = camel(`${parentName}_${singular(localName)}`);
-          this.enums.push({
-            kind: 'Enum',
-            name: { value: enumName },
-            values: schemaOrRef.enum.map<EnumValue>((n) => ({
-              kind: 'EnumValue',
-              content: { value: n.value, loc: encodeRange(n.loc) },
-              loc: range(n),
-            })),
-            loc: schemaOrRef.propRange('enum')!,
-          });
-          return {
-            typeName: { value: enumName },
-            isPrimitive: false,
-            isArray: false,
-            rules,
-            loc: range(schemaOrRef),
-          };
+          if (!schemaOrRef.const && schemaOrRef.enum.length === 1) {
+            return {
+              ...this.parseStringName(schemaOrRef),
+              isArray: false,
+              default: toScalar(schemaOrRef.default),
+              constant: toScalar(schemaOrRef.enum[0]),
+              rules,
+              loc: range(schemaOrRef),
+            };
+          } else {
+            const enumName = camel(`${parentName}_${singular(localName)}`);
+            this.enums.push({
+              kind: 'Enum',
+              name: { value: enumName },
+              values: schemaOrRef.enum.map<EnumValue>((n) => ({
+                kind: 'EnumValue',
+                content: { value: n.value, loc: encodeRange(n.loc) },
+                loc: range(n),
+              })),
+              loc: schemaOrRef.propRange('enum')!,
+            });
+            return {
+              typeName: { value: enumName },
+              isPrimitive: false,
+              isArray: false,
+              rules,
+              loc: range(schemaOrRef),
+            };
+          }
         } else {
           return {
             ...this.parseStringName(schemaOrRef),
@@ -1241,7 +1252,7 @@ export class OAS3Parser {
             isPrimitive: x.isPrimitive,
             isArray: x.isArray,
             default: x.default,
-            constant: x.constant,
+            constant: this.parseConstant(prop, x),
             rules: this.parseRules(resolvedProp, requiredSet.has(name)),
             loc: range(resolvedProp),
             meta: this.parseMeta(resolvedProp),
@@ -1262,6 +1273,29 @@ export class OAS3Parser {
       }
       return props;
     }
+  }
+
+  private parseConstant(
+    unresolvedProp: OAS3.SchemaNodeUnion | OAS3.RefNode,
+    parsedType: {
+      enumValues?: Scalar<string>[] | undefined;
+      rules: ValidationRule[];
+      loc: string;
+    } & TypedValue,
+  ): Scalar<string | number | boolean> | undefined {
+    if (parsedType.isPrimitive) {
+      if (parsedType.constant) {
+        return parsedType.constant;
+      } else if (
+        parsedType.enumValues &&
+        !OAS3.isRefNode(unresolvedProp) &&
+        parsedType.enumValues.length === 1
+      ) {
+        return parsedType.enumValues[0];
+      }
+    }
+
+    return undefined;
   }
 
   private resolve<T extends OAS3.DocumentNode>(
