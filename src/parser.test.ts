@@ -23,7 +23,7 @@ describe('parser', () => {
 
     // ACT
     const result = JSON.parse(
-      JSON.stringify(parser(sourceContent, sourcePath).service),
+      JSON.stringify(parser(sourceContent, sourcePath).service, removeLoc),
     );
 
     // ASSERT
@@ -64,7 +64,7 @@ describe('parser', () => {
 
     // ACT
     const result = JSON.parse(
-      JSON.stringify(parser(sourceContent, sourcePath).service),
+      JSON.stringify(parser(sourceContent, sourcePath).service, removeLoc),
     );
 
     // ASSERT
@@ -187,4 +187,8 @@ function getText(url: string): Promise<string> {
         reject(e);
       });
   });
+}
+
+function removeLoc(key: string, value: any): any {
+  return key === 'loc' ? undefined : value;
 }
