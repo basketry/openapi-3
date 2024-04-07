@@ -19,10 +19,15 @@ function createSnapshot(source: string, destination: string): void {
     readFileSync(join(process.cwd(), '.prettierrc')).toString('utf8'),
   );
   const { service, violations } = parser(schema, source);
-  const snapshot = format(JSON.stringify(service), {
-    ...prettierOptions,
-    parser: 'json',
-  });
+  const snapshot = format(
+    JSON.stringify(service, (key, value) =>
+      key === 'loc' ? undefined : value,
+    ),
+    {
+      ...prettierOptions,
+      parser: 'json',
+    },
+  );
   writeFileSync(destination, snapshot);
   for (const violation of violations) console.warn(violation);
 }
