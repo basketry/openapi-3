@@ -1228,7 +1228,7 @@ export class OAS3Parser {
           const resolved = this.resolve(subDef, OAS3.ObjectSchemaNode);
           const p = resolved.properties;
           const r = safeConcat(resolved.required, required);
-          return this.parseProperties(p, r, undefined, parentName);
+          return this.parseProperties(p, r, resolved.allOf, parentName);
         })
         .reduce((a, b) => a.concat(b), []);
     } else {

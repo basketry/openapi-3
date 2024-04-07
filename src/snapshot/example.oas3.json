@@ -554,9 +554,35 @@
       },
       "partB": {
         "type": "object",
+        "allOf": [
+          { "$ref": "#/components/schemas/partC" },
+          {
+            "type": "object",
+            "properties": {
+              "c": { "type": "string" },
+              "d": { "type": "string" }
+            }
+          }
+        ]
+      },
+      "partC": {
+        "type": "object",
+        "allOf": [
+          { "$ref": "#/components/schemas/partD" },
+          {
+            "type": "object",
+            "properties": {
+              "e": { "type": "string" },
+              "f": { "type": "string" }
+            }
+          }
+        ]
+      },
+      "partD": {
+        "type": "object",
         "properties": {
-          "c": { "type": "string" },
-          "d": { "type": "string" }
+          "g": { "type": "string" },
+          "h": { "type": "string" }
         }
       },
       "singleValueEnum": {
