@@ -201,6 +201,8 @@ export class OAS3Parser {
           verb: { value: verb as any, loc: verbLoc },
           parameters: [],
           successCode: this.parseResponseCode(verb, operation),
+          requestMediaTypes: this.parseHttpRequestMediaType(operation),
+          responseMediaTypes: this.parseHttpResponseMediaType(operation),
           loc: methodLoc,
         };
 
@@ -275,6 +277,33 @@ export class OAS3Parser {
       if (httpPath.methods.length) httpPaths.push(httpPath);
     }
     return httpPaths;
+  }
+
+  private parseHttpRequestMediaType(
+    operation: OAS3.OperationNode,
+  ): Scalar<string>[] {
+    if (!operation.requestBody) return [];
+    const body = this.resolve(operation.requestBody, OAS3.RequestBodyNode);
+    return body.content ? this.parseMediaType(body.content) : [];
+  }
+
+  private parseHttpResponseMediaType(
+    operation: OAS3.OperationNode,
+  ): Scalar<string>[] {
+    const { response } = this.parsePrimiaryResponse(operation) ?? {};
+    if (!response) return [];
+
+    const res = this.resolve(response, OAS3.ResponseNode);
+    return res.content ? this.parseMediaType(res.content) : [];
+  }
+
+  private parseMediaType(
+    mediaTypeIndexNode: OAS3.MediaTypeIndexNode,
+  ): Scalar<string>[] {
+    return mediaTypeIndexNode.keys.map((key) => ({
+      value: key,
+      loc: mediaTypeIndexNode.keyRange(key),
+    }));
   }
 
   private parseArrayStyle(
@@ -970,6 +999,14 @@ export class OAS3Parser {
         },
         isPrimitive: true,
       };
+    } else if (format?.value === 'binary') {
+      return {
+        typeName: {
+          value: 'binary',
+          loc: range(def),
+        },
+        isPrimitive: true,
+      };
     } else {
       return {
         typeName: {
@@ -1050,21 +1087,50 @@ export class OAS3Parser {
     };
   }
 
+  private parsePrimiaryResponse(operation: OAS3.OperationNode): {
+    code: Scalar<string> | undefined;
+    response: OAS3.RefNode | OAS3.ResponseNode | undefined;
+  } {
+    const defaultResponse = operation.responses.read('default');
+    if (defaultResponse) {
+      return {
+        code: {
+          value: 'default',
+          loc: operation.responses.keyRange('default'),
+        },
+        response: defaultResponse,
+      };
+    }
+
+    const successCodes = operation.responses.keys
+      .sort((a, b) => a.localeCompare(b))
+      .filter((c) => c.startsWith('2'));
+
+    if (successCodes.length === 0) {
+      return { code: undefined, response: undefined };
+    }
+
+    const code = successCodes[0];
+
+    return {
+      code: {
+        value: code,
+        loc: operation.responses.keyRange(code),
+      },
+      response: operation.responses.read(code),
+    };
+  }
+
   private parsePrimaryResponseKey(
     operation: OAS3.OperationNode,
   ): Scalar<number> | Scalar<'default'> | undefined {
-    const hasDefault =
-      typeof operation.responses.read('default') !== 'undefined';
-    const code = operation.responses.keys.filter((c) => c.startsWith('2'))[0]; // TODO: sort
-    const codeLoc = operation.responses.keyRange(code);
-    const defaultLoc = operation.responses.keyRange('default');
+    const { code } = this.parsePrimiaryResponse(operation);
+    if (!code) return;
 
-    if (code === 'default') return { value: 'default', loc: defaultLoc };
+    const n = Number(code.value);
 
-    const n = Number(code);
-
-    if (!Number.isNaN(n)) return { value: n, loc: codeLoc };
-    if (hasDefault) return { value: 'default', loc: defaultLoc };
+    if (!Number.isNaN(n)) return { value: n, loc: code.loc };
+    if (code.value === 'default') return { value: code.value, loc: code.loc };
     return;
   }
 
@@ -1074,18 +1140,7 @@ export class OAS3Parser {
     const keys = content?.keys;
     if (!keys?.length) return undefined;
 
-    if (keys.length > 1) {
-      // TODO: support multiple content types
-      this.violations.push({
-        code: 'openapi-3/unsupported-feature',
-        message:
-          'Multiple content types are not yet supported. The first content type will be used and all following content types will be ignored.',
-        range: content!.loc,
-        severity: 'warning',
-        sourcePath: this.sourcePath,
-      });
-    }
-
+    // TODO: verify that all media types reference the same schema
     const mediaType = content?.read(keys[0]);
 
     return mediaType?.schema;
