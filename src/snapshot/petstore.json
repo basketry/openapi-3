@@ -496,7 +496,7 @@
             {
               "kind": "Parameter",
               "name": { "value": "body" },
-              "typeName": { "value": "string" },
+              "typeName": { "value": "binary" },
               "isPrimitive": true,
               "isArray": false,
               "rules": [
@@ -553,7 +553,16 @@
                     "in": { "value": "body" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [
+                  { "value": "application/json" },
+                  { "value": "application/xml" },
+                  { "value": "application/x-www-form-urlencoded" }
+                ],
+                "responseMediaTypes": [
+                  { "value": "application/json" },
+                  { "value": "application/xml" }
+                ]
               },
               {
                 "kind": "HttpMethod",
@@ -566,7 +575,16 @@
                     "in": { "value": "body" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [
+                  { "value": "application/json" },
+                  { "value": "application/xml" },
+                  { "value": "application/x-www-form-urlencoded" }
+                ],
+                "responseMediaTypes": [
+                  { "value": "application/json" },
+                  { "value": "application/xml" }
+                ]
               }
             ]
           },
@@ -585,7 +603,12 @@
                     "in": { "value": "query" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [
+                  { "value": "application/json" },
+                  { "value": "application/xml" }
+                ]
               }
             ]
           },
@@ -605,7 +628,12 @@
                     "array": { "value": "csv" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [
+                  { "value": "application/json" },
+                  { "value": "application/xml" }
+                ]
               }
             ]
           },
@@ -624,7 +652,12 @@
                     "in": { "value": "path" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [
+                  { "value": "application/json" },
+                  { "value": "application/xml" }
+                ]
               },
               {
                 "kind": "HttpMethod",
@@ -647,7 +680,9 @@
                     "in": { "value": "query" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": []
               },
               {
                 "kind": "HttpMethod",
@@ -665,7 +700,9 @@
                     "in": { "value": "path" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": []
               }
             ]
           },
@@ -694,7 +731,9 @@
                     "in": { "value": "query" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [{ "value": "application/octet-stream" }],
+                "responseMediaTypes": [{ "value": "application/json" }]
               }
             ]
           }
@@ -825,7 +864,9 @@
                 "name": { "value": "getInventory" },
                 "verb": { "value": "get" },
                 "parameters": [],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [{ "value": "application/json" }]
               }
             ]
           },
@@ -844,7 +885,13 @@
                     "in": { "value": "body" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [
+                  { "value": "application/json" },
+                  { "value": "application/xml" },
+                  { "value": "application/x-www-form-urlencoded" }
+                ],
+                "responseMediaTypes": [{ "value": "application/json" }]
               }
             ]
           },
@@ -863,7 +910,12 @@
                     "in": { "value": "path" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [
+                  { "value": "application/json" },
+                  { "value": "application/xml" }
+                ]
               },
               {
                 "kind": "HttpMethod",
@@ -876,7 +928,9 @@
                     "in": { "value": "path" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": []
               }
             ]
           }
@@ -931,14 +985,7 @@
           "description": [
             { "value": "Creates list of users with given input array" },
             { "value": "Creates list of users with given input array" }
-          ],
-          "returnType": {
-            "kind": "ReturnType",
-            "typeName": { "value": "User" },
-            "isPrimitive": false,
-            "isArray": false,
-            "rules": []
-          }
+          ]
         },
         {
           "kind": "Method",
@@ -1086,7 +1133,16 @@
                     "in": { "value": "body" }
                   }
                 ],
-                "successCode": { "value": 201 }
+                "successCode": { "value": 201 },
+                "requestMediaTypes": [
+                  { "value": "application/json" },
+                  { "value": "application/xml" },
+                  { "value": "application/x-www-form-urlencoded" }
+                ],
+                "responseMediaTypes": [
+                  { "value": "application/json" },
+                  { "value": "application/xml" }
+                ]
               }
             ]
           },
@@ -1105,7 +1161,9 @@
                     "in": { "value": "body" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 204 },
+                "requestMediaTypes": [{ "value": "application/json" }],
+                "responseMediaTypes": []
               }
             ]
           },
@@ -1129,7 +1187,12 @@
                     "in": { "value": "query" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [
+                  { "value": "application/xml" },
+                  { "value": "application/json" }
+                ]
               }
             ]
           },
@@ -1142,7 +1205,9 @@
                 "name": { "value": "logoutUser" },
                 "verb": { "value": "get" },
                 "parameters": [],
-                "successCode": { "value": 204 }
+                "successCode": { "value": 204 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": []
               }
             ]
           },
@@ -1161,7 +1226,12 @@
                     "in": { "value": "path" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [
+                  { "value": "application/json" },
+                  { "value": "application/xml" }
+                ]
               },
               {
                 "kind": "HttpMethod",
@@ -1179,7 +1249,13 @@
                     "in": { "value": "path" }
                   }
                 ],
-                "successCode": { "value": 204 }
+                "successCode": { "value": 204 },
+                "requestMediaTypes": [
+                  { "value": "application/json" },
+                  { "value": "application/xml" },
+                  { "value": "application/x-www-form-urlencoded" }
+                ],
+                "responseMediaTypes": []
               },
               {
                 "kind": "HttpMethod",
@@ -1192,7 +1268,9 @@
                     "in": { "value": "path" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": []
               }
             ]
           }

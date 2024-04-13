@@ -247,7 +247,9 @@
                     "in": { "value": "query" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [{ "value": "*/*" }]
               },
               {
                 "kind": "HttpMethod",
@@ -261,7 +263,9 @@
                     "array": { "value": "csv" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [{ "value": "*/*" }]
               },
               {
                 "kind": "HttpMethod",
@@ -274,7 +278,9 @@
                     "in": { "value": "query" }
                   }
                 ],
-                "successCode": { "value": 201 }
+                "successCode": { "value": 201 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [{ "value": "*/*" }]
               }
             ]
           }
@@ -441,14 +447,18 @@
                 "name": { "value": "getWidgets" },
                 "verb": { "value": "get" },
                 "parameters": [],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [{ "value": "*/*" }]
               },
               {
                 "kind": "HttpMethod",
                 "name": { "value": "putWidget" },
                 "verb": { "value": "put" },
                 "parameters": [],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": []
               },
               {
                 "kind": "HttpMethod",
@@ -461,7 +471,9 @@
                     "in": { "value": "body" }
                   }
                 ],
-                "successCode": { "value": 204 }
+                "successCode": { "value": 204 },
+                "requestMediaTypes": [{ "value": "*/*" }],
+                "responseMediaTypes": []
               }
             ]
           },
@@ -480,7 +492,9 @@
                     "in": { "value": "path" }
                   }
                 ],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [{ "value": "*/*" }]
               },
               {
                 "kind": "HttpMethod",
@@ -493,7 +507,9 @@
                     "in": { "value": "path" }
                   }
                 ],
-                "successCode": { "value": 204 }
+                "successCode": { "value": 204 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": []
               }
             ]
           }
@@ -996,7 +1012,9 @@
                     "in": { "value": "query" }
                   }
                 ],
-                "successCode": { "value": 204 }
+                "successCode": { "value": 204 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": []
               }
             ]
           },
@@ -1182,7 +1200,9 @@
                     "array": { "value": "csv" }
                   }
                 ],
-                "successCode": { "value": 204 }
+                "successCode": { "value": 204 },
+                "requestMediaTypes": [{ "value": "*/*" }],
+                "responseMediaTypes": []
               }
             ]
           }
@@ -1337,14 +1357,18 @@
                 "name": { "value": "all-auth-schemes" },
                 "verb": { "value": "get" },
                 "parameters": [],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": []
               },
               {
                 "kind": "HttpMethod",
                 "name": { "value": "combo-auth-schemes" },
                 "verb": { "value": "put" },
                 "parameters": [],
-                "successCode": { "value": 200 }
+                "successCode": { "value": 200 },
+                "requestMediaTypes": [],
+                "responseMediaTypes": []
               }
             ]
           }
