@@ -374,6 +374,15 @@ export class OAS3Parser {
     return operation.tags?.[0].value || path.split('/')[1];
   }
 
+  private parseDeprecated(node: {
+    deprecated: OAS3.LiteralNode<boolean> | undefined;
+  }): Scalar<true> | undefined {
+    if (node.deprecated) {
+      return { value: true, loc: range(node.deprecated) };
+    }
+    return;
+  }
+
   private parseMethods(interfaceName: string): Method[] {
     const paths = this.schema.paths.keys;
 
@@ -390,6 +399,8 @@ export class OAS3Parser {
         continue;
       }
 
+      operation.deprecated;
+
       const nameLoc = operation.operationId
         ? range(operation.operationId)
         : undefined;
@@ -405,6 +416,7 @@ export class OAS3Parser {
           operation.summary,
           operation.description,
         ),
+        deprecated: this.parseDeprecated(operation),
         returnType: this.parseReturnType(operation),
         loc: this.schema.paths.read(path)!.propRange(verb)!,
         meta: this.parseMeta(operation),
@@ -482,6 +494,7 @@ export class OAS3Parser {
       kind: 'BasicScheme',
       type: { value: 'basic', loc: range(definition.type) },
       name,
+      // TODO: deprecated: this.parseDeprecated(definition),
       loc,
       meta: this.parseMeta(definition),
     };
@@ -499,6 +512,7 @@ export class OAS3Parser {
       description: this.parseDescriptionOnly(definition.description),
       parameter: literal(definition.name),
       in: literal(definition.in),
+      // TODO: deprecated: this.parseDeprecated(definition),
       loc,
       meta: this.parseMeta(definition),
     };
@@ -515,6 +529,7 @@ export class OAS3Parser {
       name,
       description: this.parseDescriptionOnly(definition.description),
       flows: Array.from(this.parseOAuth2Flows(definition.flows, name, loc)),
+      // TODO: deprecated: this.parseDeprecated(definition),
       loc,
       meta: this.parseMeta(definition),
     };
@@ -537,6 +552,7 @@ export class OAS3Parser {
         refreshUrl: literal(flow.refreshUrl),
         tokenUrl: literal(flow.tokenUrl),
         scopes: this.parseScopes(flow.scopes),
+        // TODO: deprecated: this.parseDeprecated(definition),
         loc,
       };
     }
@@ -551,6 +567,7 @@ export class OAS3Parser {
         refreshUrl: literal(flow.refreshUrl),
         tokenUrl: literal(flow.tokenUrl),
         scopes: this.parseScopes(flow.scopes),
+        // TODO: deprecated: this.parseDeprecated(definition),
         loc,
       };
     }
@@ -565,6 +582,7 @@ export class OAS3Parser {
         authorizationUrl: literal(flow.authorizationUrl),
         refreshUrl: literal(flow.refreshUrl),
         scopes: this.parseScopes(flow.scopes),
+        // TODO: deprecated: this.parseDeprecated(definition),
         loc,
       };
     }
@@ -579,6 +597,7 @@ export class OAS3Parser {
         refreshUrl: literal(flow.refreshUrl),
         tokenUrl: literal(flow.tokenUrl),
         scopes: this.parseScopes(flow.scopes),
+        // TODO: deprecated: this.parseDeprecated(definition),
         loc,
       };
     }
@@ -660,6 +679,7 @@ export class OAS3Parser {
         isPrimitive: x.isPrimitive,
         isArray: x.isArray,
         default: x.default,
+        deprecated: this.parseDeprecated(param),
         rules: this.parseRules(resolved, param.required?.value),
         loc: range(param),
         meta: this.parseMeta(param),
@@ -672,6 +692,7 @@ export class OAS3Parser {
         typeName: x.typeName,
         isPrimitive: x.isPrimitive,
         isArray: x.isArray,
+        deprecated: this.parseDeprecated(param),
         rules: this.parseRules(resolved, param.required?.value),
         loc: range(param),
         meta: this.parseMeta(param),
@@ -790,6 +811,7 @@ export class OAS3Parser {
               content: { value: n.value, loc: encodeRange(n.loc) },
               loc: range(n),
             })),
+            deprecated: this.parseDeprecated(schema),
             loc: schema.propRange('enum')!,
           });
           return {
@@ -838,8 +860,10 @@ export class OAS3Parser {
               values: schemaOrRef.enum.map<EnumValue>((n) => ({
                 kind: 'EnumValue',
                 content: { value: n.value, loc: encodeRange(n.loc) },
+                // TODO: deprecated
                 loc: range(n),
               })),
+              deprecated: this.parseDeprecated(schemaOrRef),
               loc: schemaOrRef.propRange('enum')!,
             });
             return {
@@ -938,6 +962,7 @@ export class OAS3Parser {
                   loc: range(schemaOrRef.description),
                 }
               : undefined,
+            deprecated: this.parseDeprecated(schemaOrRef),
             rules: this.parseObjectRules(schemaOrRef),
             loc: range(schemaOrRef),
           });
@@ -1265,6 +1290,7 @@ export class OAS3Parser {
               name,
             )
           : [],
+      deprecated: this.parseDeprecated(node),
       rules: this.parseObjectRules(node),
       loc: defLoc,
       meta: this.parseMeta(node),
@@ -1307,6 +1333,7 @@ export class OAS3Parser {
             isPrimitive: x.isPrimitive,
             isArray: x.isArray,
             default: x.default,
+            deprecated: this.parseDeprecated(resolvedProp),
             constant: this.parseConstant(prop, x),
             rules: this.parseRules(resolvedProp, requiredSet.has(name)),
             loc: range(resolvedProp),
@@ -1320,6 +1347,7 @@ export class OAS3Parser {
             typeName: x.typeName,
             isPrimitive: x.isPrimitive,
             isArray: x.isArray,
+            deprecated: this.parseDeprecated(resolvedProp),
             rules: this.parseRules(resolvedProp, requiredSet.has(name)),
             loc: range(resolvedProp),
             meta: this.parseMeta(resolvedProp),

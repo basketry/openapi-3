@@ -80,6 +80,7 @@
             }
           ],
           "description": { "value": "Only has a summary" },
+          "deprecated": { "value": true },
           "returnType": {
             "kind": "ReturnType",
             "typeName": { "value": "getGizmosResponse" },
