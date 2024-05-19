@@ -111,6 +111,7 @@ describe('parser', () => {
 
     const typeNames = new Set([
       ...result.types.map((t) => t.name.value),
+      ...result.unions.map((t) => t.name.value),
       ...result.enums.map((e) => e.name.value),
     ]);
 

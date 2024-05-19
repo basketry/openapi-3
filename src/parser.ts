@@ -939,15 +939,12 @@ export class OAS3Parser {
       case 'ObjectSchema':
         const typeName = { value: camel(`${parentName}_${localName}`) };
         if (schemaOrRef.oneOf) {
-          this.unions.push({
-            kind: 'Union',
-            name: typeName,
-            members: schemaOrRef.oneOf.map((subDef) =>
-              this.parseType(subDef, localName, parentName),
-            ),
-            loc: range(schemaOrRef),
-            meta: this.parseMeta(schemaOrRef),
-          });
+          this.parseAsUnion(
+            typeName.value,
+            schemaOrRef,
+            schemaOrRef.oneOf,
+            undefined,
+          );
         } else {
           this.anonymousTypes.push({
             kind: 'Type',
