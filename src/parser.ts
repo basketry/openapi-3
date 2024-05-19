@@ -1748,6 +1748,12 @@ class EmptyObject implements AST.ASTNode {
 }
 
 function toScalar<T extends string | number | boolean | null>(
+  node: OAS3.LiteralNode<T>,
+): Scalar<T>;
+function toScalar<T extends string | number | boolean | null>(
+  node: OAS3.LiteralNode<T> | undefined,
+): Scalar<T> | undefined;
+function toScalar<T extends string | number | boolean | null>(
   node: OAS3.LiteralNode<T> | undefined,
 ): Scalar<T> | undefined {
   if (!node) return undefined;
