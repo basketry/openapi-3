@@ -1631,6 +1631,29 @@
     },
     {
       "kind": "Type",
+      "name": { "value": "someType" },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": { "value": "a" },
+          "typeName": { "value": "string" },
+          "isPrimitive": true,
+          "isArray": false,
+          "rules": []
+        },
+        {
+          "kind": "Property",
+          "name": { "value": "nestedUnion" },
+          "typeName": { "value": "someTypeNestedUnion" },
+          "isPrimitive": false,
+          "isArray": false,
+          "rules": []
+        }
+      ],
+      "rules": []
+    },
+    {
+      "kind": "Type",
       "name": { "value": "partA" },
       "properties": [
         {
@@ -1990,6 +2013,24 @@
     {
       "kind": "Union",
       "name": { "value": "topLevelUnion" },
+      "members": [
+        {
+          "typeName": { "value": "partA" },
+          "isPrimitive": false,
+          "isArray": false,
+          "rules": []
+        },
+        {
+          "typeName": { "value": "partB" },
+          "isPrimitive": false,
+          "isArray": false,
+          "rules": []
+        }
+      ]
+    },
+    {
+      "kind": "Union",
+      "name": { "value": "someTypeNestedUnion" },
       "members": [
         {
           "typeName": { "value": "partA" },

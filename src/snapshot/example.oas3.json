@@ -544,6 +544,18 @@
           { "$ref": "#/components/schemas/partB" }
         ]
       },
+      "someType": {
+        "type": "object",
+        "properties": {
+          "a": { "type": "string" },
+          "nestedUnion": {
+            "oneOf": [
+              { "$ref": "#/components/schemas/partA" },
+              { "$ref": "#/components/schemas/partB" }
+            ]
+          }
+        }
+      },
       "partA": {
         "type": "object",
         "properties": {
