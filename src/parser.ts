@@ -6,6 +6,7 @@ import { AST, DocumentNode, parse } from '@basketry/ast';
 import * as OAS3 from './types';
 
 import {
+  CustomValue,
   decodeRange,
   encodeRange,
   Enum,
@@ -1252,15 +1253,60 @@ export class OAS3Parser {
     oneOf: (OAS3.RefNode | OAS3.ObjectSchemaNode)[],
     nameLoc: string | undefined,
   ): void {
-    const members = oneOf.map((subDef) => this.parseType(subDef, name, ''));
+    const members: TypedValue[] = oneOf.map((subDef) =>
+      this.parseType(subDef, name, ''),
+    );
 
-    this.unions.push({
-      kind: 'Union',
-      name: { value: name, loc: nameLoc },
-      members,
-      loc: range(node),
-      meta: this.parseMeta(node),
-    });
+    if (node.discriminator) {
+      const { propertyName, mapping } = node.discriminator;
+
+      if (mapping) {
+        this.violations.push({
+          code: 'openapi-3/unsupported-feature',
+          message:
+            'Discriminator mapping is not yet supported and will have no effect.',
+          range: mapping.loc,
+          severity: 'info',
+          sourcePath: this.sourcePath,
+        });
+      }
+
+      // TODO: validate that the discriminator definition is compatable with the referenced types
+
+      const customTypes: CustomValue[] = [];
+      for (const member of members) {
+        if (member.isPrimitive) {
+          this.violations.push({
+            code: 'openapi-3/misconfigured-discriminator',
+            message: 'Discriminators may not reference primitive types.',
+            range: node.discriminator.loc,
+            severity: 'error',
+            sourcePath: this.sourcePath,
+          });
+        } else {
+          customTypes.push(member);
+        }
+      }
+
+      const union: Union = {
+        kind: 'Union',
+        name: { value: name, loc: nameLoc },
+        discriminator: toScalar(propertyName),
+        members: customTypes,
+        loc: range(node),
+        meta: this.parseMeta(node),
+      };
+
+      this.unions.push(union);
+    } else {
+      this.unions.push({
+        kind: 'Union',
+        name: { value: name, loc: nameLoc },
+        members,
+        loc: range(node),
+        meta: this.parseMeta(node),
+      });
+    }
   }
 
   private parseAsType(

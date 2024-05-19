@@ -1821,6 +1821,66 @@
     },
     {
       "kind": "Type",
+      "name": { "value": "cat" },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": { "value": "type" },
+          "typeName": { "value": "string" },
+          "isPrimitive": true,
+          "isArray": false,
+          "constant": { "value": "cat" },
+          "rules": [
+            {
+              "kind": "ValidationRule",
+              "id": "string-enum",
+              "values": [{ "value": "cat" }]
+            }
+          ]
+        },
+        {
+          "kind": "Property",
+          "name": { "value": "lives" },
+          "typeName": { "value": "integer" },
+          "isPrimitive": true,
+          "isArray": false,
+          "rules": []
+        }
+      ],
+      "rules": []
+    },
+    {
+      "kind": "Type",
+      "name": { "value": "dog" },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": { "value": "type" },
+          "typeName": { "value": "string" },
+          "isPrimitive": true,
+          "isArray": false,
+          "constant": { "value": "dog" },
+          "rules": [
+            {
+              "kind": "ValidationRule",
+              "id": "string-enum",
+              "values": [{ "value": "dog" }]
+            }
+          ]
+        },
+        {
+          "kind": "Property",
+          "name": { "value": "goodBoi" },
+          "typeName": { "value": "boolean" },
+          "isPrimitive": true,
+          "isArray": false,
+          "rules": []
+        }
+      ],
+      "rules": []
+    },
+    {
+      "kind": "Type",
       "name": { "value": "getGizmosResponse" },
       "properties": [
         {
@@ -2040,6 +2100,25 @@
         },
         {
           "typeName": { "value": "partB" },
+          "isPrimitive": false,
+          "isArray": false,
+          "rules": []
+        }
+      ]
+    },
+    {
+      "kind": "Union",
+      "name": { "value": "animal" },
+      "discriminator": { "value": "type" },
+      "members": [
+        {
+          "typeName": { "value": "cat" },
+          "isPrimitive": false,
+          "isArray": false,
+          "rules": []
+        },
+        {
+          "typeName": { "value": "dog" },
           "isPrimitive": false,
           "isArray": false,
           "rules": []
