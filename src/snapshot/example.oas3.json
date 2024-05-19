@@ -604,6 +604,33 @@
       "multiValueEnum": {
         "type": "string",
         "enum": ["the value", "another value"]
+      },
+      "animal": {
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "cat": "#/components/schemas/cat",
+            "dog": "#/components/schemas/dog"
+          }
+        },
+        "oneOf": [
+          { "$ref": "#/components/schemas/cat" },
+          { "$ref": "#/components/schemas/dog" }
+        ]
+      },
+      "cat": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string", "enum": ["cat"] },
+          "lives": { "type": "integer" }
+        }
+      },
+      "dog": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string", "enum": ["dog"] },
+          "goodBoi": { "type": "boolean" }
+        }
       }
     },
     "responses": {
