@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "@basketry/ast": "^0.0.1",
-    "basketry": "^0.1.1-alpha.0",
+    "basketry": "^0.1.1-alpha.1",
     "case": "^1.6.3",
     "json-to-ast": "^2.1.0",
     "pluralize": "^8.0.0",
