@@ -19,6 +19,10 @@
     "@typescript-eslint/prefer-for-of": "warn",
     "@typescript-eslint/triple-slash-reference": "error",
     "@typescript-eslint/unified-signatures": "warn",
+    "@typescript-eslint/no-redeclare": [
+      "error",
+      { "ignoreDeclarationMerge": true }
+    ],
     "no-param-reassign": "error",
     "import/no-unassigned-import": "warn",
     "comma-dangle": ["error", "only-multiline"],
@@ -36,7 +40,7 @@
     "spaced-comment": "error",
     "no-invalid-this": "error",
     "no-new-wrappers": "error",
-    "no-redeclare": "error",
+    "no-redeclare": "off",
     "no-sequences": "error",
     "no-shadow": [
       "error",
