@@ -256,7 +256,7 @@ export class OpenAPINode extends DocumentNode {
   }
 
   get paths() {
-    return this.getChild('paths', PathsNode)!;
+    return this.getChild('paths', PathsNode);
   }
 
   get components() {

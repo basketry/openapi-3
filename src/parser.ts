@@ -158,6 +158,8 @@ export class OAS3Parser {
   }
 
   private parseHttpProtocol(interfaceName: string): HttpPath[] {
+    if (!this.schema.paths) return [];
+
     const paths = this.schema.paths.keys;
 
     const httpPaths: HttpPath[] = [];
@@ -347,12 +349,13 @@ export class OAS3Parser {
     verb: string;
     operation: OAS3.OperationNode;
   }> {
-    for (const path of this.schema.paths.keys) {
-      for (const verb of this.schema.paths.read(path)!.keys) {
+    const pathsNode = this.schema.paths;
+    if (!pathsNode) return;
+    for (const path of pathsNode.keys) {
+      for (const verb of pathsNode.read(path)!.keys) {
         if (verb === 'parameters' || verb.startsWith('x-')) continue;
 
-        const operation: OAS3.OperationNode =
-          this.schema.paths.read(path)![verb];
+        const operation: OAS3.OperationNode = pathsNode.read(path)![verb];
 
         yield { path, verb, operation };
       }
@@ -384,15 +387,14 @@ export class OAS3Parser {
   }
 
   private parseMethods(interfaceName: string): Method[] {
-    const paths = this.schema.paths.keys;
+    const pathsNode = this.schema.paths;
+    if (!pathsNode) return [];
+    const paths = pathsNode.keys;
 
     const methods: Method[] = [];
 
     for (const { path, verb, operation } of this.allOperations()) {
-      const pathNode = this.resolve(
-        this.schema.paths.read(path)!,
-        OAS3.PathItemNode,
-      );
+      const pathNode = this.resolve(pathsNode.read(path)!, OAS3.PathItemNode);
       const commonParameters = pathNode.parameters || [];
 
       if (this.parseInterfaceName(path, operation) !== interfaceName) {
@@ -418,7 +420,7 @@ export class OAS3Parser {
         ),
         deprecated: this.parseDeprecated(operation),
         returnType: this.parseReturnType(operation),
-        loc: this.schema.paths.read(path)!.propRange(verb)!,
+        loc: pathsNode.read(path)!.propRange(verb)!,
         meta: this.parseMeta(operation),
       });
     }
