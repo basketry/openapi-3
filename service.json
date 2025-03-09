@@ -1,9 +1,7 @@
 {
   "kind": "Service",
   "basketry": "0.2",
-  "sourcePaths": [
-    "#"
-  ],
+  "sourcePaths": ["#"],
   "title": {
     "kind": "StringLiteral",
     "value": "BasketryExample",
