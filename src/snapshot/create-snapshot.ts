@@ -13,12 +13,15 @@ createSnapshot(
   join(process.cwd(), 'src', 'snapshot', 'petstore.json'),
 );
 
-function createSnapshot(source: string, destination: string): void {
+async function createSnapshot(
+  source: string,
+  destination: string,
+): Promise<void> {
   const schema = readFileSync(source).toString('utf8');
   const prettierOptions = JSON.parse(
     readFileSync(join(process.cwd(), '.prettierrc')).toString('utf8'),
   );
-  const { service, violations } = parser(schema, source);
+  const { service, violations } = await parser(schema);
   const snapshot = format(
     JSON.stringify(service, (key, value) =>
       key === 'loc' ? undefined : value,

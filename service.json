@@ -1,0 +1,5412 @@
+{
+  "kind": "Service",
+  "basketry": "0.2",
+  "sourcePaths": [
+    "#"
+  ],
+  "title": {
+    "kind": "StringLiteral",
+    "value": "BasketryExample",
+    "loc": "0:5;14;32;157;175"
+  },
+  "majorVersion": {
+    "kind": "IntegerLiteral",
+    "value": 1,
+    "loc": "0:7;16;27;266;277"
+  },
+  "interfaces": [
+    {
+      "kind": "Interface",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "gizmo"
+      },
+      "methods": [
+        {
+          "kind": "Method",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "getGizmos",
+            "loc": "0:21;24;35;642;653"
+          },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "OAuth2Scheme",
+                  "type": {
+                    "value": "oauth2",
+                    "loc": "0:692;17;25;20101;20109"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "oauth2Auth",
+                    "loc": "0:691;7;19;20069;20081"
+                  },
+                  "flows": [
+                    {
+                      "kind": "OAuth2ImplicitFlow",
+                      "type": {
+                        "value": "implicit",
+                        "loc": "0:694;11;21;20140;20150"
+                      },
+                      "authorizationUrl": {
+                        "kind": "StringLiteral",
+                        "value": "https://example.com/auth",
+                        "loc": "0:695;33;59;20186;20212"
+                      },
+                      "scopes": [
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "read:gizmos",
+                            "loc": "0:697;15;28;20252;20265"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "Access gizmo data",
+                              "loc": "0:697;30;49;20267;20286"
+                            }
+                          ],
+                          "loc": "0:697;15;49;20252;20286"
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "write:gizmos",
+                            "loc": "0:698;15;29;20302;20316"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "Write gizmo data",
+                              "loc": "0:698;31;49;20318;20336"
+                            }
+                          ],
+                          "loc": "0:698;15;49;20302;20336"
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "admin:gizmos",
+                            "loc": "0:699;15;29;20352;20366"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "Manage gizmos",
+                              "loc": "0:699;31;46;20368;20383"
+                            }
+                          ],
+                          "loc": "0:699;15;46;20352;20383"
+                        }
+                      ],
+                      "loc": "0:691;7;703;8;20069;20427"
+                    }
+                  ],
+                  "loc": "0:691;7;703;8;20069;20427"
+                }
+              ],
+              "loc": "0:65;22;55;1965;1998"
+            }
+          ],
+          "parameters": [
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "search",
+                "loc": "0:25;21;29;739;747"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "string",
+                  "loc": "0:29;23;31;856;864"
+                },
+                "default": {
+                  "kind": "StringLiteral",
+                  "value": "ASDF",
+                  "loc": "0:30;26;32;891;897"
+                },
+                "rules": []
+              },
+              "loc": "0:24;11;44;12;717;1393",
+              "meta": [
+                {
+                  "kind": "MetaValue",
+                  "key": {
+                    "kind": "StringLiteral",
+                    "value": "metaString",
+                    "loc": "0:38;13;27;1166;1180"
+                  },
+                  "value": {
+                    "kind": "UntypedLiteral",
+                    "value": "bar",
+                    "loc": "0:38;29;34;1182;1187"
+                  }
+                },
+                {
+                  "kind": "MetaValue",
+                  "key": {
+                    "kind": "StringLiteral",
+                    "value": "metaNumber",
+                    "loc": "0:39;13;27;1201;1215"
+                  },
+                  "value": {
+                    "kind": "UntypedLiteral",
+                    "value": 1234,
+                    "loc": "0:39;29;33;1217;1221"
+                  }
+                },
+                {
+                  "kind": "MetaValue",
+                  "key": {
+                    "kind": "StringLiteral",
+                    "value": "metaBoolean",
+                    "loc": "0:40;13;28;1235;1250"
+                  },
+                  "value": {
+                    "kind": "UntypedLiteral",
+                    "value": true,
+                    "loc": "0:40;30;34;1252;1256"
+                  }
+                },
+                {
+                  "kind": "MetaValue",
+                  "key": {
+                    "kind": "StringLiteral",
+                    "value": "metaNull",
+                    "loc": "0:41;13;25;1270;1282"
+                  },
+                  "value": {
+                    "kind": "UntypedLiteral",
+                    "value": null,
+                    "loc": "0:41;27;31;1284;1288"
+                  }
+                },
+                {
+                  "kind": "MetaValue",
+                  "key": {
+                    "kind": "StringLiteral",
+                    "value": "metaObject",
+                    "loc": "0:42;13;27;1302;1316"
+                  },
+                  "value": {
+                    "kind": "UntypedLiteral",
+                    "value": {
+                      "foo": "bar"
+                    },
+                    "loc": "0:42;29;45;1318;1334"
+                  }
+                },
+                {
+                  "kind": "MetaValue",
+                  "key": {
+                    "kind": "StringLiteral",
+                    "value": "metaArray",
+                    "loc": "0:43;13;26;1348;1361"
+                  },
+                  "value": {
+                    "kind": "UntypedLiteral",
+                    "value": [
+                      {
+                        "foo": "bar"
+                      }
+                    ],
+                    "loc": "0:43;28;46;1363;1381"
+                  }
+                }
+              ]
+            }
+          ],
+          "description": [
+            {
+              "kind": "StringLiteral",
+              "value": "Only has a summary",
+              "loc": "0:20;20;40;597;617"
+            }
+          ],
+          "deprecated": {
+            "kind": "TrueLiteral",
+            "value": true,
+            "loc": "0:22;23;27;677;681"
+          },
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "ComplexValue",
+              "typeName": {
+                "kind": "StringLiteral",
+                "value": "getGizmosResponse"
+              },
+              "rules": [],
+              "loc": "0:51;27;60;18;1578;1890"
+            }
+          },
+          "loc": "0:19;7;66;8;569;2007"
+        },
+        {
+          "kind": "Method",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "updateGizmo",
+            "loc": "0:68;24;37;2047;2060"
+          },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "OAuth2Scheme",
+                  "type": {
+                    "value": "oauth2",
+                    "loc": "0:692;17;25;20101;20109"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "oauth2Auth",
+                    "loc": "0:691;7;19;20069;20081"
+                  },
+                  "flows": [
+                    {
+                      "kind": "OAuth2ImplicitFlow",
+                      "type": {
+                        "value": "implicit",
+                        "loc": "0:694;11;21;20140;20150"
+                      },
+                      "authorizationUrl": {
+                        "kind": "StringLiteral",
+                        "value": "https://example.com/auth",
+                        "loc": "0:695;33;59;20186;20212"
+                      },
+                      "scopes": [
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "read:gizmos",
+                            "loc": "0:697;15;28;20252;20265"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "Access gizmo data",
+                              "loc": "0:697;30;49;20267;20286"
+                            }
+                          ],
+                          "loc": "0:697;15;49;20252;20286"
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "write:gizmos",
+                            "loc": "0:698;15;29;20302;20316"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "Write gizmo data",
+                              "loc": "0:698;31;49;20318;20336"
+                            }
+                          ],
+                          "loc": "0:698;15;49;20302;20336"
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "admin:gizmos",
+                            "loc": "0:699;15;29;20352;20366"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "Manage gizmos",
+                              "loc": "0:699;31;46;20368;20383"
+                            }
+                          ],
+                          "loc": "0:699;15;46;20352;20383"
+                        }
+                      ],
+                      "loc": "0:691;7;703;8;20069;20427"
+                    }
+                  ],
+                  "loc": "0:691;7;703;8;20069;20427"
+                }
+              ],
+              "loc": "0:92;22;72;2738;2788"
+            }
+          ],
+          "parameters": [
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "factors",
+                "loc": "0:71;21;30;2118;2127"
+              },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "array of primitive",
+                  "loc": "0:73;28;48;2183;2203"
+                }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "string",
+                  "loc": "0:80;61;69;2437;2445"
+                },
+                "isArray": {
+                  "kind": "TrueLiteral",
+                  "value": true,
+                  "loc": "0:80;24;71;2400;2447"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "ArrayMaxItems",
+                    "max": {
+                      "kind": "NonNegativeNumberLiteral",
+                      "value": 6,
+                      "loc": "0:77;27;28;2314;2315"
+                    },
+                    "loc": "0:77;15;28;2302;2315"
+                  },
+                  {
+                    "kind": "ValidationRule",
+                    "id": "ArrayMinItems",
+                    "min": {
+                      "kind": "NonNegativeNumberLiteral",
+                      "value": 2,
+                      "loc": "0:78;27;28;2343;2344"
+                    },
+                    "loc": "0:78;15;28;2331;2344"
+                  },
+                  {
+                    "kind": "ValidationRule",
+                    "id": "StringPattern",
+                    "pattern": {
+                      "kind": "NonEmptyStringLiteral",
+                      "value": "[0-9a-fA-F]+",
+                      "loc": "0:80;37;51;2413;2427"
+                    },
+                    "loc": "0:80;26;51;2402;2427"
+                  }
+                ]
+              },
+              "loc": "0:70;11;82;12;2096;2473"
+            }
+          ],
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "ComplexValue",
+              "typeName": {
+                "kind": "StringLiteral",
+                "value": "gizmo",
+                "loc": "0:499;7;14;14690;14697"
+              },
+              "rules": [],
+              "loc": "0:499;16;506;8;14699;14928"
+            }
+          },
+          "loc": "0:67;7;93;8;2015;2797"
+        },
+        {
+          "kind": "Method",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "createGizmo",
+            "loc": "0:97;24;37;2972;2985"
+          },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "OAuth2Scheme",
+                  "type": {
+                    "value": "oauth2",
+                    "loc": "0:692;17;25;20101;20109"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "oauth2Auth",
+                    "loc": "0:691;7;19;20069;20081"
+                  },
+                  "flows": [
+                    {
+                      "kind": "OAuth2ImplicitFlow",
+                      "type": {
+                        "value": "implicit",
+                        "loc": "0:694;11;21;20140;20150"
+                      },
+                      "authorizationUrl": {
+                        "kind": "StringLiteral",
+                        "value": "https://example.com/auth",
+                        "loc": "0:695;33;59;20186;20212"
+                      },
+                      "scopes": [
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "read:gizmos",
+                            "loc": "0:697;15;28;20252;20265"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "Access gizmo data",
+                              "loc": "0:697;30;49;20267;20286"
+                            }
+                          ],
+                          "loc": "0:697;15;49;20252;20286"
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "write:gizmos",
+                            "loc": "0:698;15;29;20302;20316"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "Write gizmo data",
+                              "loc": "0:698;31;49;20318;20336"
+                            }
+                          ],
+                          "loc": "0:698;15;49;20302;20336"
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "admin:gizmos",
+                            "loc": "0:699;15;29;20352;20366"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "Manage gizmos",
+                              "loc": "0:699;31;46;20368;20383"
+                            }
+                          ],
+                          "loc": "0:699;15;46;20352;20383"
+                        }
+                      ],
+                      "loc": "0:691;7;703;8;20069;20427"
+                    }
+                  ],
+                  "loc": "0:691;7;703;8;20069;20427"
+                }
+              ],
+              "loc": "0:117;22;56;3524;3558"
+            }
+          ],
+          "parameters": [
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "size",
+                "loc": "0:100;21;27;3043;3049"
+              },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "Anonymous enum",
+                  "loc": "0:102;28;44;3105;3121"
+                }
+              ],
+              "value": {
+                "kind": "ComplexValue",
+                "typeName": {
+                  "kind": "StringLiteral",
+                  "value": "createGizmoSize"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "StringEnum",
+                    "values": [
+                      {
+                        "kind": "StringLiteral",
+                        "value": "small",
+                        "loc": "0:105;24;31;3202;3209"
+                      },
+                      {
+                        "kind": "StringLiteral",
+                        "value": "medium",
+                        "loc": "0:105;33;41;3211;3219"
+                      },
+                      {
+                        "kind": "StringLiteral",
+                        "value": "big",
+                        "loc": "0:105;43;48;3221;3226"
+                      },
+                      {
+                        "kind": "StringLiteral",
+                        "value": "XL",
+                        "loc": "0:105;50;54;3228;3232"
+                      }
+                    ],
+                    "loc": "0:105;15;55;3193;3233"
+                  }
+                ]
+              },
+              "loc": "0:99;11;107;12;3021;3259"
+            }
+          ],
+          "description": [
+            {
+              "kind": "StringLiteral",
+              "value": "Has a summary in addition to a description",
+              "loc": "0:95;20;64;2834;2878"
+            },
+            {
+              "kind": "StringLiteral",
+              "value": "Has a description in addition to a summary",
+              "loc": "0:96;24;68;2903;2947"
+            }
+          ],
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "ComplexValue",
+              "typeName": {
+                "kind": "StringLiteral",
+                "value": "gizmo",
+                "loc": "0:499;7;14;14690;14697"
+              },
+              "rules": [],
+              "loc": "0:499;16;506;8;14699;14928"
+            }
+          },
+          "loc": "0:94;7;118;8;2805;3567"
+        }
+      ],
+      "protocols": {
+        "kind": "InterfaceProtocols",
+        "http": [
+          {
+            "kind": "HttpRoute",
+            "pattern": {
+              "kind": "StringLiteral",
+              "value": "/gizmos",
+              "loc": "0:18;5;14;550;559"
+            },
+            "methods": [
+              {
+                "kind": "HttpMethod",
+                "name": {
+                  "kind": "StringLiteral",
+                  "value": "getGizmos",
+                  "loc": "0:21;24;35;642;653"
+                },
+                "verb": {
+                  "kind": "HttpVerbLiteral",
+                  "value": "get",
+                  "loc": "0:19;7;12;569;574"
+                },
+                "parameters": [
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "search",
+                      "loc": "0:25;21;29;739;747"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:26;19;26;767;774"
+                    },
+                    "loc": "0:24;11;44;12;717;1393"
+                  }
+                ],
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200,
+                  "loc": "0:47;11;20;1438;1447"
+                },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [
+                  {
+                    "kind": "StringLiteral",
+                    "value": "*/*",
+                    "loc": "0:50;15;20;1543;1548"
+                  }
+                ],
+                "loc": "0:19;7;66;8;569;2007"
+              },
+              {
+                "kind": "HttpMethod",
+                "name": {
+                  "kind": "StringLiteral",
+                  "value": "updateGizmo",
+                  "loc": "0:68;24;37;2047;2060"
+                },
+                "verb": {
+                  "kind": "HttpVerbLiteral",
+                  "value": "put",
+                  "loc": "0:67;7;12;2015;2020"
+                },
+                "parameters": [
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "factors",
+                      "loc": "0:71;21;30;2118;2127"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:72;19;26;2147;2154"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv",
+                      "loc": "0:74;22;28;2226;2232"
+                    },
+                    "loc": "0:70;11;82;12;2096;2473"
+                  }
+                ],
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200,
+                  "loc": "0:85;11;20;2518;2527"
+                },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [
+                  {
+                    "kind": "StringLiteral",
+                    "value": "*/*",
+                    "loc": "0:88;15;20;2618;2623"
+                  }
+                ],
+                "loc": "0:67;7;93;8;2015;2797"
+              },
+              {
+                "kind": "HttpMethod",
+                "name": {
+                  "kind": "StringLiteral",
+                  "value": "createGizmo",
+                  "loc": "0:97;24;37;2972;2985"
+                },
+                "verb": {
+                  "kind": "HttpVerbLiteral",
+                  "value": "post",
+                  "loc": "0:94;7;13;2805;2811"
+                },
+                "parameters": [
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "size",
+                      "loc": "0:100;21;27;3043;3049"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:101;19;26;3069;3076"
+                    },
+                    "loc": "0:99;11;107;12;3021;3259"
+                  }
+                ],
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 201,
+                  "loc": "0:110;11;20;3304;3313"
+                },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [
+                  {
+                    "kind": "StringLiteral",
+                    "value": "*/*",
+                    "loc": "0:113;15;20;3404;3409"
+                  }
+                ],
+                "loc": "0:94;7;118;8;2805;3567"
+              }
+            ],
+            "loc": "0:18;5;119;6;550;3573"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "Interface",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "widget"
+      },
+      "methods": [
+        {
+          "kind": "Method",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "getWidgets",
+            "loc": "0:122;24;36;3631;3643"
+          },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "ApiKeyScheme",
+                  "type": {
+                    "value": "apiKey",
+                    "loc": "0:685;31;39;19901;19909"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "apiKeyAuth",
+                    "loc": "0:685;7;19;19877;19889"
+                  },
+                  "parameter": {
+                    "kind": "StringLiteral",
+                    "value": "x-apikey",
+                    "loc": "0:685;49;59;19919;19929"
+                  },
+                  "in": {
+                    "value": "header",
+                    "loc": "0:685;67;75;19937;19945"
+                  },
+                  "loc": "0:685;7;77;19877;19947"
+                }
+              ],
+              "loc": "0:16;16;36;510;530"
+            }
+          ],
+          "parameters": [],
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "ComplexValue",
+              "typeName": {
+                "kind": "StringLiteral",
+                "value": "widget",
+                "loc": "0:508;7;15;15017;15025"
+              },
+              "rules": [],
+              "loc": "0:508;17;516;8;15027;15249"
+            }
+          },
+          "loc": "0:121;7;131;8;3599;3912"
+        },
+        {
+          "kind": "Method",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "putWidget",
+            "loc": "0:133;24;35;3952;3963"
+          },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "ApiKeyScheme",
+                  "type": {
+                    "value": "apiKey",
+                    "loc": "0:685;31;39;19901;19909"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "apiKeyAuth",
+                    "loc": "0:685;7;19;19877;19889"
+                  },
+                  "parameter": {
+                    "kind": "StringLiteral",
+                    "value": "x-apikey",
+                    "loc": "0:685;49;59;19919;19929"
+                  },
+                  "in": {
+                    "value": "header",
+                    "loc": "0:685;67;75;19937;19945"
+                  },
+                  "loc": "0:685;7;77;19877;19947"
+                }
+              ],
+              "loc": "0:16;16;36;510;530"
+            }
+          ],
+          "parameters": [],
+          "loc": "0:132;7;137;8;3920;4078"
+        },
+        {
+          "kind": "Method",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "createWidget",
+            "loc": "0:139;24;38;4119;4133"
+          },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "ApiKeyScheme",
+                  "type": {
+                    "value": "apiKey",
+                    "loc": "0:685;31;39;19901;19909"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "apiKeyAuth",
+                    "loc": "0:685;7;19;19877;19889"
+                  },
+                  "parameter": {
+                    "kind": "StringLiteral",
+                    "value": "x-apikey",
+                    "loc": "0:685;49;59;19919;19929"
+                  },
+                  "in": {
+                    "value": "header",
+                    "loc": "0:685;67;75;19937;19945"
+                  },
+                  "loc": "0:685;7;77;19877;19947"
+                }
+              ],
+              "loc": "0:16;16;36;510;530"
+            }
+          ],
+          "parameters": [
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "string",
+                "loc": "0:159;40;46;4700;4706"
+              },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "The new widget",
+                  "loc": "0:141;26;42;4185;4201"
+                }
+              ],
+              "value": {
+                "kind": "ComplexValue",
+                "typeName": {
+                  "kind": "StringLiteral",
+                  "value": "createWidgetString"
+                },
+                "rules": [],
+                "loc": "0:144;25;148;16;4271;4423"
+              },
+              "loc": "0:140;24;152;10;4158;4488"
+            }
+          ],
+          "loc": "0:138;7;160;8;4086;4714",
+          "meta": [
+            {
+              "kind": "MetaValue",
+              "key": {
+                "kind": "StringLiteral",
+                "value": "codegen-request-body-name",
+                "loc": "0:159;9;38;4669;4698"
+              },
+              "value": {
+                "kind": "UntypedLiteral",
+                "value": "body",
+                "loc": "0:159;40;46;4700;4706"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "Method",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "getWidgetFoo",
+            "loc": "0:164;24;38;4787;4801"
+          },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "ApiKeyScheme",
+                  "type": {
+                    "value": "apiKey",
+                    "loc": "0:685;31;39;19901;19909"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "apiKeyAuth",
+                    "loc": "0:685;7;19;19877;19889"
+                  },
+                  "parameter": {
+                    "kind": "StringLiteral",
+                    "value": "x-apikey",
+                    "loc": "0:685;49;59;19919;19929"
+                  },
+                  "in": {
+                    "value": "header",
+                    "loc": "0:685;67;75;19937;19945"
+                  },
+                  "loc": "0:685;7;77;19877;19947"
+                }
+              ],
+              "loc": "0:16;16;36;510;530"
+            }
+          ],
+          "parameters": [
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "id",
+                "loc": "0:167;21;25;4859;4863"
+              },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "The widget ID",
+                  "loc": "0:169;28;43;4918;4933"
+                }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "string",
+                  "loc": "0:171;50;58;5014;5022"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "Required"
+                  },
+                  {
+                    "kind": "ValidationRule",
+                    "id": "StringMaxLength",
+                    "length": {
+                      "kind": "NonNegativeIntegerLiteral",
+                      "value": 30,
+                      "loc": "0:171;38;40;5002;5004"
+                    },
+                    "loc": "0:171;25;40;4989;5004"
+                  }
+                ]
+              },
+              "loc": "0:166;11;172;12;4837;5036"
+            }
+          ],
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "ComplexValue",
+              "typeName": {
+                "kind": "StringLiteral",
+                "value": "widget",
+                "loc": "0:508;7;15;15017;15025"
+              },
+              "rules": [],
+              "loc": "0:508;17;516;8;15027;15249"
+            }
+          },
+          "loc": "0:163;7;182;8;4755;5315"
+        },
+        {
+          "kind": "Method",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "deleteWidgetFoo",
+            "loc": "0:184;24;41;5358;5375"
+          },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "ApiKeyScheme",
+                  "type": {
+                    "value": "apiKey",
+                    "loc": "0:685;31;39;19901;19909"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "apiKeyAuth",
+                    "loc": "0:685;7;19;19877;19889"
+                  },
+                  "parameter": {
+                    "kind": "StringLiteral",
+                    "value": "x-apikey",
+                    "loc": "0:685;49;59;19919;19929"
+                  },
+                  "in": {
+                    "value": "header",
+                    "loc": "0:685;67;75;19937;19945"
+                  },
+                  "loc": "0:685;7;77;19877;19947"
+                }
+              ],
+              "loc": "0:16;16;36;510;530"
+            }
+          ],
+          "parameters": [
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "id",
+                "loc": "0:187;21;25;5433;5437"
+              },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "The widget ID",
+                  "loc": "0:189;28;43;5492;5507"
+                }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "string",
+                  "loc": "0:191;50;58;5588;5596"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "Required"
+                  },
+                  {
+                    "kind": "ValidationRule",
+                    "id": "StringMaxLength",
+                    "length": {
+                      "kind": "NonNegativeIntegerLiteral",
+                      "value": 30,
+                      "loc": "0:191;38;40;5576;5578"
+                    },
+                    "loc": "0:191;25;40;5563;5578"
+                  }
+                ]
+              },
+              "loc": "0:186;11;192;12;5411;5610"
+            }
+          ],
+          "loc": "0:183;7;200;8;5323;5781"
+        }
+      ],
+      "protocols": {
+        "kind": "InterfaceProtocols",
+        "http": [
+          {
+            "kind": "HttpRoute",
+            "pattern": {
+              "kind": "StringLiteral",
+              "value": "/widgets",
+              "loc": "0:120;5;15;3579;3589"
+            },
+            "methods": [
+              {
+                "kind": "HttpMethod",
+                "name": {
+                  "kind": "StringLiteral",
+                  "value": "getWidgets",
+                  "loc": "0:122;24;36;3631;3643"
+                },
+                "verb": {
+                  "kind": "HttpVerbLiteral",
+                  "value": "get",
+                  "loc": "0:121;7;12;3599;3604"
+                },
+                "parameters": [],
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200,
+                  "loc": "0:124;11;20;3678;3687"
+                },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [
+                  {
+                    "kind": "StringLiteral",
+                    "value": "*/*",
+                    "loc": "0:127;15;20;3806;3811"
+                  }
+                ],
+                "loc": "0:121;7;131;8;3599;3912"
+              },
+              {
+                "kind": "HttpMethod",
+                "name": {
+                  "kind": "StringLiteral",
+                  "value": "putWidget",
+                  "loc": "0:133;24;35;3952;3963"
+                },
+                "verb": {
+                  "kind": "HttpVerbLiteral",
+                  "value": "put",
+                  "loc": "0:132;7;12;3920;3925"
+                },
+                "parameters": [],
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200
+                },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [],
+                "loc": "0:132;7;137;8;3920;4078"
+              },
+              {
+                "kind": "HttpMethod",
+                "name": {
+                  "kind": "StringLiteral",
+                  "value": "createWidget",
+                  "loc": "0:139;24;38;4119;4133"
+                },
+                "verb": {
+                  "kind": "HttpVerbLiteral",
+                  "value": "post",
+                  "loc": "0:138;7;13;4086;4092"
+                },
+                "parameters": [
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "string",
+                      "loc": "0:159;40;46;4700;4706"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "body"
+                    },
+                    "loc": "0:140;24;152;10;4158;4488"
+                  }
+                ],
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 204,
+                  "loc": "0:154;11;20;4523;4532"
+                },
+                "requestMediaTypes": [
+                  {
+                    "kind": "StringLiteral",
+                    "value": "*/*",
+                    "loc": "0:143;13;18;4238;4243"
+                  }
+                ],
+                "responseMediaTypes": [],
+                "loc": "0:138;7;160;8;4086;4714"
+              }
+            ],
+            "loc": "0:120;5;161;6;3579;4720"
+          },
+          {
+            "kind": "HttpRoute",
+            "pattern": {
+              "kind": "StringLiteral",
+              "value": "/widgets/{id}/foo",
+              "loc": "0:162;5;24;4726;4745"
+            },
+            "methods": [
+              {
+                "kind": "HttpMethod",
+                "name": {
+                  "kind": "StringLiteral",
+                  "value": "getWidgetFoo",
+                  "loc": "0:164;24;38;4787;4801"
+                },
+                "verb": {
+                  "kind": "HttpVerbLiteral",
+                  "value": "get",
+                  "loc": "0:163;7;12;4755;4760"
+                },
+                "parameters": [
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "id",
+                      "loc": "0:167;21;25;4859;4863"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path",
+                      "loc": "0:168;19;25;4883;4889"
+                    },
+                    "loc": "0:166;11;172;12;4837;5036"
+                  }
+                ],
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200,
+                  "loc": "0:175;11;20;5081;5090"
+                },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [
+                  {
+                    "kind": "StringLiteral",
+                    "value": "*/*",
+                    "loc": "0:178;15;20;5209;5214"
+                  }
+                ],
+                "loc": "0:163;7;182;8;4755;5315"
+              },
+              {
+                "kind": "HttpMethod",
+                "name": {
+                  "kind": "StringLiteral",
+                  "value": "deleteWidgetFoo",
+                  "loc": "0:184;24;41;5358;5375"
+                },
+                "verb": {
+                  "kind": "HttpVerbLiteral",
+                  "value": "delete",
+                  "loc": "0:183;7;15;5323;5331"
+                },
+                "parameters": [
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "id",
+                      "loc": "0:187;21;25;5433;5437"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path",
+                      "loc": "0:188;19;25;5457;5463"
+                    },
+                    "loc": "0:186;11;192;12;5411;5610"
+                  }
+                ],
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 204,
+                  "loc": "0:195;11;20;5655;5664"
+                },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [],
+                "loc": "0:183;7;200;8;5323;5781"
+              }
+            ],
+            "loc": "0:162;5;201;6;4726;5787"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "Interface",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "exhaustive"
+      },
+      "methods": [
+        {
+          "kind": "Method",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "exhaustiveFormats",
+            "loc": "0:204;24;43;5848;5867"
+          },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "ApiKeyScheme",
+                  "type": {
+                    "value": "apiKey",
+                    "loc": "0:685;31;39;19901;19909"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "apiKeyAuth",
+                    "loc": "0:685;7;19;19877;19889"
+                  },
+                  "parameter": {
+                    "kind": "StringLiteral",
+                    "value": "x-apikey",
+                    "loc": "0:685;49;59;19919;19929"
+                  },
+                  "in": {
+                    "value": "header",
+                    "loc": "0:685;67;75;19937;19945"
+                  },
+                  "loc": "0:685;7;77;19877;19947"
+                }
+              ],
+              "loc": "0:16;16;36;510;530"
+            }
+          ],
+          "parameters": [
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "string-no-format",
+                "loc": "0:207;21;39;5925;5943"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "string",
+                  "loc": "0:209;33;41;6004;6012"
+                },
+                "rules": []
+              },
+              "loc": "0:206;11;210;12;5903;6026"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "string-date",
+                "loc": "0:212;21;34;6060;6073"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "date",
+                  "loc": "0:214;23;61;6124;6162"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "StringFormat",
+                    "format": {
+                      "kind": "NonEmptyStringLiteral",
+                      "value": "date",
+                      "loc": "0:214;53;59;6154;6160"
+                    },
+                    "loc": "0:214;43;59;6144;6160"
+                  }
+                ]
+              },
+              "loc": "0:211;11;215;12;6038;6174"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "string-date-time",
+                "loc": "0:217;21;39;6208;6226"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "date-time",
+                  "loc": "0:219;23;66;6277;6320"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "StringFormat",
+                    "format": {
+                      "kind": "NonEmptyStringLiteral",
+                      "value": "date-time",
+                      "loc": "0:219;53;64;6307;6318"
+                    },
+                    "loc": "0:219;43;64;6297;6318"
+                  }
+                ]
+              },
+              "loc": "0:216;11;220;12;6186;6332"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "integer-no-format",
+                "loc": "0:222;21;40;6366;6385"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "integer",
+                  "loc": "0:224;33;42;6446;6455"
+                },
+                "rules": []
+              },
+              "loc": "0:221;11;225;12;6344;6469"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "integer-int32",
+                "loc": "0:227;21;36;6503;6518"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "integer",
+                  "loc": "0:229;23;63;6569;6609"
+                },
+                "rules": []
+              },
+              "loc": "0:226;11;230;12;6481;6621"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "integer-int64",
+                "loc": "0:232;21;36;6655;6670"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "long",
+                  "loc": "0:234;23;63;6721;6761"
+                },
+                "rules": []
+              },
+              "loc": "0:231;11;235;12;6633;6773"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "number-no-format",
+                "loc": "0:237;21;39;6807;6825"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "number",
+                  "loc": "0:239;33;41;6886;6894"
+                },
+                "rules": []
+              },
+              "loc": "0:236;11;240;12;6785;6908"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "number-float",
+                "loc": "0:242;21;35;6942;6956"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "float",
+                  "loc": "0:244;23;62;7007;7046"
+                },
+                "rules": []
+              },
+              "loc": "0:241;11;245;12;6920;7058"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "number-double",
+                "loc": "0:247;21;36;7092;7107"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "double",
+                  "loc": "0:249;23;63;7158;7198"
+                },
+                "rules": []
+              },
+              "loc": "0:246;11;250;12;7070;7210"
+            }
+          ],
+          "loc": "0:203;7;258;8;5816;7415"
+        },
+        {
+          "kind": "Method",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "exhaustiveParams",
+            "loc": "0:262;24;42;7652;7670"
+          },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "ApiKeyScheme",
+                  "type": {
+                    "value": "apiKey",
+                    "loc": "0:685;31;39;19901;19909"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "apiKeyAuth",
+                    "loc": "0:685;7;19;19877;19889"
+                  },
+                  "parameter": {
+                    "kind": "StringLiteral",
+                    "value": "x-apikey",
+                    "loc": "0:685;49;59;19919;19929"
+                  },
+                  "in": {
+                    "value": "header",
+                    "loc": "0:685;67;75;19937;19945"
+                  },
+                  "loc": "0:685;7;77;19877;19947"
+                }
+              ],
+              "loc": "0:16;16;36;510;530"
+            }
+          ],
+          "parameters": [
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "string",
+                "loc": "0:472;40;46;13906;13912"
+              },
+              "value": {
+                "kind": "ComplexValue",
+                "typeName": {
+                  "kind": "StringLiteral",
+                  "value": "exhaustiveParamsString"
+                },
+                "rules": [],
+                "loc": "0:455;25;461;16;13438;13632"
+              },
+              "loc": "0:452;24;465;10;13368;13697"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "query-string",
+                "loc": "0:265;21;35;7728;7742"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "string",
+                  "loc": "0:267;33;41;7803;7811"
+                },
+                "rules": []
+              },
+              "loc": "0:264;11;268;12;7706;7825"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "query-enum",
+                "loc": "0:270;21;33;7859;7871"
+              },
+              "value": {
+                "kind": "ComplexValue",
+                "typeName": {
+                  "kind": "StringLiteral",
+                  "value": "exhaustiveParamsQueryEnum"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "StringEnum",
+                    "values": [
+                      {
+                        "kind": "StringLiteral",
+                        "value": "one",
+                        "loc": "0:272;52;57;7951;7956"
+                      },
+                      {
+                        "kind": "StringLiteral",
+                        "value": "two",
+                        "loc": "0:272;59;64;7958;7963"
+                      },
+                      {
+                        "kind": "StringLiteral",
+                        "value": "three",
+                        "loc": "0:272;66;73;7965;7972"
+                      }
+                    ],
+                    "loc": "0:272;43;74;7942;7973"
+                  }
+                ]
+              },
+              "loc": "0:269;11;273;12;7837;7987"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "query-number",
+                "loc": "0:275;21;35;8021;8035"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "number",
+                  "loc": "0:277;33;41;8096;8104"
+                },
+                "rules": []
+              },
+              "loc": "0:274;11;278;12;7999;8118"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "query-integer",
+                "loc": "0:280;21;36;8152;8167"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "integer",
+                  "loc": "0:282;33;42;8228;8237"
+                },
+                "rules": []
+              },
+              "loc": "0:279;11;283;12;8130;8251"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "query-boolean",
+                "loc": "0:285;21;36;8285;8300"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "boolean",
+                  "loc": "0:287;33;42;8361;8370"
+                },
+                "rules": []
+              },
+              "loc": "0:284;11;288;12;8263;8384"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "query-string-array",
+                "loc": "0:290;21;41;8418;8438"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "string",
+                  "loc": "0:294;61;69;8586;8594"
+                },
+                "isArray": {
+                  "kind": "TrueLiteral",
+                  "value": true,
+                  "loc": "0:294;51;71;8576;8596"
+                },
+                "rules": []
+              },
+              "loc": "0:289;11;295;12;8396;8610"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "query-enum-array",
+                "loc": "0:297;21;39;8644;8662"
+              },
+              "value": {
+                "kind": "ComplexValue",
+                "typeName": {
+                  "kind": "StringLiteral",
+                  "value": "exhaustiveParamsQueryEnumArray"
+                },
+                "isArray": {
+                  "kind": "TrueLiteral",
+                  "value": true,
+                  "loc": "0:303;24;77;8828;8881"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "StringEnum",
+                    "values": [
+                      {
+                        "kind": "StringLiteral",
+                        "value": "one",
+                        "loc": "0:303;53;58;8857;8862"
+                      },
+                      {
+                        "kind": "StringLiteral",
+                        "value": "two",
+                        "loc": "0:303;60;65;8864;8869"
+                      },
+                      {
+                        "kind": "StringLiteral",
+                        "value": "three",
+                        "loc": "0:303;67;74;8871;8878"
+                      }
+                    ],
+                    "loc": "0:303;44;75;8848;8879"
+                  }
+                ]
+              },
+              "loc": "0:296;11;305;12;8622;8907"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "query-number-array",
+                "loc": "0:307;21;41;8941;8961"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "number",
+                  "loc": "0:311;61;69;9109;9117"
+                },
+                "isArray": {
+                  "kind": "TrueLiteral",
+                  "value": true,
+                  "loc": "0:311;51;71;9099;9119"
+                },
+                "rules": []
+              },
+              "loc": "0:306;11;312;12;8919;9133"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "query-integer-array",
+                "loc": "0:314;21;42;9167;9188"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "integer",
+                  "loc": "0:318;61;70;9336;9345"
+                },
+                "isArray": {
+                  "kind": "TrueLiteral",
+                  "value": true,
+                  "loc": "0:318;51;72;9326;9347"
+                },
+                "rules": []
+              },
+              "loc": "0:313;11;319;12;9145;9361"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "query-boolean-array",
+                "loc": "0:321;21;42;9395;9416"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "boolean",
+                  "loc": "0:325;61;70;9564;9573"
+                },
+                "isArray": {
+                  "kind": "TrueLiteral",
+                  "value": true,
+                  "loc": "0:325;51;72;9554;9575"
+                },
+                "rules": []
+              },
+              "loc": "0:320;11;326;12;9373;9589"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "path-string",
+                "loc": "0:328;21;34;9623;9636"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "string",
+                  "loc": "0:331;33;41;9726;9734"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "Required"
+                  }
+                ]
+              },
+              "loc": "0:327;11;332;12;9601;9748"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "path-enum",
+                "loc": "0:334;21;32;9782;9793"
+              },
+              "value": {
+                "kind": "ComplexValue",
+                "typeName": {
+                  "kind": "StringLiteral",
+                  "value": "exhaustiveParamsPathEnum"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "Required"
+                  },
+                  {
+                    "kind": "ValidationRule",
+                    "id": "StringEnum",
+                    "values": [
+                      {
+                        "kind": "StringLiteral",
+                        "value": "one",
+                        "loc": "0:337;52;57;9902;9907"
+                      },
+                      {
+                        "kind": "StringLiteral",
+                        "value": "two",
+                        "loc": "0:337;59;64;9909;9914"
+                      },
+                      {
+                        "kind": "StringLiteral",
+                        "value": "three",
+                        "loc": "0:337;66;73;9916;9923"
+                      }
+                    ],
+                    "loc": "0:337;43;74;9893;9924"
+                  }
+                ]
+              },
+              "loc": "0:333;11;338;12;9760;9938"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "path-number",
+                "loc": "0:340;21;34;9972;9985"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "number",
+                  "loc": "0:343;33;41;10075;10083"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "Required"
+                  }
+                ]
+              },
+              "loc": "0:339;11;344;12;9950;10097"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "path-integer",
+                "loc": "0:346;21;35;10131;10145"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "integer",
+                  "loc": "0:349;33;42;10235;10244"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "Required"
+                  }
+                ]
+              },
+              "loc": "0:345;11;350;12;10109;10258"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "path-boolean",
+                "loc": "0:352;21;35;10292;10306"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "boolean",
+                  "loc": "0:355;33;42;10396;10405"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "Required"
+                  }
+                ]
+              },
+              "loc": "0:351;11;356;12;10270;10419"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "path-string-array",
+                "loc": "0:358;21;40;10453;10472"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "string",
+                  "loc": "0:363;61;69;10651;10659"
+                },
+                "isArray": {
+                  "kind": "TrueLiteral",
+                  "value": true,
+                  "loc": "0:363;51;71;10641;10661"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "Required"
+                  }
+                ]
+              },
+              "loc": "0:357;11;364;12;10431;10675"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "path-enum-array",
+                "loc": "0:366;21;38;10709;10726"
+              },
+              "value": {
+                "kind": "ComplexValue",
+                "typeName": {
+                  "kind": "StringLiteral",
+                  "value": "exhaustiveParamsPathEnumArray"
+                },
+                "isArray": {
+                  "kind": "TrueLiteral",
+                  "value": true,
+                  "loc": "0:371;24;77;10862;10915"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "Required"
+                  },
+                  {
+                    "kind": "ValidationRule",
+                    "id": "StringEnum",
+                    "values": [
+                      {
+                        "kind": "StringLiteral",
+                        "value": "one",
+                        "loc": "0:371;53;58;10891;10896"
+                      },
+                      {
+                        "kind": "StringLiteral",
+                        "value": "two",
+                        "loc": "0:371;60;65;10898;10903"
+                      },
+                      {
+                        "kind": "StringLiteral",
+                        "value": "three",
+                        "loc": "0:371;67;74;10905;10912"
+                      }
+                    ],
+                    "loc": "0:371;44;75;10882;10913"
+                  }
+                ]
+              },
+              "loc": "0:365;11;373;12;10687;10941"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "path-number-array",
+                "loc": "0:375;21;40;10975;10994"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "number",
+                  "loc": "0:378;61;69;11112;11120"
+                },
+                "isArray": {
+                  "kind": "TrueLiteral",
+                  "value": true,
+                  "loc": "0:378;51;71;11102;11122"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "Required"
+                  }
+                ]
+              },
+              "loc": "0:374;11;379;12;10953;11136"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "path-integer-array",
+                "loc": "0:381;21;41;11170;11190"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "integer",
+                  "loc": "0:384;61;70;11308;11317"
+                },
+                "isArray": {
+                  "kind": "TrueLiteral",
+                  "value": true,
+                  "loc": "0:384;51;72;11298;11319"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "Required"
+                  }
+                ]
+              },
+              "loc": "0:380;11;385;12;11148;11333"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "path-boolean-array",
+                "loc": "0:387;21;41;11367;11387"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "boolean",
+                  "loc": "0:392;61;70;11566;11575"
+                },
+                "isArray": {
+                  "kind": "TrueLiteral",
+                  "value": true,
+                  "loc": "0:392;51;72;11556;11577"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "Required"
+                  }
+                ]
+              },
+              "loc": "0:386;11;393;12;11345;11591"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "header-string",
+                "loc": "0:395;21;36;11625;11640"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "string",
+                  "loc": "0:397;33;41;11702;11710"
+                },
+                "rules": []
+              },
+              "loc": "0:394;11;398;12;11603;11724"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "header-enum",
+                "loc": "0:400;21;34;11758;11771"
+              },
+              "value": {
+                "kind": "ComplexValue",
+                "typeName": {
+                  "kind": "StringLiteral",
+                  "value": "exhaustiveParamsHeaderEnum"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "StringEnum",
+                    "values": [
+                      {
+                        "kind": "StringLiteral",
+                        "value": "one",
+                        "loc": "0:402;52;57;11852;11857"
+                      },
+                      {
+                        "kind": "StringLiteral",
+                        "value": "two",
+                        "loc": "0:402;59;64;11859;11864"
+                      },
+                      {
+                        "kind": "StringLiteral",
+                        "value": "three",
+                        "loc": "0:402;66;73;11866;11873"
+                      }
+                    ],
+                    "loc": "0:402;43;74;11843;11874"
+                  }
+                ]
+              },
+              "loc": "0:399;11;403;12;11736;11888"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "header-number",
+                "loc": "0:405;21;36;11922;11937"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "number",
+                  "loc": "0:407;33;41;11999;12007"
+                },
+                "rules": []
+              },
+              "loc": "0:404;11;408;12;11900;12021"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "header-integer",
+                "loc": "0:410;21;37;12055;12071"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "integer",
+                  "loc": "0:412;33;42;12133;12142"
+                },
+                "rules": []
+              },
+              "loc": "0:409;11;413;12;12033;12156"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "header-boolean",
+                "loc": "0:415;21;37;12190;12206"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "boolean",
+                  "loc": "0:417;33;42;12268;12277"
+                },
+                "rules": []
+              },
+              "loc": "0:414;11;418;12;12168;12291"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "header-string-array",
+                "loc": "0:420;21;42;12325;12346"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "string",
+                  "loc": "0:424;61;69;12497;12505"
+                },
+                "isArray": {
+                  "kind": "TrueLiteral",
+                  "value": true,
+                  "loc": "0:424;51;71;12487;12507"
+                },
+                "rules": []
+              },
+              "loc": "0:419;11;425;12;12303;12521"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "header-enum-array",
+                "loc": "0:427;21;40;12555;12574"
+              },
+              "value": {
+                "kind": "ComplexValue",
+                "typeName": {
+                  "kind": "StringLiteral",
+                  "value": "exhaustiveParamsHeaderEnumArray"
+                },
+                "isArray": {
+                  "kind": "TrueLiteral",
+                  "value": true,
+                  "loc": "0:433;24;77;12743;12796"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "StringEnum",
+                    "values": [
+                      {
+                        "kind": "StringLiteral",
+                        "value": "one",
+                        "loc": "0:433;53;58;12772;12777"
+                      },
+                      {
+                        "kind": "StringLiteral",
+                        "value": "two",
+                        "loc": "0:433;60;65;12779;12784"
+                      },
+                      {
+                        "kind": "StringLiteral",
+                        "value": "three",
+                        "loc": "0:433;67;74;12786;12793"
+                      }
+                    ],
+                    "loc": "0:433;44;75;12763;12794"
+                  }
+                ]
+              },
+              "loc": "0:426;11;435;12;12533;12822"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "header-number-array",
+                "loc": "0:437;21;42;12856;12877"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "number",
+                  "loc": "0:439;61;69;12967;12975"
+                },
+                "isArray": {
+                  "kind": "TrueLiteral",
+                  "value": true,
+                  "loc": "0:439;51;71;12957;12977"
+                },
+                "rules": []
+              },
+              "loc": "0:436;11;440;12;12834;12991"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "header-integer-array",
+                "loc": "0:442;21;43;13025;13047"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "integer",
+                  "loc": "0:444;61;70;13137;13146"
+                },
+                "isArray": {
+                  "kind": "TrueLiteral",
+                  "value": true,
+                  "loc": "0:444;51;72;13127;13148"
+                },
+                "rules": []
+              },
+              "loc": "0:441;11;445;12;13003;13162"
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "header-boolean-array",
+                "loc": "0:447;21;43;13196;13218"
+              },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": {
+                  "kind": "PrimitiveLiteral",
+                  "value": "boolean",
+                  "loc": "0:449;61;70;13308;13317"
+                },
+                "isArray": {
+                  "kind": "TrueLiteral",
+                  "value": true,
+                  "loc": "0:449;51;72;13298;13319"
+                },
+                "rules": []
+              },
+              "loc": "0:446;11;450;12;13174;13333"
+            }
+          ],
+          "loc": "0:261;7;473;8;7620;13920",
+          "meta": [
+            {
+              "kind": "MetaValue",
+              "key": {
+                "kind": "StringLiteral",
+                "value": "codegen-request-body-name",
+                "loc": "0:472;9;38;13875;13904"
+              },
+              "value": {
+                "kind": "UntypedLiteral",
+                "value": "body",
+                "loc": "0:472;40;46;13906;13912"
+              }
+            }
+          ]
+        }
+      ],
+      "protocols": {
+        "kind": "InterfaceProtocols",
+        "http": [
+          {
+            "kind": "HttpRoute",
+            "pattern": {
+              "kind": "StringLiteral",
+              "value": "/exhaustive",
+              "loc": "0:202;5;18;5793;5806"
+            },
+            "methods": [
+              {
+                "kind": "HttpMethod",
+                "name": {
+                  "kind": "StringLiteral",
+                  "value": "exhaustiveFormats",
+                  "loc": "0:204;24;43;5848;5867"
+                },
+                "verb": {
+                  "kind": "HttpVerbLiteral",
+                  "value": "get",
+                  "loc": "0:203;7;12;5816;5821"
+                },
+                "parameters": [
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "string-no-format",
+                      "loc": "0:207;21;39;5925;5943"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:208;19;26;5963;5970"
+                    },
+                    "loc": "0:206;11;210;12;5903;6026"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "string-date",
+                      "loc": "0:212;21;34;6060;6073"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:213;19;26;6093;6100"
+                    },
+                    "loc": "0:211;11;215;12;6038;6174"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "string-date-time",
+                      "loc": "0:217;21;39;6208;6226"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:218;19;26;6246;6253"
+                    },
+                    "loc": "0:216;11;220;12;6186;6332"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "integer-no-format",
+                      "loc": "0:222;21;40;6366;6385"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:223;19;26;6405;6412"
+                    },
+                    "loc": "0:221;11;225;12;6344;6469"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "integer-int32",
+                      "loc": "0:227;21;36;6503;6518"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:228;19;26;6538;6545"
+                    },
+                    "loc": "0:226;11;230;12;6481;6621"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "integer-int64",
+                      "loc": "0:232;21;36;6655;6670"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:233;19;26;6690;6697"
+                    },
+                    "loc": "0:231;11;235;12;6633;6773"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "number-no-format",
+                      "loc": "0:237;21;39;6807;6825"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:238;19;26;6845;6852"
+                    },
+                    "loc": "0:236;11;240;12;6785;6908"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "number-float",
+                      "loc": "0:242;21;35;6942;6956"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:243;19;26;6976;6983"
+                    },
+                    "loc": "0:241;11;245;12;6920;7058"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "number-double",
+                      "loc": "0:247;21;36;7092;7107"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:248;19;26;7127;7134"
+                    },
+                    "loc": "0:246;11;250;12;7070;7210"
+                  }
+                ],
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 204,
+                  "loc": "0:253;11;20;7255;7264"
+                },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [],
+                "loc": "0:203;7;258;8;5816;7415"
+              }
+            ],
+            "loc": "0:202;5;259;6;5793;7421"
+          },
+          {
+            "kind": "HttpRoute",
+            "pattern": {
+              "kind": "StringLiteral",
+              "value": "/exhaustive/{path-string}/{path-enum}/{path-number}/{path-integer}/{path-boolean}/{path-string-array}/{path-enum-array}/{path-number-array}/{path-integer-array}/{path-boolean-array}",
+              "loc": "0:260;5;188;7427;7610"
+            },
+            "methods": [
+              {
+                "kind": "HttpMethod",
+                "name": {
+                  "kind": "StringLiteral",
+                  "value": "exhaustiveParams",
+                  "loc": "0:262;24;42;7652;7670"
+                },
+                "verb": {
+                  "kind": "HttpVerbLiteral",
+                  "value": "get",
+                  "loc": "0:261;7;12;7620;7625"
+                },
+                "parameters": [
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "string",
+                      "loc": "0:472;40;46;13906;13912"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "body"
+                    },
+                    "loc": "0:452;24;465;10;13368;13697"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "query-string",
+                      "loc": "0:265;21;35;7728;7742"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:266;19;26;7762;7769"
+                    },
+                    "loc": "0:264;11;268;12;7706;7825"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "query-enum",
+                      "loc": "0:270;21;33;7859;7871"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:271;19;26;7891;7898"
+                    },
+                    "loc": "0:269;11;273;12;7837;7987"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "query-number",
+                      "loc": "0:275;21;35;8021;8035"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:276;19;26;8055;8062"
+                    },
+                    "loc": "0:274;11;278;12;7999;8118"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "query-integer",
+                      "loc": "0:280;21;36;8152;8167"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:281;19;26;8187;8194"
+                    },
+                    "loc": "0:279;11;283;12;8130;8251"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "query-boolean",
+                      "loc": "0:285;21;36;8285;8300"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:286;19;26;8320;8327"
+                    },
+                    "loc": "0:284;11;288;12;8263;8384"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "query-string-array",
+                      "loc": "0:290;21;41;8418;8438"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:291;19;26;8458;8465"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv",
+                      "loc": "0:292;22;28;8488;8494"
+                    },
+                    "loc": "0:289;11;295;12;8396;8610"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "query-enum-array",
+                      "loc": "0:297;21;39;8644;8662"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:298;19;26;8682;8689"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv",
+                      "loc": "0:299;22;28;8712;8718"
+                    },
+                    "loc": "0:296;11;305;12;8622;8907"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "query-number-array",
+                      "loc": "0:307;21;41;8941;8961"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:308;19;26;8981;8988"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv",
+                      "loc": "0:309;22;28;9011;9017"
+                    },
+                    "loc": "0:306;11;312;12;8919;9133"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "query-integer-array",
+                      "loc": "0:314;21;42;9167;9188"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:315;19;26;9208;9215"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv",
+                      "loc": "0:316;22;28;9238;9244"
+                    },
+                    "loc": "0:313;11;319;12;9145;9361"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "query-boolean-array",
+                      "loc": "0:321;21;42;9395;9416"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query",
+                      "loc": "0:322;19;26;9436;9443"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv",
+                      "loc": "0:323;22;28;9466;9472"
+                    },
+                    "loc": "0:320;11;326;12;9373;9589"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "path-string",
+                      "loc": "0:328;21;34;9623;9636"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path",
+                      "loc": "0:329;19;25;9656;9662"
+                    },
+                    "loc": "0:327;11;332;12;9601;9748"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "path-enum",
+                      "loc": "0:334;21;32;9782;9793"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path",
+                      "loc": "0:335;19;25;9813;9819"
+                    },
+                    "loc": "0:333;11;338;12;9760;9938"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "path-number",
+                      "loc": "0:340;21;34;9972;9985"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path",
+                      "loc": "0:341;19;25;10005;10011"
+                    },
+                    "loc": "0:339;11;344;12;9950;10097"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "path-integer",
+                      "loc": "0:346;21;35;10131;10145"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path",
+                      "loc": "0:347;19;25;10165;10171"
+                    },
+                    "loc": "0:345;11;350;12;10109;10258"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "path-boolean",
+                      "loc": "0:352;21;35;10292;10306"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path",
+                      "loc": "0:353;19;25;10326;10332"
+                    },
+                    "loc": "0:351;11;356;12;10270;10419"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "path-string-array",
+                      "loc": "0:358;21;40;10453;10472"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path",
+                      "loc": "0:359;19;25;10492;10498"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv",
+                      "loc": "0:361;22;30;10551;10559"
+                    },
+                    "loc": "0:357;11;364;12;10431;10675"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "path-enum-array",
+                      "loc": "0:366;21;38;10709;10726"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path",
+                      "loc": "0:367;19;25;10746;10752"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv"
+                    },
+                    "loc": "0:365;11;373;12;10687;10941"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "path-number-array",
+                      "loc": "0:375;21;40;10975;10994"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path",
+                      "loc": "0:376;19;25;11014;11020"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv"
+                    },
+                    "loc": "0:374;11;379;12;10953;11136"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "path-integer-array",
+                      "loc": "0:381;21;41;11170;11190"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path",
+                      "loc": "0:382;19;25;11210;11216"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv"
+                    },
+                    "loc": "0:380;11;385;12;11148;11333"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "path-boolean-array",
+                      "loc": "0:387;21;41;11367;11387"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path",
+                      "loc": "0:388;19;25;11407;11413"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv",
+                      "loc": "0:390;22;30;11466;11474"
+                    },
+                    "loc": "0:386;11;393;12;11345;11591"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "header-string",
+                      "loc": "0:395;21;36;11625;11640"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "header",
+                      "loc": "0:396;19;27;11660;11668"
+                    },
+                    "loc": "0:394;11;398;12;11603;11724"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "header-enum",
+                      "loc": "0:400;21;34;11758;11771"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "header",
+                      "loc": "0:401;19;27;11791;11799"
+                    },
+                    "loc": "0:399;11;403;12;11736;11888"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "header-number",
+                      "loc": "0:405;21;36;11922;11937"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "header",
+                      "loc": "0:406;19;27;11957;11965"
+                    },
+                    "loc": "0:404;11;408;12;11900;12021"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "header-integer",
+                      "loc": "0:410;21;37;12055;12071"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "header",
+                      "loc": "0:411;19;27;12091;12099"
+                    },
+                    "loc": "0:409;11;413;12;12033;12156"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "header-boolean",
+                      "loc": "0:415;21;37;12190;12206"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "header",
+                      "loc": "0:416;19;27;12226;12234"
+                    },
+                    "loc": "0:414;11;418;12;12168;12291"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "header-string-array",
+                      "loc": "0:420;21;42;12325;12346"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "header",
+                      "loc": "0:421;19;27;12366;12374"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv",
+                      "loc": "0:422;22;30;12397;12405"
+                    },
+                    "loc": "0:419;11;425;12;12303;12521"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "header-enum-array",
+                      "loc": "0:427;21;40;12555;12574"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "header",
+                      "loc": "0:428;19;27;12594;12602"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv",
+                      "loc": "0:429;22;30;12625;12633"
+                    },
+                    "loc": "0:426;11;435;12;12533;12822"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "header-number-array",
+                      "loc": "0:437;21;42;12856;12877"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "header",
+                      "loc": "0:438;19;27;12897;12905"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv"
+                    },
+                    "loc": "0:436;11;440;12;12834;12991"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "header-integer-array",
+                      "loc": "0:442;21;43;13025;13047"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "header",
+                      "loc": "0:443;19;27;13067;13075"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv"
+                    },
+                    "loc": "0:441;11;445;12;13003;13162"
+                  },
+                  {
+                    "kind": "HttpParameter",
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "header-boolean-array",
+                      "loc": "0:447;21;43;13196;13218"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "header",
+                      "loc": "0:448;19;27;13238;13246"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv"
+                    },
+                    "loc": "0:446;11;450;12;13174;13333"
+                  }
+                ],
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 204,
+                  "loc": "0:467;11;20;13732;13741"
+                },
+                "requestMediaTypes": [
+                  {
+                    "kind": "StringLiteral",
+                    "value": "*/*",
+                    "loc": "0:454;13;18;13405;13410"
+                  }
+                ],
+                "responseMediaTypes": [],
+                "loc": "0:261;7;473;8;7620;13920"
+              }
+            ],
+            "loc": "0:260;5;474;6;7427;13926"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "Interface",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "authPermutation"
+      },
+      "methods": [
+        {
+          "kind": "Method",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "all-auth-schemes",
+            "loc": "0:477;24;42;13993;14011"
+          },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "BasicScheme",
+                  "type": {
+                    "value": "basic",
+                    "loc": "0:683;30;36;19773;19779"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "basicAuth",
+                    "loc": "0:683;7;18;19750;19761"
+                  },
+                  "loc": "0:683;7;57;19750;19800"
+                }
+              ],
+              "loc": "0:480;11;30;14122;14141"
+            },
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "BasicScheme",
+                  "type": {
+                    "value": "basic",
+                    "loc": "0:684;41;47;19842;19848"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "alternate-basic-auth",
+                    "loc": "0:684;7;29;19808;19830"
+                  },
+                  "loc": "0:684;7;68;19808;19869"
+                }
+              ],
+              "loc": "0:481;11;41;14153;14183"
+            },
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "ApiKeyScheme",
+                  "type": {
+                    "value": "apiKey",
+                    "loc": "0:685;31;39;19901;19909"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "apiKeyAuth",
+                    "loc": "0:685;7;19;19877;19889"
+                  },
+                  "parameter": {
+                    "kind": "StringLiteral",
+                    "value": "x-apikey",
+                    "loc": "0:685;49;59;19919;19929"
+                  },
+                  "in": {
+                    "value": "header",
+                    "loc": "0:685;67;75;19937;19945"
+                  },
+                  "loc": "0:685;7;77;19877;19947"
+                }
+              ],
+              "loc": "0:482;11;31;14195;14215"
+            },
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "OAuth2Scheme",
+                  "type": {
+                    "value": "oauth2",
+                    "loc": "0:692;17;25;20101;20109"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "oauth2Auth",
+                    "loc": "0:691;7;19;20069;20081"
+                  },
+                  "flows": [
+                    {
+                      "kind": "OAuth2ImplicitFlow",
+                      "type": {
+                        "value": "implicit",
+                        "loc": "0:694;11;21;20140;20150"
+                      },
+                      "authorizationUrl": {
+                        "kind": "StringLiteral",
+                        "value": "https://example.com/auth",
+                        "loc": "0:695;33;59;20186;20212"
+                      },
+                      "scopes": [
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "read:gizmos",
+                            "loc": "0:697;15;28;20252;20265"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "Access gizmo data",
+                              "loc": "0:697;30;49;20267;20286"
+                            }
+                          ],
+                          "loc": "0:697;15;49;20252;20286"
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "write:gizmos",
+                            "loc": "0:698;15;29;20302;20316"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "Write gizmo data",
+                              "loc": "0:698;31;49;20318;20336"
+                            }
+                          ],
+                          "loc": "0:698;15;49;20302;20336"
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "admin:gizmos",
+                            "loc": "0:699;15;29;20352;20366"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "Manage gizmos",
+                              "loc": "0:699;31;46;20368;20383"
+                            }
+                          ],
+                          "loc": "0:699;15;46;20352;20383"
+                        }
+                      ],
+                      "loc": "0:691;7;703;8;20069;20427"
+                    }
+                  ],
+                  "loc": "0:691;7;703;8;20069;20427"
+                }
+              ],
+              "loc": "0:483;11;45;14227;14261"
+            }
+          ],
+          "parameters": [],
+          "loc": "0:476;7;485;8;13961;14279"
+        },
+        {
+          "kind": "Method",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "combo-auth-schemes",
+            "loc": "0:487;24;44;14319;14339"
+          },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "BasicScheme",
+                  "type": {
+                    "value": "basic",
+                    "loc": "0:683;30;36;19773;19779"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "basicAuth",
+                    "loc": "0:683;7;18;19750;19761"
+                  },
+                  "loc": "0:683;7;57;19750;19800"
+                },
+                {
+                  "kind": "ApiKeyScheme",
+                  "type": {
+                    "value": "apiKey",
+                    "loc": "0:685;31;39;19901;19909"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "apiKeyAuth",
+                    "loc": "0:685;7;19;19877;19889"
+                  },
+                  "parameter": {
+                    "kind": "StringLiteral",
+                    "value": "x-apikey",
+                    "loc": "0:685;49;59;19919;19929"
+                  },
+                  "in": {
+                    "value": "header",
+                    "loc": "0:685;67;75;19937;19945"
+                  },
+                  "loc": "0:685;7;77;19877;19947"
+                }
+              ],
+              "loc": "0:490;11;48;14450;14487"
+            },
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "BasicScheme",
+                  "type": {
+                    "value": "basic",
+                    "loc": "0:683;30;36;19773;19779"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "basicAuth",
+                    "loc": "0:683;7;18;19750;19761"
+                  },
+                  "loc": "0:683;7;57;19750;19800"
+                },
+                {
+                  "kind": "ApiKeyScheme",
+                  "type": {
+                    "value": "apiKey",
+                    "loc": "0:687;17;25;19996;20004"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "alternateApiKeyAuth",
+                    "loc": "0:686;7;28;19955;19976"
+                  },
+                  "parameter": {
+                    "kind": "StringLiteral",
+                    "value": "apikey",
+                    "loc": "0:688;17;25;20022;20030"
+                  },
+                  "in": {
+                    "value": "query",
+                    "loc": "0:689;15;22;20046;20053"
+                  },
+                  "loc": "0:686;7;690;8;19955;20061"
+                }
+              ],
+              "loc": "0:491;11;57;14499;14545"
+            },
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "BasicScheme",
+                  "type": {
+                    "value": "basic",
+                    "loc": "0:684;41;47;19842;19848"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "alternate-basic-auth",
+                    "loc": "0:684;7;29;19808;19830"
+                  },
+                  "loc": "0:684;7;68;19808;19869"
+                },
+                {
+                  "kind": "OAuth2Scheme",
+                  "type": {
+                    "value": "oauth2",
+                    "loc": "0:692;17;25;20101;20109"
+                  },
+                  "name": {
+                    "kind": "StringLiteral",
+                    "value": "oauth2Auth",
+                    "loc": "0:691;7;19;20069;20081"
+                  },
+                  "flows": [
+                    {
+                      "kind": "OAuth2ImplicitFlow",
+                      "type": {
+                        "value": "implicit",
+                        "loc": "0:694;11;21;20140;20150"
+                      },
+                      "authorizationUrl": {
+                        "kind": "StringLiteral",
+                        "value": "https://example.com/auth",
+                        "loc": "0:695;33;59;20186;20212"
+                      },
+                      "scopes": [
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "read:gizmos",
+                            "loc": "0:697;15;28;20252;20265"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "Access gizmo data",
+                              "loc": "0:697;30;49;20267;20286"
+                            }
+                          ],
+                          "loc": "0:697;15;49;20252;20286"
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "write:gizmos",
+                            "loc": "0:698;15;29;20302;20316"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "Write gizmo data",
+                              "loc": "0:698;31;49;20318;20336"
+                            }
+                          ],
+                          "loc": "0:698;15;49;20302;20336"
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "admin:gizmos",
+                            "loc": "0:699;15;29;20352;20366"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "Manage gizmos",
+                              "loc": "0:699;31;46;20368;20383"
+                            }
+                          ],
+                          "loc": "0:699;15;46;20352;20383"
+                        }
+                      ],
+                      "loc": "0:691;7;703;8;20069;20427"
+                    }
+                  ],
+                  "loc": "0:691;7;703;8;20069;20427"
+                }
+              ],
+              "loc": "0:492;11;73;14557;14619"
+            }
+          ],
+          "parameters": [],
+          "loc": "0:486;7;494;8;14287;14637"
+        }
+      ],
+      "protocols": {
+        "kind": "InterfaceProtocols",
+        "http": [
+          {
+            "kind": "HttpRoute",
+            "pattern": {
+              "kind": "StringLiteral",
+              "value": "/authPermutations",
+              "loc": "0:475;5;24;13932;13951"
+            },
+            "methods": [
+              {
+                "kind": "HttpMethod",
+                "name": {
+                  "kind": "StringLiteral",
+                  "value": "all-auth-schemes",
+                  "loc": "0:477;24;42;13993;14011"
+                },
+                "verb": {
+                  "kind": "HttpVerbLiteral",
+                  "value": "get",
+                  "loc": "0:476;7;12;13961;13966"
+                },
+                "parameters": [],
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200,
+                  "loc": "0:478;24;29;14036;14041"
+                },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [],
+                "loc": "0:476;7;485;8;13961;14279"
+              },
+              {
+                "kind": "HttpMethod",
+                "name": {
+                  "kind": "StringLiteral",
+                  "value": "combo-auth-schemes",
+                  "loc": "0:487;24;44;14319;14339"
+                },
+                "verb": {
+                  "kind": "HttpVerbLiteral",
+                  "value": "put",
+                  "loc": "0:486;7;12;14287;14292"
+                },
+                "parameters": [],
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200,
+                  "loc": "0:488;24;29;14364;14369"
+                },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [],
+                "loc": "0:486;7;494;8;14287;14637"
+              }
+            ],
+            "loc": "0:475;5;495;6;13932;14643"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "kind": "Type",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "gizmo",
+        "loc": "0:499;7;14;14690;14697"
+      },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "id",
+            "loc": "0:502;11;15;14761;14765"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:540;40;48;16019;16027"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "StringMaxLength",
+                "length": {
+                  "kind": "NonNegativeIntegerLiteral",
+                  "value": 30,
+                  "loc": "0:540;28;30;16007;16009"
+                },
+                "loc": "0:540;15;30;15994;16009"
+              }
+            ],
+            "loc": "0:540;13;50;15992;16029"
+          },
+          "loc": "0:540;13;50;15992;16029"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "name",
+            "loc": "0:503;11;17;14816;14822"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:503;29;37;14834;14842"
+            },
+            "rules": [],
+            "loc": "0:503;19;39;14824;14844"
+          },
+          "loc": "0:503;19;39;14824;14844"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "size",
+            "loc": "0:504;11;17;14856;14862"
+          },
+          "value": {
+            "kind": "ComplexValue",
+            "typeName": {
+              "kind": "StringLiteral",
+              "value": "productSize",
+              "loc": "0:507;7;20;14936;14949"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "StringEnum",
+                "values": [
+                  {
+                    "kind": "StringLiteral",
+                    "value": "small",
+                    "loc": "0:507;51;58;14980;14987"
+                  },
+                  {
+                    "kind": "StringLiteral",
+                    "value": "medium",
+                    "loc": "0:507;60;68;14989;14997"
+                  },
+                  {
+                    "kind": "StringLiteral",
+                    "value": "large",
+                    "loc": "0:507;70;77;14999;15006"
+                  }
+                ],
+                "loc": "0:507;42;78;14971;15007"
+              }
+            ],
+            "loc": "0:507;22;80;14951;15009"
+          },
+          "loc": "0:507;22;80;14951;15009"
+        }
+      ],
+      "rules": [],
+      "loc": "0:499;7;506;8;14690;14928"
+    },
+    {
+      "kind": "Type",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "widget",
+        "loc": "0:508;7;15;15017;15025"
+      },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "id",
+            "loc": "0:512;29;33;15118;15122"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:540;40;48;16019;16027"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "StringMaxLength",
+                "length": {
+                  "kind": "NonNegativeIntegerLiteral",
+                  "value": 30,
+                  "loc": "0:540;28;30;16007;16009"
+                },
+                "loc": "0:540;15;30;15994;16009"
+              }
+            ],
+            "loc": "0:540;13;50;15992;16029"
+          },
+          "loc": "0:540;13;50;15992;16029"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "name",
+            "loc": "0:521;11;17;15361;15367"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:524;21;29;15459;15467"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "StringMaxLength",
+                "length": {
+                  "kind": "NonNegativeIntegerLiteral",
+                  "value": 30,
+                  "loc": "0:522;26;28;15396;15398"
+                },
+                "loc": "0:522;13;28;15383;15398"
+              },
+              {
+                "kind": "ValidationRule",
+                "id": "StringPattern",
+                "pattern": {
+                  "kind": "NonEmptyStringLiteral",
+                  "value": "[0-9a-fA-F]+",
+                  "loc": "0:523;24;38;15423;15437"
+                },
+                "loc": "0:523;13;38;15412;15437"
+              }
+            ],
+            "loc": "0:521;19;525;12;15369;15479"
+          },
+          "loc": "0:521;19;525;12;15369;15479"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "fiz",
+            "loc": "0:526;11;16;15491;15496"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "number",
+              "loc": "0:526;45;53;15525;15533"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "NumberMultipleOf",
+                "value": {
+                  "kind": "NonNegativeNumberLiteral",
+                  "value": 3,
+                  "loc": "0:526;34;35;15514;15515"
+                },
+                "loc": "0:526;20;35;15500;15515"
+              }
+            ],
+            "loc": "0:526;18;55;15498;15535"
+          },
+          "loc": "0:526;18;55;15498;15535"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "buzz",
+            "loc": "0:527;11;17;15547;15553"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "number",
+              "loc": "0:527;46;54;15582;15590"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "NumberMultipleOf",
+                "value": {
+                  "kind": "NonNegativeNumberLiteral",
+                  "value": 5,
+                  "loc": "0:527;35;36;15571;15572"
+                },
+                "loc": "0:527;21;36;15557;15572"
+              }
+            ],
+            "loc": "0:527;19;56;15555;15592"
+          },
+          "loc": "0:527;19;56;15555;15592"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "fizbuzz",
+            "loc": "0:528;11;20;15604;15613"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "number",
+              "loc": "0:528;50;58;15643;15651"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "NumberMultipleOf",
+                "value": {
+                  "kind": "NonNegativeNumberLiteral",
+                  "value": 15,
+                  "loc": "0:528;38;40;15631;15633"
+                },
+                "loc": "0:528;24;40;15617;15633"
+              }
+            ],
+            "loc": "0:528;22;60;15615;15653"
+          },
+          "loc": "0:528;22;60;15615;15653"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "foo",
+            "loc": "0:529;11;16;15665;15670"
+          },
+          "value": {
+            "kind": "ComplexValue",
+            "typeName": {
+              "kind": "StringLiteral",
+              "value": "widgetFoo"
+            },
+            "rules": [],
+            "loc": "0:529;18;536;12;15672;15894"
+          },
+          "loc": "0:529;18;536;12;15672;15894"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "size",
+            "loc": "0:537;11;17;15906;15912"
+          },
+          "value": {
+            "kind": "ComplexValue",
+            "typeName": {
+              "kind": "StringLiteral",
+              "value": "productSize",
+              "loc": "0:507;7;20;14936;14949"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "StringEnum",
+                "values": [
+                  {
+                    "kind": "StringLiteral",
+                    "value": "small",
+                    "loc": "0:507;51;58;14980;14987"
+                  },
+                  {
+                    "kind": "StringLiteral",
+                    "value": "medium",
+                    "loc": "0:507;60;68;14989;14997"
+                  },
+                  {
+                    "kind": "StringLiteral",
+                    "value": "large",
+                    "loc": "0:507;70;77;14999;15006"
+                  }
+                ],
+                "loc": "0:507;42;78;14971;15007"
+              }
+            ],
+            "loc": "0:507;22;80;14951;15009"
+          },
+          "loc": "0:507;22;80;14951;15009"
+        }
+      ],
+      "rules": [],
+      "loc": "0:508;7;516;8;15017;15249"
+    },
+    {
+      "kind": "Type",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "newWidget",
+        "loc": "0:517;7;18;15257;15268"
+      },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "name",
+            "loc": "0:521;11;17;15361;15367"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:524;21;29;15459;15467"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "StringMaxLength",
+                "length": {
+                  "kind": "NonNegativeIntegerLiteral",
+                  "value": 30,
+                  "loc": "0:522;26;28;15396;15398"
+                },
+                "loc": "0:522;13;28;15383;15398"
+              },
+              {
+                "kind": "ValidationRule",
+                "id": "StringPattern",
+                "pattern": {
+                  "kind": "NonEmptyStringLiteral",
+                  "value": "[0-9a-fA-F]+",
+                  "loc": "0:523;24;38;15423;15437"
+                },
+                "loc": "0:523;13;38;15412;15437"
+              }
+            ],
+            "loc": "0:521;19;525;12;15369;15479"
+          },
+          "loc": "0:521;19;525;12;15369;15479"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "fiz",
+            "loc": "0:526;11;16;15491;15496"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "number",
+              "loc": "0:526;45;53;15525;15533"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "NumberMultipleOf",
+                "value": {
+                  "kind": "NonNegativeNumberLiteral",
+                  "value": 3,
+                  "loc": "0:526;34;35;15514;15515"
+                },
+                "loc": "0:526;20;35;15500;15515"
+              }
+            ],
+            "loc": "0:526;18;55;15498;15535"
+          },
+          "loc": "0:526;18;55;15498;15535"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "buzz",
+            "loc": "0:527;11;17;15547;15553"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "number",
+              "loc": "0:527;46;54;15582;15590"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "NumberMultipleOf",
+                "value": {
+                  "kind": "NonNegativeNumberLiteral",
+                  "value": 5,
+                  "loc": "0:527;35;36;15571;15572"
+                },
+                "loc": "0:527;21;36;15557;15572"
+              }
+            ],
+            "loc": "0:527;19;56;15555;15592"
+          },
+          "loc": "0:527;19;56;15555;15592"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "fizbuzz",
+            "loc": "0:528;11;20;15604;15613"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "number",
+              "loc": "0:528;50;58;15643;15651"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "NumberMultipleOf",
+                "value": {
+                  "kind": "NonNegativeNumberLiteral",
+                  "value": 15,
+                  "loc": "0:528;38;40;15631;15633"
+                },
+                "loc": "0:528;24;40;15617;15633"
+              }
+            ],
+            "loc": "0:528;22;60;15615;15653"
+          },
+          "loc": "0:528;22;60;15615;15653"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "foo",
+            "loc": "0:529;11;16;15665;15670"
+          },
+          "value": {
+            "kind": "ComplexValue",
+            "typeName": {
+              "kind": "StringLiteral",
+              "value": "newWidgetFoo"
+            },
+            "rules": [],
+            "loc": "0:529;18;536;12;15672;15894"
+          },
+          "loc": "0:529;18;536;12;15672;15894"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "size",
+            "loc": "0:537;11;17;15906;15912"
+          },
+          "value": {
+            "kind": "ComplexValue",
+            "typeName": {
+              "kind": "StringLiteral",
+              "value": "productSize",
+              "loc": "0:507;7;20;14936;14949"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "StringEnum",
+                "values": [
+                  {
+                    "kind": "StringLiteral",
+                    "value": "small",
+                    "loc": "0:507;51;58;14980;14987"
+                  },
+                  {
+                    "kind": "StringLiteral",
+                    "value": "medium",
+                    "loc": "0:507;60;68;14989;14997"
+                  },
+                  {
+                    "kind": "StringLiteral",
+                    "value": "large",
+                    "loc": "0:507;70;77;14999;15006"
+                  }
+                ],
+                "loc": "0:507;42;78;14971;15007"
+              }
+            ],
+            "loc": "0:507;22;80;14951;15009"
+          },
+          "loc": "0:507;22;80;14951;15009"
+        }
+      ],
+      "rules": [],
+      "loc": "0:517;7;539;8;15257;15978"
+    },
+    {
+      "kind": "Type",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "someType",
+        "loc": "0:547;7;17;16203;16213"
+      },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "a",
+            "loc": "0:550;11;14;16277;16280"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:550;26;34;16292;16300"
+            },
+            "rules": [],
+            "loc": "0:550;16;36;16282;16302"
+          },
+          "loc": "0:550;16;36;16282;16302"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "nestedUnion",
+            "loc": "0:551;11;24;16314;16327"
+          },
+          "value": {
+            "kind": "ComplexValue",
+            "typeName": {
+              "kind": "StringLiteral",
+              "value": "someTypeNestedUnion"
+            },
+            "rules": [],
+            "loc": "0:551;26;556;12;16329;16490"
+          },
+          "loc": "0:551;26;556;12;16329;16490"
+        }
+      ],
+      "rules": [],
+      "loc": "0:547;7;558;8;16203;16508"
+    },
+    {
+      "kind": "Type",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "partA",
+        "loc": "0:559;7;14;16516;16523"
+      },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "a",
+            "loc": "0:562;11;14;16587;16590"
+          },
+          "value": {
+            "kind": "ComplexValue",
+            "typeName": {
+              "kind": "StringLiteral",
+              "value": "singleValueEnum",
+              "loc": "0:600;7;24;17582;17599"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "StringEnum",
+                "values": [
+                  {
+                    "kind": "StringLiteral",
+                    "value": "the value",
+                    "loc": "0:602;18;29;17646;17657"
+                  }
+                ],
+                "loc": "0:602;9;30;17637;17658"
+              }
+            ],
+            "loc": "0:600;26;603;8;17601;17666"
+          },
+          "loc": "0:600;26;603;8;17601;17666"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "b",
+            "loc": "0:563;11;14;16654;16657"
+          },
+          "value": {
+            "kind": "ComplexValue",
+            "typeName": {
+              "kind": "StringLiteral",
+              "value": "multiValueEnum",
+              "loc": "0:604;7;23;17674;17690"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "StringEnum",
+                "values": [
+                  {
+                    "kind": "StringLiteral",
+                    "value": "the value",
+                    "loc": "0:606;18;29;17737;17748"
+                  },
+                  {
+                    "kind": "StringLiteral",
+                    "value": "another value",
+                    "loc": "0:606;31;46;17750;17765"
+                  }
+                ],
+                "loc": "0:606;9;47;17728;17766"
+              }
+            ],
+            "loc": "0:604;25;607;8;17692;17774"
+          },
+          "loc": "0:604;25;607;8;17692;17774"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "const",
+            "loc": "0:564;11;18;16720;16727"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:564;30;38;16739;16747"
+            },
+            "constant": {
+              "kind": "StringLiteral",
+              "value": "the only value",
+              "loc": "0:564;49;65;16758;16774"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "StringEnum",
+                "values": [
+                  {
+                    "kind": "StringLiteral",
+                    "value": "the only value",
+                    "loc": "0:564;49;65;16758;16774"
+                  }
+                ],
+                "loc": "0:564;40;66;16749;16775"
+              }
+            ],
+            "loc": "0:564;20;68;16729;16777"
+          },
+          "loc": "0:564;20;68;16729;16777"
+        }
+      ],
+      "rules": [],
+      "loc": "0:559;7;566;8;16516;16795"
+    },
+    {
+      "kind": "Type",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "partB",
+        "loc": "0:567;7;14;16803;16810"
+      },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "g",
+            "loc": "0:596;11;14;17494;17497"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:596;26;34;17509;17517"
+            },
+            "rules": [],
+            "loc": "0:596;16;36;17499;17519"
+          },
+          "loc": "0:596;16;36;17499;17519"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "h",
+            "loc": "0:597;11;14;17531;17534"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:597;26;34;17546;17554"
+            },
+            "rules": [],
+            "loc": "0:597;16;36;17536;17556"
+          },
+          "loc": "0:597;16;36;17536;17556"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "e",
+            "loc": "0:587;15;18;17305;17308"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:587;30;38;17320;17328"
+            },
+            "rules": [],
+            "loc": "0:587;20;40;17310;17330"
+          },
+          "loc": "0:587;20;40;17310;17330"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "f",
+            "loc": "0:588;15;18;17346;17349"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:588;30;38;17361;17369"
+            },
+            "rules": [],
+            "loc": "0:588;20;40;17351;17371"
+          },
+          "loc": "0:588;20;40;17351;17371"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "c",
+            "loc": "0:574;15;18;16995;16998"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:574;30;38;17010;17018"
+            },
+            "rules": [],
+            "loc": "0:574;20;40;17000;17020"
+          },
+          "loc": "0:574;20;40;17000;17020"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "d",
+            "loc": "0:575;15;18;17036;17039"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:575;30;38;17051;17059"
+            },
+            "rules": [],
+            "loc": "0:575;20;40;17041;17061"
+          },
+          "loc": "0:575;20;40;17041;17061"
+        }
+      ],
+      "rules": [],
+      "loc": "0:567;7;579;8;16803;17105"
+    },
+    {
+      "kind": "Type",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "partC",
+        "loc": "0:580;7;14;17113;17120"
+      },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "g",
+            "loc": "0:596;11;14;17494;17497"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:596;26;34;17509;17517"
+            },
+            "rules": [],
+            "loc": "0:596;16;36;17499;17519"
+          },
+          "loc": "0:596;16;36;17499;17519"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "h",
+            "loc": "0:597;11;14;17531;17534"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:597;26;34;17546;17554"
+            },
+            "rules": [],
+            "loc": "0:597;16;36;17536;17556"
+          },
+          "loc": "0:597;16;36;17536;17556"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "e",
+            "loc": "0:587;15;18;17305;17308"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:587;30;38;17320;17328"
+            },
+            "rules": [],
+            "loc": "0:587;20;40;17310;17330"
+          },
+          "loc": "0:587;20;40;17310;17330"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "f",
+            "loc": "0:588;15;18;17346;17349"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:588;30;38;17361;17369"
+            },
+            "rules": [],
+            "loc": "0:588;20;40;17351;17371"
+          },
+          "loc": "0:588;20;40;17351;17371"
+        }
+      ],
+      "rules": [],
+      "loc": "0:580;7;592;8;17113;17415"
+    },
+    {
+      "kind": "Type",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "partD",
+        "loc": "0:593;7;14;17423;17430"
+      },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "g",
+            "loc": "0:596;11;14;17494;17497"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:596;26;34;17509;17517"
+            },
+            "rules": [],
+            "loc": "0:596;16;36;17499;17519"
+          },
+          "loc": "0:596;16;36;17499;17519"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "h",
+            "loc": "0:597;11;14;17531;17534"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:597;26;34;17546;17554"
+            },
+            "rules": [],
+            "loc": "0:597;16;36;17536;17556"
+          },
+          "loc": "0:597;16;36;17536;17556"
+        }
+      ],
+      "rules": [],
+      "loc": "0:593;7;599;8;17423;17574"
+    },
+    {
+      "kind": "Type",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "cat",
+        "loc": "0:621;7;12;18137;18142"
+      },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "type",
+            "loc": "0:624;11;17;18206;18212"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:624;29;37;18224;18232"
+            },
+            "constant": {
+              "kind": "StringLiteral",
+              "value": "cat",
+              "loc": "0:624;48;53;18243;18248"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "StringEnum",
+                "values": [
+                  {
+                    "kind": "StringLiteral",
+                    "value": "cat",
+                    "loc": "0:624;48;53;18243;18248"
+                  }
+                ],
+                "loc": "0:624;39;54;18234;18249"
+              }
+            ],
+            "loc": "0:624;19;56;18214;18251"
+          },
+          "loc": "0:624;19;56;18214;18251"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "lives",
+            "loc": "0:625;11;18;18263;18270"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "integer",
+              "loc": "0:625;30;39;18282;18291"
+            },
+            "rules": [],
+            "loc": "0:625;20;41;18272;18293"
+          },
+          "loc": "0:625;20;41;18272;18293"
+        }
+      ],
+      "rules": [],
+      "loc": "0:621;7;627;8;18137;18311"
+    },
+    {
+      "kind": "Type",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "dog",
+        "loc": "0:628;7;12;18319;18324"
+      },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "type",
+            "loc": "0:631;11;17;18388;18394"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:631;29;37;18406;18414"
+            },
+            "constant": {
+              "kind": "StringLiteral",
+              "value": "dog",
+              "loc": "0:631;48;53;18425;18430"
+            },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "StringEnum",
+                "values": [
+                  {
+                    "kind": "StringLiteral",
+                    "value": "dog",
+                    "loc": "0:631;48;53;18425;18430"
+                  }
+                ],
+                "loc": "0:631;39;54;18416;18431"
+              }
+            ],
+            "loc": "0:631;19;56;18396;18433"
+          },
+          "loc": "0:631;19;56;18396;18433"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "goodBoi",
+            "loc": "0:632;11;20;18445;18454"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "boolean",
+              "loc": "0:632;32;41;18466;18475"
+            },
+            "rules": [],
+            "loc": "0:632;22;43;18456;18477"
+          },
+          "loc": "0:632;22;43;18456;18477"
+        }
+      ],
+      "rules": [],
+      "loc": "0:628;7;634;8;18319;18495"
+    },
+    {
+      "kind": "Type",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "getGizmosResponse"
+      },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "data",
+            "loc": "0:55;21;27;1710;1716"
+          },
+          "value": {
+            "kind": "ComplexValue",
+            "typeName": {
+              "kind": "StringLiteral",
+              "value": "gizmo",
+              "loc": "0:499;7;14;14690;14697"
+            },
+            "rules": [],
+            "loc": "0:499;16;506;8;14699;14928",
+            "isArray": {
+              "kind": "TrueLiteral",
+              "value": true,
+              "loc": "0:57;32;72;1790;1830"
+            }
+          },
+          "loc": "0:55;29;58;22;1718;1852"
+        }
+      ],
+      "rules": [],
+      "loc": "0:51;27;60;18;1578;1890"
+    },
+    {
+      "kind": "Type",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "createWidgetString"
+      },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "name",
+            "loc": "0:147;33;39;4377;4383"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:147;51;59;4395;4403"
+            },
+            "rules": [],
+            "loc": "0:147;41;61;4385;4405"
+          },
+          "loc": "0:147;41;61;4385;4405"
+        }
+      ],
+      "rules": [],
+      "loc": "0:144;25;148;16;4271;4423"
+    },
+    {
+      "kind": "Type",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "exhaustiveParamsString"
+      },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "foo",
+            "loc": "0:458;19;24;13524;13529"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:458;36;44;13541;13549"
+            },
+            "rules": [],
+            "loc": "0:458;26;46;13531;13551"
+          },
+          "loc": "0:458;26;46;13531;13551"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "bar",
+            "loc": "0:459;19;24;13571;13576"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "string",
+              "loc": "0:459;36;44;13588;13596"
+            },
+            "rules": [],
+            "loc": "0:459;26;46;13578;13598"
+          },
+          "loc": "0:459;26;46;13578;13598"
+        }
+      ],
+      "rules": [],
+      "loc": "0:455;25;461;16;13438;13632"
+    },
+    {
+      "kind": "Type",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "widgetFoo"
+      },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "fiz",
+            "loc": "0:533;15;20;15780;15785"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "number",
+              "loc": "0:533;32;40;15797;15805"
+            },
+            "constant": {
+              "kind": "NumberLiteral",
+              "value": 123456,
+              "loc": "0:533;51;57;15816;15822"
+            },
+            "rules": [],
+            "loc": "0:533;22;59;15787;15824"
+          },
+          "loc": "0:533;22;59;15787;15824"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "buzz",
+            "loc": "0:534;15;21;15840;15846"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "number",
+              "loc": "0:534;33;41;15858;15866"
+            },
+            "rules": [],
+            "loc": "0:534;23;43;15848;15868"
+          },
+          "loc": "0:534;23;43;15848;15868"
+        }
+      ],
+      "rules": [],
+      "loc": "0:529;18;536;12;15672;15894"
+    },
+    {
+      "kind": "Type",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "newWidgetFoo"
+      },
+      "properties": [
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "fiz",
+            "loc": "0:533;15;20;15780;15785"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "number",
+              "loc": "0:533;32;40;15797;15805"
+            },
+            "constant": {
+              "kind": "NumberLiteral",
+              "value": 123456,
+              "loc": "0:533;51;57;15816;15822"
+            },
+            "rules": [],
+            "loc": "0:533;22;59;15787;15824"
+          },
+          "loc": "0:533;22;59;15787;15824"
+        },
+        {
+          "kind": "Property",
+          "name": {
+            "kind": "StringLiteral",
+            "value": "buzz",
+            "loc": "0:534;15;21;15840;15846"
+          },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": {
+              "kind": "PrimitiveLiteral",
+              "value": "number",
+              "loc": "0:534;33;41;15858;15866"
+            },
+            "rules": [],
+            "loc": "0:534;23;43;15848;15868"
+          },
+          "loc": "0:534;23;43;15848;15868"
+        }
+      ],
+      "rules": [],
+      "loc": "0:529;18;536;12;15672;15894"
+    }
+  ],
+  "enums": [
+    {
+      "kind": "Enum",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "createGizmoSize"
+      },
+      "members": [
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "small",
+            "loc": "0:105;24;31;3202;3209"
+          },
+          "loc": "0:105;24;31;3202;3209"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "medium",
+            "loc": "0:105;33;41;3211;3219"
+          },
+          "loc": "0:105;33;41;3211;3219"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "big",
+            "loc": "0:105;43;48;3221;3226"
+          },
+          "loc": "0:105;43;48;3221;3226"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "XL",
+            "loc": "0:105;50;54;3228;3232"
+          },
+          "loc": "0:105;50;54;3228;3232"
+        }
+      ],
+      "loc": "0:105;15;55;3193;3233"
+    },
+    {
+      "kind": "Enum",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "exhaustiveParamsQueryEnum"
+      },
+      "members": [
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "one",
+            "loc": "0:272;52;57;7951;7956"
+          },
+          "loc": "0:272;52;57;7951;7956"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "two",
+            "loc": "0:272;59;64;7958;7963"
+          },
+          "loc": "0:272;59;64;7958;7963"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "three",
+            "loc": "0:272;66;73;7965;7972"
+          },
+          "loc": "0:272;66;73;7965;7972"
+        }
+      ],
+      "loc": "0:272;43;74;7942;7973"
+    },
+    {
+      "kind": "Enum",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "exhaustiveParamsQueryEnumArray"
+      },
+      "members": [
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "one",
+            "loc": "0:303;53;58;8857;8862"
+          },
+          "loc": "0:303;53;58;8857;8862"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "two",
+            "loc": "0:303;60;65;8864;8869"
+          },
+          "loc": "0:303;60;65;8864;8869"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "three",
+            "loc": "0:303;67;74;8871;8878"
+          },
+          "loc": "0:303;67;74;8871;8878"
+        }
+      ],
+      "loc": "0:303;44;75;8848;8879"
+    },
+    {
+      "kind": "Enum",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "exhaustiveParamsPathEnum"
+      },
+      "members": [
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "one",
+            "loc": "0:337;52;57;9902;9907"
+          },
+          "loc": "0:337;52;57;9902;9907"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "two",
+            "loc": "0:337;59;64;9909;9914"
+          },
+          "loc": "0:337;59;64;9909;9914"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "three",
+            "loc": "0:337;66;73;9916;9923"
+          },
+          "loc": "0:337;66;73;9916;9923"
+        }
+      ],
+      "loc": "0:337;43;74;9893;9924"
+    },
+    {
+      "kind": "Enum",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "exhaustiveParamsPathEnumArray"
+      },
+      "members": [
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "one",
+            "loc": "0:371;53;58;10891;10896"
+          },
+          "loc": "0:371;53;58;10891;10896"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "two",
+            "loc": "0:371;60;65;10898;10903"
+          },
+          "loc": "0:371;60;65;10898;10903"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "three",
+            "loc": "0:371;67;74;10905;10912"
+          },
+          "loc": "0:371;67;74;10905;10912"
+        }
+      ],
+      "loc": "0:371;44;75;10882;10913"
+    },
+    {
+      "kind": "Enum",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "exhaustiveParamsHeaderEnum"
+      },
+      "members": [
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "one",
+            "loc": "0:402;52;57;11852;11857"
+          },
+          "loc": "0:402;52;57;11852;11857"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "two",
+            "loc": "0:402;59;64;11859;11864"
+          },
+          "loc": "0:402;59;64;11859;11864"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "three",
+            "loc": "0:402;66;73;11866;11873"
+          },
+          "loc": "0:402;66;73;11866;11873"
+        }
+      ],
+      "loc": "0:402;43;74;11843;11874"
+    },
+    {
+      "kind": "Enum",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "exhaustiveParamsHeaderEnumArray"
+      },
+      "members": [
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "one",
+            "loc": "0:433;53;58;12772;12777"
+          },
+          "loc": "0:433;53;58;12772;12777"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "two",
+            "loc": "0:433;60;65;12779;12784"
+          },
+          "loc": "0:433;60;65;12779;12784"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "three",
+            "loc": "0:433;67;74;12786;12793"
+          },
+          "loc": "0:433;67;74;12786;12793"
+        }
+      ],
+      "loc": "0:433;44;75;12763;12794"
+    },
+    {
+      "kind": "Enum",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "productSize",
+        "loc": "0:507;7;20;14936;14949"
+      },
+      "members": [
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "small",
+            "loc": "0:507;51;58;14980;14987"
+          },
+          "loc": "0:507;51;58;14980;14987"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "medium",
+            "loc": "0:507;60;68;14989;14997"
+          },
+          "loc": "0:507;60;68;14989;14997"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "large",
+            "loc": "0:507;70;77;14999;15006"
+          },
+          "loc": "0:507;70;77;14999;15006"
+        }
+      ],
+      "loc": "0:507;42;78;14971;15007"
+    },
+    {
+      "kind": "Enum",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "singleValueEnum",
+        "loc": "0:600;7;24;17582;17599"
+      },
+      "members": [
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "the value",
+            "loc": "0:602;18;29;17646;17657"
+          },
+          "loc": "0:602;18;29;17646;17657"
+        }
+      ],
+      "loc": "0:602;9;30;17637;17658"
+    },
+    {
+      "kind": "Enum",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "multiValueEnum",
+        "loc": "0:604;7;23;17674;17690"
+      },
+      "members": [
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "the value",
+            "loc": "0:606;18;29;17737;17748"
+          },
+          "loc": "0:606;18;29;17737;17748"
+        },
+        {
+          "kind": "EnumMember",
+          "content": {
+            "kind": "StringLiteral",
+            "value": "another value",
+            "loc": "0:606;31;46;17750;17765"
+          },
+          "loc": "0:606;31;46;17750;17765"
+        }
+      ],
+      "loc": "0:606;9;47;17728;17766"
+    }
+  ],
+  "unions": [
+    {
+      "kind": "ComplexUnion",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "topLevelUnion",
+        "loc": "0:541;7;22;16037;16052"
+      },
+      "members": [
+        {
+          "kind": "ComplexValue",
+          "typeName": {
+            "kind": "StringLiteral",
+            "value": "partA",
+            "loc": "0:559;7;14;16516;16523"
+          },
+          "rules": [],
+          "loc": "0:559;16;566;8;16525;16795"
+        },
+        {
+          "kind": "ComplexValue",
+          "typeName": {
+            "kind": "StringLiteral",
+            "value": "partB",
+            "loc": "0:567;7;14;16803;16810"
+          },
+          "rules": [],
+          "loc": "0:567;16;579;8;16812;17105"
+        }
+      ],
+      "loc": "0:541;24;546;8;16054;16195"
+    },
+    {
+      "kind": "ComplexUnion",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "someTypeNestedUnion"
+      },
+      "members": [
+        {
+          "kind": "ComplexValue",
+          "typeName": {
+            "kind": "StringLiteral",
+            "value": "partA",
+            "loc": "0:559;7;14;16516;16523"
+          },
+          "rules": [],
+          "loc": "0:559;16;566;8;16525;16795"
+        },
+        {
+          "kind": "ComplexValue",
+          "typeName": {
+            "kind": "StringLiteral",
+            "value": "partB",
+            "loc": "0:567;7;14;16803;16810"
+          },
+          "rules": [],
+          "loc": "0:567;16;579;8;16812;17105"
+        }
+      ],
+      "loc": "0:551;26;556;12;16329;16490"
+    },
+    {
+      "kind": "DiscriminatedUnion",
+      "name": {
+        "kind": "StringLiteral",
+        "value": "animal",
+        "loc": "0:608;7;15;17782;17790"
+      },
+      "discriminator": {
+        "kind": "StringLiteral",
+        "value": "type",
+        "loc": "0:610;27;33;17847;17853"
+      },
+      "members": [
+        {
+          "kind": "ComplexValue",
+          "typeName": {
+            "kind": "StringLiteral",
+            "value": "cat",
+            "loc": "0:621;7;12;18137;18142"
+          },
+          "rules": [],
+          "loc": "0:621;14;627;8;18144;18311"
+        },
+        {
+          "kind": "ComplexValue",
+          "typeName": {
+            "kind": "StringLiteral",
+            "value": "dog",
+            "loc": "0:628;7;12;18319;18324"
+          },
+          "rules": [],
+          "loc": "0:628;14;634;8;18326;18495"
+        }
+      ],
+      "loc": "0:608;17;620;8;17792;18129"
+    }
+  ],
+  "loc": "0:1;1;712;2;0;20608",
+  "meta": [
+    {
+      "kind": "MetaValue",
+      "key": {
+        "kind": "StringLiteral",
+        "value": "metaString",
+        "loc": "0:706;3;17;20441;20455"
+      },
+      "value": {
+        "kind": "UntypedLiteral",
+        "value": "bar",
+        "loc": "0:706;19;24;20457;20462"
+      }
+    },
+    {
+      "kind": "MetaValue",
+      "key": {
+        "kind": "StringLiteral",
+        "value": "metaNumber",
+        "loc": "0:707;3;17;20466;20480"
+      },
+      "value": {
+        "kind": "UntypedLiteral",
+        "value": 1234,
+        "loc": "0:707;19;23;20482;20486"
+      }
+    },
+    {
+      "kind": "MetaValue",
+      "key": {
+        "kind": "StringLiteral",
+        "value": "metaBoolean",
+        "loc": "0:708;3;18;20490;20505"
+      },
+      "value": {
+        "kind": "UntypedLiteral",
+        "value": true,
+        "loc": "0:708;20;24;20507;20511"
+      }
+    },
+    {
+      "kind": "MetaValue",
+      "key": {
+        "kind": "StringLiteral",
+        "value": "metaNull",
+        "loc": "0:709;3;15;20515;20527"
+      },
+      "value": {
+        "kind": "UntypedLiteral",
+        "value": null,
+        "loc": "0:709;17;21;20529;20533"
+      }
+    },
+    {
+      "kind": "MetaValue",
+      "key": {
+        "kind": "StringLiteral",
+        "value": "metaObject",
+        "loc": "0:710;3;17;20537;20551"
+      },
+      "value": {
+        "kind": "UntypedLiteral",
+        "value": {
+          "foo": "bar"
+        },
+        "loc": "0:710;19;35;20553;20569"
+      }
+    },
+    {
+      "kind": "MetaValue",
+      "key": {
+        "kind": "StringLiteral",
+        "value": "metaArray",
+        "loc": "0:711;3;16;20573;20586"
+      },
+      "value": {
+        "kind": "UntypedLiteral",
+        "value": [
+          {
+            "foo": "bar"
+          }
+        ],
+        "loc": "0:711;18;36;20588;20606"
+      }
+    }
+  ]
+}

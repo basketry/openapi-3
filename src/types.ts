@@ -12,7 +12,7 @@ export function refRange(root: AST.ASTNode, ref: string): string {
 
   let node: AST.ASTNode = root;
 
-  let result: string = encodeRange(node.loc);
+  let result: string = encodeRange(0, node.loc);
 
   for (const segment of ref.split('/')) {
     if (segment === '#') {
@@ -22,7 +22,7 @@ export function refRange(root: AST.ASTNode, ref: string): string {
         const child = node.children.find((n) => n.key.value === segment);
         if (!child) throw new Error(`Cannot resolve ref '${ref}'`);
         node = child.value;
-        result = encodeRange(child.key.loc);
+        result = encodeRange(0, child.key.loc);
       } else {
         throw new Error(`Cannot resolve ref '${ref}'`);
       }

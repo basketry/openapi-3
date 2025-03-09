@@ -1,739 +1,1054 @@
 {
   "kind": "Service",
-  "basketry": "1.1-rc",
-  "sourcePath": "src/snapshot/petstore.oas3.json",
-  "title": { "value": "SwaggerPetstoreOpenAPI30" },
-  "majorVersion": { "value": 1 },
+  "basketry": "0.2",
+  "sourcePaths": ["#"],
+  "title": { "kind": "StringLiteral", "value": "SwaggerPetstoreOpenAPI30" },
+  "majorVersion": { "kind": "IntegerLiteral", "value": 1 },
   "interfaces": [
     {
       "kind": "Interface",
-      "name": { "value": "pet" },
+      "name": { "kind": "StringLiteral", "value": "pet" },
       "methods": [
         {
           "kind": "Method",
-          "name": { "value": "updatePet" },
+          "name": { "kind": "StringLiteral", "value": "updatePet" },
           "security": [
-            [
-              {
-                "kind": "OAuth2Scheme",
-                "type": { "value": "oauth2" },
-                "name": { "value": "petstore_auth" },
-                "flows": [
-                  {
-                    "kind": "OAuth2ImplicitFlow",
-                    "type": { "value": "implicit" },
-                    "authorizationUrl": {
-                      "value": "https://petstore3.swagger.io/oauth/authorize"
-                    },
-                    "scopes": [
-                      {
-                        "kind": "OAuth2Scope",
-                        "name": { "value": "write:pets" },
-                        "description": {
-                          "value": "modify pets in your account"
-                        }
-                      },
-                      {
-                        "kind": "OAuth2Scope",
-                        "name": { "value": "read:pets" },
-                        "description": { "value": "read your pets" }
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          ],
-          "parameters": [
             {
-              "kind": "Parameter",
-              "name": { "value": "body" },
-              "description": { "value": "Update an existent pet in the store" },
-              "typeName": { "value": "Pet" },
-              "isPrimitive": false,
-              "isArray": false,
-              "rules": [{ "kind": "ValidationRule", "id": "required" }]
-            }
-          ],
-          "description": [
-            { "value": "Update an existing pet" },
-            { "value": "Update an existing pet by Id" }
-          ],
-          "returnType": {
-            "kind": "ReturnType",
-            "typeName": { "value": "Pet" },
-            "isPrimitive": false,
-            "isArray": false,
-            "rules": []
-          }
-        },
-        {
-          "kind": "Method",
-          "name": { "value": "addPet" },
-          "security": [
-            [
-              {
-                "kind": "OAuth2Scheme",
-                "type": { "value": "oauth2" },
-                "name": { "value": "petstore_auth" },
-                "flows": [
-                  {
-                    "kind": "OAuth2ImplicitFlow",
-                    "type": { "value": "implicit" },
-                    "authorizationUrl": {
-                      "value": "https://petstore3.swagger.io/oauth/authorize"
-                    },
-                    "scopes": [
-                      {
-                        "kind": "OAuth2Scope",
-                        "name": { "value": "write:pets" },
-                        "description": {
-                          "value": "modify pets in your account"
-                        }
-                      },
-                      {
-                        "kind": "OAuth2Scope",
-                        "name": { "value": "read:pets" },
-                        "description": { "value": "read your pets" }
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          ],
-          "parameters": [
-            {
-              "kind": "Parameter",
-              "name": { "value": "body" },
-              "description": { "value": "Create a new pet in the store" },
-              "typeName": { "value": "Pet" },
-              "isPrimitive": false,
-              "isArray": false,
-              "rules": [{ "kind": "ValidationRule", "id": "required" }]
-            }
-          ],
-          "description": [
-            { "value": "Add a new pet to the store" },
-            { "value": "Add a new pet to the store" }
-          ],
-          "returnType": {
-            "kind": "ReturnType",
-            "typeName": { "value": "Pet" },
-            "isPrimitive": false,
-            "isArray": false,
-            "rules": []
-          }
-        },
-        {
-          "kind": "Method",
-          "name": { "value": "findPetsByStatus" },
-          "security": [
-            [
-              {
-                "kind": "OAuth2Scheme",
-                "type": { "value": "oauth2" },
-                "name": { "value": "petstore_auth" },
-                "flows": [
-                  {
-                    "kind": "OAuth2ImplicitFlow",
-                    "type": { "value": "implicit" },
-                    "authorizationUrl": {
-                      "value": "https://petstore3.swagger.io/oauth/authorize"
-                    },
-                    "scopes": [
-                      {
-                        "kind": "OAuth2Scope",
-                        "name": { "value": "write:pets" },
-                        "description": {
-                          "value": "modify pets in your account"
-                        }
-                      },
-                      {
-                        "kind": "OAuth2Scope",
-                        "name": { "value": "read:pets" },
-                        "description": { "value": "read your pets" }
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          ],
-          "parameters": [
-            {
-              "kind": "Parameter",
-              "name": { "value": "status" },
-              "description": {
-                "value": "Status values that need to be considered for filter"
-              },
-              "typeName": { "value": "findPetsByStatusStatus" },
-              "isPrimitive": false,
-              "isArray": false,
-              "rules": [
+              "kind": "SecurityOption",
+              "schemes": [
                 {
-                  "kind": "ValidationRule",
-                  "id": "string-enum",
-                  "values": [
-                    { "value": "available" },
-                    { "value": "pending" },
-                    { "value": "sold" }
+                  "kind": "OAuth2Scheme",
+                  "type": { "value": "oauth2" },
+                  "name": { "kind": "StringLiteral", "value": "petstore_auth" },
+                  "flows": [
+                    {
+                      "kind": "OAuth2ImplicitFlow",
+                      "type": { "value": "implicit" },
+                      "authorizationUrl": {
+                        "kind": "StringLiteral",
+                        "value": "https://petstore3.swagger.io/oauth/authorize"
+                      },
+                      "scopes": [
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "write:pets"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "modify pets in your account"
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "read:pets"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "read your pets"
+                            }
+                          ]
+                        }
+                      ]
+                    }
                   ]
                 }
               ]
             }
           ],
-          "description": [
-            { "value": "Finds Pets by status" },
+          "parameters": [
             {
+              "kind": "Parameter",
+              "name": { "kind": "StringLiteral", "value": "undefined" },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "Update an existent pet in the store"
+                }
+              ],
+              "value": {
+                "kind": "ComplexValue",
+                "typeName": { "kind": "StringLiteral", "value": "Pet" },
+                "rules": []
+              }
+            }
+          ],
+          "description": [
+            { "kind": "StringLiteral", "value": "Update an existing pet" },
+            { "kind": "StringLiteral", "value": "Update an existing pet by Id" }
+          ],
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "ComplexValue",
+              "typeName": { "kind": "StringLiteral", "value": "Pet" },
+              "rules": []
+            }
+          }
+        },
+        {
+          "kind": "Method",
+          "name": { "kind": "StringLiteral", "value": "addPet" },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "OAuth2Scheme",
+                  "type": { "value": "oauth2" },
+                  "name": { "kind": "StringLiteral", "value": "petstore_auth" },
+                  "flows": [
+                    {
+                      "kind": "OAuth2ImplicitFlow",
+                      "type": { "value": "implicit" },
+                      "authorizationUrl": {
+                        "kind": "StringLiteral",
+                        "value": "https://petstore3.swagger.io/oauth/authorize"
+                      },
+                      "scopes": [
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "write:pets"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "modify pets in your account"
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "read:pets"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "read your pets"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "parameters": [
+            {
+              "kind": "Parameter",
+              "name": { "kind": "StringLiteral", "value": "undefined" },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "Create a new pet in the store"
+                }
+              ],
+              "value": {
+                "kind": "ComplexValue",
+                "typeName": { "kind": "StringLiteral", "value": "Pet" },
+                "rules": []
+              }
+            }
+          ],
+          "description": [
+            { "kind": "StringLiteral", "value": "Add a new pet to the store" },
+            { "kind": "StringLiteral", "value": "Add a new pet to the store" }
+          ],
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "ComplexValue",
+              "typeName": { "kind": "StringLiteral", "value": "Pet" },
+              "rules": []
+            }
+          }
+        },
+        {
+          "kind": "Method",
+          "name": { "kind": "StringLiteral", "value": "findPetsByStatus" },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "OAuth2Scheme",
+                  "type": { "value": "oauth2" },
+                  "name": { "kind": "StringLiteral", "value": "petstore_auth" },
+                  "flows": [
+                    {
+                      "kind": "OAuth2ImplicitFlow",
+                      "type": { "value": "implicit" },
+                      "authorizationUrl": {
+                        "kind": "StringLiteral",
+                        "value": "https://petstore3.swagger.io/oauth/authorize"
+                      },
+                      "scopes": [
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "write:pets"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "modify pets in your account"
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "read:pets"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "read your pets"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "parameters": [
+            {
+              "kind": "Parameter",
+              "name": { "kind": "StringLiteral", "value": "status" },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "Status values that need to be considered for filter"
+                }
+              ],
+              "value": {
+                "kind": "ComplexValue",
+                "typeName": {
+                  "kind": "StringLiteral",
+                  "value": "findPetsByStatusStatus"
+                },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "StringEnum",
+                    "values": [
+                      { "kind": "StringLiteral", "value": "available" },
+                      { "kind": "StringLiteral", "value": "pending" },
+                      { "kind": "StringLiteral", "value": "sold" }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "description": [
+            { "kind": "StringLiteral", "value": "Finds Pets by status" },
+            {
+              "kind": "StringLiteral",
               "value": "Multiple status values can be provided with comma separated strings"
             }
           ],
-          "returnType": {
-            "kind": "ReturnType",
-            "typeName": { "value": "Pet" },
-            "isPrimitive": false,
-            "isArray": true,
-            "rules": []
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "ComplexValue",
+              "typeName": { "kind": "StringLiteral", "value": "Pet" },
+              "rules": [],
+              "isArray": { "kind": "TrueLiteral", "value": true }
+            }
           }
         },
         {
           "kind": "Method",
-          "name": { "value": "findPetsByTags" },
+          "name": { "kind": "StringLiteral", "value": "findPetsByTags" },
           "security": [
-            [
-              {
-                "kind": "OAuth2Scheme",
-                "type": { "value": "oauth2" },
-                "name": { "value": "petstore_auth" },
-                "flows": [
-                  {
-                    "kind": "OAuth2ImplicitFlow",
-                    "type": { "value": "implicit" },
-                    "authorizationUrl": {
-                      "value": "https://petstore3.swagger.io/oauth/authorize"
-                    },
-                    "scopes": [
-                      {
-                        "kind": "OAuth2Scope",
-                        "name": { "value": "write:pets" },
-                        "description": {
-                          "value": "modify pets in your account"
-                        }
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "OAuth2Scheme",
+                  "type": { "value": "oauth2" },
+                  "name": { "kind": "StringLiteral", "value": "petstore_auth" },
+                  "flows": [
+                    {
+                      "kind": "OAuth2ImplicitFlow",
+                      "type": { "value": "implicit" },
+                      "authorizationUrl": {
+                        "kind": "StringLiteral",
+                        "value": "https://petstore3.swagger.io/oauth/authorize"
                       },
-                      {
-                        "kind": "OAuth2Scope",
-                        "name": { "value": "read:pets" },
-                        "description": { "value": "read your pets" }
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
+                      "scopes": [
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "write:pets"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "modify pets in your account"
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "read:pets"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "read your pets"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
           ],
           "parameters": [
             {
               "kind": "Parameter",
-              "name": { "value": "tags" },
-              "description": { "value": "Tags to filter by" },
-              "typeName": { "value": "string" },
-              "isPrimitive": true,
-              "isArray": true,
-              "rules": []
+              "name": { "kind": "StringLiteral", "value": "tags" },
+              "description": [
+                { "kind": "StringLiteral", "value": "Tags to filter by" }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "isArray": { "kind": "TrueLiteral", "value": true },
+                "rules": []
+              }
             }
           ],
           "description": [
-            { "value": "Finds Pets by tags" },
+            { "kind": "StringLiteral", "value": "Finds Pets by tags" },
             {
+              "kind": "StringLiteral",
               "value": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing."
             }
           ],
-          "returnType": {
-            "kind": "ReturnType",
-            "typeName": { "value": "Pet" },
-            "isPrimitive": false,
-            "isArray": true,
-            "rules": []
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "ComplexValue",
+              "typeName": { "kind": "StringLiteral", "value": "Pet" },
+              "rules": [],
+              "isArray": { "kind": "TrueLiteral", "value": true }
+            }
           }
         },
         {
           "kind": "Method",
-          "name": { "value": "getPetById" },
+          "name": { "kind": "StringLiteral", "value": "getPetById" },
           "security": [
-            [
-              {
-                "kind": "ApiKeyScheme",
-                "type": { "value": "apiKey" },
-                "name": { "value": "api_key" },
-                "parameter": { "value": "api_key" },
-                "in": { "value": "header" }
-              }
-            ],
-            [
-              {
-                "kind": "OAuth2Scheme",
-                "type": { "value": "oauth2" },
-                "name": { "value": "petstore_auth" },
-                "flows": [
-                  {
-                    "kind": "OAuth2ImplicitFlow",
-                    "type": { "value": "implicit" },
-                    "authorizationUrl": {
-                      "value": "https://petstore3.swagger.io/oauth/authorize"
-                    },
-                    "scopes": [
-                      {
-                        "kind": "OAuth2Scope",
-                        "name": { "value": "write:pets" },
-                        "description": {
-                          "value": "modify pets in your account"
-                        }
-                      },
-                      {
-                        "kind": "OAuth2Scope",
-                        "name": { "value": "read:pets" },
-                        "description": { "value": "read your pets" }
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          ],
-          "parameters": [
             {
-              "kind": "Parameter",
-              "name": { "value": "petId" },
-              "description": { "value": "ID of pet to return" },
-              "typeName": { "value": "long" },
-              "isPrimitive": true,
-              "isArray": false,
-              "rules": [{ "kind": "ValidationRule", "id": "required" }]
-            }
-          ],
-          "description": [
-            { "value": "Find pet by ID" },
-            { "value": "Returns a single pet" }
-          ],
-          "returnType": {
-            "kind": "ReturnType",
-            "typeName": { "value": "Pet" },
-            "isPrimitive": false,
-            "isArray": false,
-            "rules": []
-          }
-        },
-        {
-          "kind": "Method",
-          "name": { "value": "updatePetWithForm" },
-          "security": [
-            [
-              {
-                "kind": "OAuth2Scheme",
-                "type": { "value": "oauth2" },
-                "name": { "value": "petstore_auth" },
-                "flows": [
-                  {
-                    "kind": "OAuth2ImplicitFlow",
-                    "type": { "value": "implicit" },
-                    "authorizationUrl": {
-                      "value": "https://petstore3.swagger.io/oauth/authorize"
-                    },
-                    "scopes": [
-                      {
-                        "kind": "OAuth2Scope",
-                        "name": { "value": "write:pets" },
-                        "description": {
-                          "value": "modify pets in your account"
-                        }
-                      },
-                      {
-                        "kind": "OAuth2Scope",
-                        "name": { "value": "read:pets" },
-                        "description": { "value": "read your pets" }
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          ],
-          "parameters": [
-            {
-              "kind": "Parameter",
-              "name": { "value": "petId" },
-              "description": { "value": "ID of pet that needs to be updated" },
-              "typeName": { "value": "long" },
-              "isPrimitive": true,
-              "isArray": false,
-              "rules": [{ "kind": "ValidationRule", "id": "required" }]
-            },
-            {
-              "kind": "Parameter",
-              "name": { "value": "name" },
-              "description": {
-                "value": "Name of pet that needs to be updated"
-              },
-              "typeName": { "value": "string" },
-              "isPrimitive": true,
-              "isArray": false,
-              "rules": []
-            },
-            {
-              "kind": "Parameter",
-              "name": { "value": "status" },
-              "description": {
-                "value": "Status of pet that needs to be updated"
-              },
-              "typeName": { "value": "string" },
-              "isPrimitive": true,
-              "isArray": false,
-              "rules": []
-            }
-          ],
-          "description": [
-            { "value": "Updates a pet in the store with form data" },
-            { "value": "" }
-          ]
-        },
-        {
-          "kind": "Method",
-          "name": { "value": "deletePet" },
-          "security": [
-            [
-              {
-                "kind": "OAuth2Scheme",
-                "type": { "value": "oauth2" },
-                "name": { "value": "petstore_auth" },
-                "flows": [
-                  {
-                    "kind": "OAuth2ImplicitFlow",
-                    "type": { "value": "implicit" },
-                    "authorizationUrl": {
-                      "value": "https://petstore3.swagger.io/oauth/authorize"
-                    },
-                    "scopes": [
-                      {
-                        "kind": "OAuth2Scope",
-                        "name": { "value": "write:pets" },
-                        "description": {
-                          "value": "modify pets in your account"
-                        }
-                      },
-                      {
-                        "kind": "OAuth2Scope",
-                        "name": { "value": "read:pets" },
-                        "description": { "value": "read your pets" }
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          ],
-          "parameters": [
-            {
-              "kind": "Parameter",
-              "name": { "value": "api_key" },
-              "description": { "value": "" },
-              "typeName": { "value": "string" },
-              "isPrimitive": true,
-              "isArray": false,
-              "rules": []
-            },
-            {
-              "kind": "Parameter",
-              "name": { "value": "petId" },
-              "description": { "value": "Pet id to delete" },
-              "typeName": { "value": "long" },
-              "isPrimitive": true,
-              "isArray": false,
-              "rules": [{ "kind": "ValidationRule", "id": "required" }]
-            }
-          ],
-          "description": [
-            { "value": "Deletes a pet" },
-            { "value": "delete a pet" }
-          ]
-        },
-        {
-          "kind": "Method",
-          "name": { "value": "uploadFile" },
-          "security": [
-            [
-              {
-                "kind": "OAuth2Scheme",
-                "type": { "value": "oauth2" },
-                "name": { "value": "petstore_auth" },
-                "flows": [
-                  {
-                    "kind": "OAuth2ImplicitFlow",
-                    "type": { "value": "implicit" },
-                    "authorizationUrl": {
-                      "value": "https://petstore3.swagger.io/oauth/authorize"
-                    },
-                    "scopes": [
-                      {
-                        "kind": "OAuth2Scope",
-                        "name": { "value": "write:pets" },
-                        "description": {
-                          "value": "modify pets in your account"
-                        }
-                      },
-                      {
-                        "kind": "OAuth2Scope",
-                        "name": { "value": "read:pets" },
-                        "description": { "value": "read your pets" }
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          ],
-          "parameters": [
-            {
-              "kind": "Parameter",
-              "name": { "value": "body" },
-              "typeName": { "value": "binary" },
-              "isPrimitive": true,
-              "isArray": false,
-              "rules": [
+              "kind": "SecurityOption",
+              "schemes": [
                 {
-                  "kind": "ValidationRule",
-                  "id": "string-format",
-                  "format": { "value": "binary" }
+                  "kind": "ApiKeyScheme",
+                  "type": { "value": "apiKey" },
+                  "name": { "kind": "StringLiteral", "value": "api_key" },
+                  "parameter": { "kind": "StringLiteral", "value": "api_key" },
+                  "in": { "value": "header" }
                 }
               ]
             },
             {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "OAuth2Scheme",
+                  "type": { "value": "oauth2" },
+                  "name": { "kind": "StringLiteral", "value": "petstore_auth" },
+                  "flows": [
+                    {
+                      "kind": "OAuth2ImplicitFlow",
+                      "type": { "value": "implicit" },
+                      "authorizationUrl": {
+                        "kind": "StringLiteral",
+                        "value": "https://petstore3.swagger.io/oauth/authorize"
+                      },
+                      "scopes": [
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "write:pets"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "modify pets in your account"
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "read:pets"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "read your pets"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "parameters": [
+            {
               "kind": "Parameter",
-              "name": { "value": "petId" },
-              "description": { "value": "ID of pet to update" },
-              "typeName": { "value": "long" },
-              "isPrimitive": true,
-              "isArray": false,
-              "rules": [{ "kind": "ValidationRule", "id": "required" }]
+              "name": { "kind": "StringLiteral", "value": "petId" },
+              "description": [
+                { "kind": "StringLiteral", "value": "ID of pet to return" }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+              }
+            }
+          ],
+          "description": [
+            { "kind": "StringLiteral", "value": "Find pet by ID" },
+            { "kind": "StringLiteral", "value": "Returns a single pet" }
+          ],
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "ComplexValue",
+              "typeName": { "kind": "StringLiteral", "value": "Pet" },
+              "rules": []
+            }
+          }
+        },
+        {
+          "kind": "Method",
+          "name": { "kind": "StringLiteral", "value": "updatePetWithForm" },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "OAuth2Scheme",
+                  "type": { "value": "oauth2" },
+                  "name": { "kind": "StringLiteral", "value": "petstore_auth" },
+                  "flows": [
+                    {
+                      "kind": "OAuth2ImplicitFlow",
+                      "type": { "value": "implicit" },
+                      "authorizationUrl": {
+                        "kind": "StringLiteral",
+                        "value": "https://petstore3.swagger.io/oauth/authorize"
+                      },
+                      "scopes": [
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "write:pets"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "modify pets in your account"
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "read:pets"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "read your pets"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "parameters": [
+            {
+              "kind": "Parameter",
+              "name": { "kind": "StringLiteral", "value": "petId" },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "ID of pet that needs to be updated"
+                }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+              }
             },
             {
               "kind": "Parameter",
-              "name": { "value": "additionalMetadata" },
-              "description": { "value": "Additional Metadata" },
-              "typeName": { "value": "string" },
-              "isPrimitive": true,
-              "isArray": false,
-              "rules": []
+              "name": { "kind": "StringLiteral", "value": "name" },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "Name of pet that needs to be updated"
+                }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "rules": []
+              }
+            },
+            {
+              "kind": "Parameter",
+              "name": { "kind": "StringLiteral", "value": "status" },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "Status of pet that needs to be updated"
+                }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "rules": []
+              }
             }
           ],
-          "description": [{ "value": "uploads an image" }, { "value": "" }],
-          "returnType": {
-            "kind": "ReturnType",
-            "typeName": { "value": "ApiResponse" },
-            "isPrimitive": false,
-            "isArray": false,
-            "rules": []
+          "description": [
+            {
+              "kind": "StringLiteral",
+              "value": "Updates a pet in the store with form data"
+            },
+            { "kind": "StringLiteral", "value": "" }
+          ]
+        },
+        {
+          "kind": "Method",
+          "name": { "kind": "StringLiteral", "value": "deletePet" },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "OAuth2Scheme",
+                  "type": { "value": "oauth2" },
+                  "name": { "kind": "StringLiteral", "value": "petstore_auth" },
+                  "flows": [
+                    {
+                      "kind": "OAuth2ImplicitFlow",
+                      "type": { "value": "implicit" },
+                      "authorizationUrl": {
+                        "kind": "StringLiteral",
+                        "value": "https://petstore3.swagger.io/oauth/authorize"
+                      },
+                      "scopes": [
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "write:pets"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "modify pets in your account"
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "read:pets"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "read your pets"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "parameters": [
+            {
+              "kind": "Parameter",
+              "name": { "kind": "StringLiteral", "value": "api_key" },
+              "description": [{ "kind": "StringLiteral", "value": "" }],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "rules": []
+              }
+            },
+            {
+              "kind": "Parameter",
+              "name": { "kind": "StringLiteral", "value": "petId" },
+              "description": [
+                { "kind": "StringLiteral", "value": "Pet id to delete" }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+              }
+            }
+          ],
+          "description": [
+            { "kind": "StringLiteral", "value": "Deletes a pet" },
+            { "kind": "StringLiteral", "value": "delete a pet" }
+          ]
+        },
+        {
+          "kind": "Method",
+          "name": { "kind": "StringLiteral", "value": "uploadFile" },
+          "security": [
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "OAuth2Scheme",
+                  "type": { "value": "oauth2" },
+                  "name": { "kind": "StringLiteral", "value": "petstore_auth" },
+                  "flows": [
+                    {
+                      "kind": "OAuth2ImplicitFlow",
+                      "type": { "value": "implicit" },
+                      "authorizationUrl": {
+                        "kind": "StringLiteral",
+                        "value": "https://petstore3.swagger.io/oauth/authorize"
+                      },
+                      "scopes": [
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "write:pets"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "modify pets in your account"
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "OAuth2Scope",
+                          "name": {
+                            "kind": "StringLiteral",
+                            "value": "read:pets"
+                          },
+                          "description": [
+                            {
+                              "kind": "StringLiteral",
+                              "value": "read your pets"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "parameters": [
+            {
+              "kind": "Parameter",
+              "name": { "kind": "StringLiteral", "value": "undefined" },
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "binary" },
+                "rules": [
+                  {
+                    "kind": "ValidationRule",
+                    "id": "StringFormat",
+                    "format": {
+                      "kind": "NonEmptyStringLiteral",
+                      "value": "binary"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "Parameter",
+              "name": { "kind": "StringLiteral", "value": "petId" },
+              "description": [
+                { "kind": "StringLiteral", "value": "ID of pet to update" }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+              }
+            },
+            {
+              "kind": "Parameter",
+              "name": {
+                "kind": "StringLiteral",
+                "value": "additionalMetadata"
+              },
+              "description": [
+                { "kind": "StringLiteral", "value": "Additional Metadata" }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "rules": []
+              }
+            }
+          ],
+          "description": [
+            { "kind": "StringLiteral", "value": "uploads an image" },
+            { "kind": "StringLiteral", "value": "" }
+          ],
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "ComplexValue",
+              "typeName": { "kind": "StringLiteral", "value": "ApiResponse" },
+              "rules": []
+            }
           }
         }
       ],
       "protocols": {
+        "kind": "InterfaceProtocols",
         "http": [
           {
-            "kind": "HttpPath",
-            "path": { "value": "/pet" },
+            "kind": "HttpRoute",
+            "pattern": { "kind": "StringLiteral", "value": "/pet" },
             "methods": [
               {
                 "kind": "HttpMethod",
-                "name": { "value": "updatePet" },
-                "verb": { "value": "put" },
+                "name": { "kind": "StringLiteral", "value": "updatePet" },
+                "verb": { "kind": "HttpVerbLiteral", "value": "put" },
                 "parameters": [
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "body" },
-                    "in": { "value": "body" }
+                    "name": { "kind": "StringLiteral", "value": "undefined" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "body"
+                    }
                   }
                 ],
-                "successCode": { "value": 200 },
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200
+                },
                 "requestMediaTypes": [
-                  { "value": "application/json" },
-                  { "value": "application/xml" },
-                  { "value": "application/x-www-form-urlencoded" }
+                  { "kind": "StringLiteral", "value": "application/json" },
+                  { "kind": "StringLiteral", "value": "application/xml" },
+                  {
+                    "kind": "StringLiteral",
+                    "value": "application/x-www-form-urlencoded"
+                  }
                 ],
                 "responseMediaTypes": [
-                  { "value": "application/json" },
-                  { "value": "application/xml" }
+                  { "kind": "StringLiteral", "value": "application/json" },
+                  { "kind": "StringLiteral", "value": "application/xml" }
                 ]
               },
               {
                 "kind": "HttpMethod",
-                "name": { "value": "addPet" },
-                "verb": { "value": "post" },
+                "name": { "kind": "StringLiteral", "value": "addPet" },
+                "verb": { "kind": "HttpVerbLiteral", "value": "post" },
                 "parameters": [
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "body" },
-                    "in": { "value": "body" }
+                    "name": { "kind": "StringLiteral", "value": "undefined" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "body"
+                    }
                   }
                 ],
-                "successCode": { "value": 200 },
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200
+                },
                 "requestMediaTypes": [
-                  { "value": "application/json" },
-                  { "value": "application/xml" },
-                  { "value": "application/x-www-form-urlencoded" }
+                  { "kind": "StringLiteral", "value": "application/json" },
+                  { "kind": "StringLiteral", "value": "application/xml" },
+                  {
+                    "kind": "StringLiteral",
+                    "value": "application/x-www-form-urlencoded"
+                  }
                 ],
                 "responseMediaTypes": [
-                  { "value": "application/json" },
-                  { "value": "application/xml" }
+                  { "kind": "StringLiteral", "value": "application/json" },
+                  { "kind": "StringLiteral", "value": "application/xml" }
                 ]
               }
             ]
           },
           {
-            "kind": "HttpPath",
-            "path": { "value": "/pet/findByStatus" },
+            "kind": "HttpRoute",
+            "pattern": {
+              "kind": "StringLiteral",
+              "value": "/pet/findByStatus"
+            },
             "methods": [
               {
                 "kind": "HttpMethod",
-                "name": { "value": "findPetsByStatus" },
-                "verb": { "value": "get" },
+                "name": {
+                  "kind": "StringLiteral",
+                  "value": "findPetsByStatus"
+                },
+                "verb": { "kind": "HttpVerbLiteral", "value": "get" },
                 "parameters": [
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "status" },
-                    "in": { "value": "query" }
+                    "name": { "kind": "StringLiteral", "value": "status" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query"
+                    }
                   }
                 ],
-                "successCode": { "value": 200 },
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200
+                },
                 "requestMediaTypes": [],
                 "responseMediaTypes": [
-                  { "value": "application/json" },
-                  { "value": "application/xml" }
+                  { "kind": "StringLiteral", "value": "application/json" },
+                  { "kind": "StringLiteral", "value": "application/xml" }
                 ]
               }
             ]
           },
           {
-            "kind": "HttpPath",
-            "path": { "value": "/pet/findByTags" },
+            "kind": "HttpRoute",
+            "pattern": { "kind": "StringLiteral", "value": "/pet/findByTags" },
             "methods": [
               {
                 "kind": "HttpMethod",
-                "name": { "value": "findPetsByTags" },
-                "verb": { "value": "get" },
+                "name": { "kind": "StringLiteral", "value": "findPetsByTags" },
+                "verb": { "kind": "HttpVerbLiteral", "value": "get" },
                 "parameters": [
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "tags" },
-                    "in": { "value": "query" },
-                    "array": { "value": "csv" }
+                    "name": { "kind": "StringLiteral", "value": "tags" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query"
+                    },
+                    "arrayFormat": {
+                      "kind": "HttpArrayFormatLiteral",
+                      "value": "csv"
+                    }
                   }
                 ],
-                "successCode": { "value": 200 },
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200
+                },
                 "requestMediaTypes": [],
                 "responseMediaTypes": [
-                  { "value": "application/json" },
-                  { "value": "application/xml" }
+                  { "kind": "StringLiteral", "value": "application/json" },
+                  { "kind": "StringLiteral", "value": "application/xml" }
                 ]
               }
             ]
           },
           {
-            "kind": "HttpPath",
-            "path": { "value": "/pet/{petId}" },
+            "kind": "HttpRoute",
+            "pattern": { "kind": "StringLiteral", "value": "/pet/{petId}" },
             "methods": [
               {
                 "kind": "HttpMethod",
-                "name": { "value": "getPetById" },
-                "verb": { "value": "get" },
+                "name": { "kind": "StringLiteral", "value": "getPetById" },
+                "verb": { "kind": "HttpVerbLiteral", "value": "get" },
                 "parameters": [
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "petId" },
-                    "in": { "value": "path" }
+                    "name": { "kind": "StringLiteral", "value": "petId" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path"
+                    }
                   }
                 ],
-                "successCode": { "value": 200 },
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200
+                },
                 "requestMediaTypes": [],
                 "responseMediaTypes": [
-                  { "value": "application/json" },
-                  { "value": "application/xml" }
+                  { "kind": "StringLiteral", "value": "application/json" },
+                  { "kind": "StringLiteral", "value": "application/xml" }
                 ]
               },
               {
                 "kind": "HttpMethod",
-                "name": { "value": "updatePetWithForm" },
-                "verb": { "value": "post" },
+                "name": {
+                  "kind": "StringLiteral",
+                  "value": "updatePetWithForm"
+                },
+                "verb": { "kind": "HttpVerbLiteral", "value": "post" },
                 "parameters": [
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "petId" },
-                    "in": { "value": "path" }
+                    "name": { "kind": "StringLiteral", "value": "petId" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path"
+                    }
                   },
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "name" },
-                    "in": { "value": "query" }
+                    "name": { "kind": "StringLiteral", "value": "name" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query"
+                    }
                   },
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "status" },
-                    "in": { "value": "query" }
+                    "name": { "kind": "StringLiteral", "value": "status" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query"
+                    }
                   }
                 ],
-                "successCode": { "value": 200 },
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200
+                },
                 "requestMediaTypes": [],
                 "responseMediaTypes": []
               },
               {
                 "kind": "HttpMethod",
-                "name": { "value": "deletePet" },
-                "verb": { "value": "delete" },
+                "name": { "kind": "StringLiteral", "value": "deletePet" },
+                "verb": { "kind": "HttpVerbLiteral", "value": "delete" },
                 "parameters": [
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "api_key" },
-                    "in": { "value": "header" }
+                    "name": { "kind": "StringLiteral", "value": "api_key" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "header"
+                    }
                   },
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "petId" },
-                    "in": { "value": "path" }
+                    "name": { "kind": "StringLiteral", "value": "petId" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path"
+                    }
                   }
                 ],
-                "successCode": { "value": 200 },
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200
+                },
                 "requestMediaTypes": [],
                 "responseMediaTypes": []
               }
             ]
           },
           {
-            "kind": "HttpPath",
-            "path": { "value": "/pet/{petId}/uploadImage" },
+            "kind": "HttpRoute",
+            "pattern": {
+              "kind": "StringLiteral",
+              "value": "/pet/{petId}/uploadImage"
+            },
             "methods": [
               {
                 "kind": "HttpMethod",
-                "name": { "value": "uploadFile" },
-                "verb": { "value": "post" },
+                "name": { "kind": "StringLiteral", "value": "uploadFile" },
+                "verb": { "kind": "HttpVerbLiteral", "value": "post" },
                 "parameters": [
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "body" },
-                    "in": { "value": "body" }
+                    "name": { "kind": "StringLiteral", "value": "undefined" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "body"
+                    }
                   },
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "petId" },
-                    "in": { "value": "path" }
+                    "name": { "kind": "StringLiteral", "value": "petId" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path"
+                    }
                   },
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "additionalMetadata" },
-                    "in": { "value": "query" }
+                    "name": {
+                      "kind": "StringLiteral",
+                      "value": "additionalMetadata"
+                    },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query"
+                    }
                   }
                 ],
-                "successCode": { "value": 200 },
-                "requestMediaTypes": [{ "value": "application/octet-stream" }],
-                "responseMediaTypes": [{ "value": "application/json" }]
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200
+                },
+                "requestMediaTypes": [
+                  {
+                    "kind": "StringLiteral",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "responseMediaTypes": [
+                  { "kind": "StringLiteral", "value": "application/json" }
+                ]
               }
             ]
           }
@@ -742,193 +1057,254 @@
     },
     {
       "kind": "Interface",
-      "name": { "value": "store" },
+      "name": { "kind": "StringLiteral", "value": "store" },
       "methods": [
         {
           "kind": "Method",
-          "name": { "value": "getInventory" },
+          "name": { "kind": "StringLiteral", "value": "getInventory" },
           "security": [
-            [
-              {
-                "kind": "ApiKeyScheme",
-                "type": { "value": "apiKey" },
-                "name": { "value": "api_key" },
-                "parameter": { "value": "api_key" },
-                "in": { "value": "header" }
-              }
-            ]
+            {
+              "kind": "SecurityOption",
+              "schemes": [
+                {
+                  "kind": "ApiKeyScheme",
+                  "type": { "value": "apiKey" },
+                  "name": { "kind": "StringLiteral", "value": "api_key" },
+                  "parameter": { "kind": "StringLiteral", "value": "api_key" },
+                  "in": { "value": "header" }
+                }
+              ]
+            }
           ],
           "parameters": [],
           "description": [
-            { "value": "Returns pet inventories by status" },
-            { "value": "Returns a map of status codes to quantities" }
-          ],
-          "returnType": {
-            "kind": "ReturnType",
-            "typeName": { "value": "getInventoryResponse" },
-            "isPrimitive": false,
-            "isArray": false,
-            "rules": []
-          }
-        },
-        {
-          "kind": "Method",
-          "name": { "value": "placeOrder" },
-          "security": [],
-          "parameters": [
             {
-              "kind": "Parameter",
-              "name": { "value": "body" },
-              "typeName": { "value": "Order" },
-              "isPrimitive": false,
-              "isArray": false,
+              "kind": "StringLiteral",
+              "value": "Returns pet inventories by status"
+            },
+            {
+              "kind": "StringLiteral",
+              "value": "Returns a map of status codes to quantities"
+            }
+          ],
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "ComplexValue",
+              "typeName": {
+                "kind": "StringLiteral",
+                "value": "getInventoryResponse"
+              },
               "rules": []
             }
-          ],
-          "description": [
-            { "value": "Place an order for a pet" },
-            { "value": "Place a new order in the store" }
-          ],
-          "returnType": {
-            "kind": "ReturnType",
-            "typeName": { "value": "Order" },
-            "isPrimitive": false,
-            "isArray": false,
-            "rules": []
           }
         },
         {
           "kind": "Method",
-          "name": { "value": "getOrderById" },
+          "name": { "kind": "StringLiteral", "value": "placeOrder" },
           "security": [],
           "parameters": [
             {
               "kind": "Parameter",
-              "name": { "value": "orderId" },
-              "description": {
-                "value": "ID of order that needs to be fetched"
-              },
-              "typeName": { "value": "long" },
-              "isPrimitive": true,
-              "isArray": false,
-              "rules": [{ "kind": "ValidationRule", "id": "required" }]
+              "name": { "kind": "StringLiteral", "value": "undefined" },
+              "value": {
+                "kind": "ComplexValue",
+                "typeName": { "kind": "StringLiteral", "value": "Order" },
+                "rules": []
+              }
             }
           ],
           "description": [
-            { "value": "Find purchase order by ID" },
+            { "kind": "StringLiteral", "value": "Place an order for a pet" },
             {
+              "kind": "StringLiteral",
+              "value": "Place a new order in the store"
+            }
+          ],
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "ComplexValue",
+              "typeName": { "kind": "StringLiteral", "value": "Order" },
+              "rules": []
+            }
+          }
+        },
+        {
+          "kind": "Method",
+          "name": { "kind": "StringLiteral", "value": "getOrderById" },
+          "security": [],
+          "parameters": [
+            {
+              "kind": "Parameter",
+              "name": { "kind": "StringLiteral", "value": "orderId" },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "ID of order that needs to be fetched"
+                }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+              }
+            }
+          ],
+          "description": [
+            { "kind": "StringLiteral", "value": "Find purchase order by ID" },
+            {
+              "kind": "StringLiteral",
               "value": "For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions."
             }
           ],
-          "returnType": {
-            "kind": "ReturnType",
-            "typeName": { "value": "Order" },
-            "isPrimitive": false,
-            "isArray": false,
-            "rules": []
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "ComplexValue",
+              "typeName": { "kind": "StringLiteral", "value": "Order" },
+              "rules": []
+            }
           }
         },
         {
           "kind": "Method",
-          "name": { "value": "deleteOrder" },
+          "name": { "kind": "StringLiteral", "value": "deleteOrder" },
           "security": [],
           "parameters": [
             {
               "kind": "Parameter",
-              "name": { "value": "orderId" },
-              "description": {
-                "value": "ID of the order that needs to be deleted"
-              },
-              "typeName": { "value": "long" },
-              "isPrimitive": true,
-              "isArray": false,
-              "rules": [{ "kind": "ValidationRule", "id": "required" }]
+              "name": { "kind": "StringLiteral", "value": "orderId" },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "ID of the order that needs to be deleted"
+                }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+              }
             }
           ],
           "description": [
-            { "value": "Delete purchase order by ID" },
+            { "kind": "StringLiteral", "value": "Delete purchase order by ID" },
             {
+              "kind": "StringLiteral",
               "value": "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors"
             }
           ]
         }
       ],
       "protocols": {
+        "kind": "InterfaceProtocols",
         "http": [
           {
-            "kind": "HttpPath",
-            "path": { "value": "/store/inventory" },
+            "kind": "HttpRoute",
+            "pattern": { "kind": "StringLiteral", "value": "/store/inventory" },
             "methods": [
               {
                 "kind": "HttpMethod",
-                "name": { "value": "getInventory" },
-                "verb": { "value": "get" },
+                "name": { "kind": "StringLiteral", "value": "getInventory" },
+                "verb": { "kind": "HttpVerbLiteral", "value": "get" },
                 "parameters": [],
-                "successCode": { "value": 200 },
-                "requestMediaTypes": [],
-                "responseMediaTypes": [{ "value": "application/json" }]
-              }
-            ]
-          },
-          {
-            "kind": "HttpPath",
-            "path": { "value": "/store/order" },
-            "methods": [
-              {
-                "kind": "HttpMethod",
-                "name": { "value": "placeOrder" },
-                "verb": { "value": "post" },
-                "parameters": [
-                  {
-                    "kind": "HttpParameter",
-                    "name": { "value": "body" },
-                    "in": { "value": "body" }
-                  }
-                ],
-                "successCode": { "value": 200 },
-                "requestMediaTypes": [
-                  { "value": "application/json" },
-                  { "value": "application/xml" },
-                  { "value": "application/x-www-form-urlencoded" }
-                ],
-                "responseMediaTypes": [{ "value": "application/json" }]
-              }
-            ]
-          },
-          {
-            "kind": "HttpPath",
-            "path": { "value": "/store/order/{orderId}" },
-            "methods": [
-              {
-                "kind": "HttpMethod",
-                "name": { "value": "getOrderById" },
-                "verb": { "value": "get" },
-                "parameters": [
-                  {
-                    "kind": "HttpParameter",
-                    "name": { "value": "orderId" },
-                    "in": { "value": "path" }
-                  }
-                ],
-                "successCode": { "value": 200 },
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200
+                },
                 "requestMediaTypes": [],
                 "responseMediaTypes": [
-                  { "value": "application/json" },
-                  { "value": "application/xml" }
+                  { "kind": "StringLiteral", "value": "application/json" }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "HttpRoute",
+            "pattern": { "kind": "StringLiteral", "value": "/store/order" },
+            "methods": [
+              {
+                "kind": "HttpMethod",
+                "name": { "kind": "StringLiteral", "value": "placeOrder" },
+                "verb": { "kind": "HttpVerbLiteral", "value": "post" },
+                "parameters": [
+                  {
+                    "kind": "HttpParameter",
+                    "name": { "kind": "StringLiteral", "value": "undefined" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "body"
+                    }
+                  }
+                ],
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200
+                },
+                "requestMediaTypes": [
+                  { "kind": "StringLiteral", "value": "application/json" },
+                  { "kind": "StringLiteral", "value": "application/xml" },
+                  {
+                    "kind": "StringLiteral",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "responseMediaTypes": [
+                  { "kind": "StringLiteral", "value": "application/json" }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "HttpRoute",
+            "pattern": {
+              "kind": "StringLiteral",
+              "value": "/store/order/{orderId}"
+            },
+            "methods": [
+              {
+                "kind": "HttpMethod",
+                "name": { "kind": "StringLiteral", "value": "getOrderById" },
+                "verb": { "kind": "HttpVerbLiteral", "value": "get" },
+                "parameters": [
+                  {
+                    "kind": "HttpParameter",
+                    "name": { "kind": "StringLiteral", "value": "orderId" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path"
+                    }
+                  }
+                ],
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200
+                },
+                "requestMediaTypes": [],
+                "responseMediaTypes": [
+                  { "kind": "StringLiteral", "value": "application/json" },
+                  { "kind": "StringLiteral", "value": "application/xml" }
                 ]
               },
               {
                 "kind": "HttpMethod",
-                "name": { "value": "deleteOrder" },
-                "verb": { "value": "delete" },
+                "name": { "kind": "StringLiteral", "value": "deleteOrder" },
+                "verb": { "kind": "HttpVerbLiteral", "value": "delete" },
                 "parameters": [
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "orderId" },
-                    "in": { "value": "path" }
+                    "name": { "kind": "StringLiteral", "value": "orderId" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path"
+                    }
                   }
                 ],
-                "successCode": { "value": 200 },
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200
+                },
                 "requestMediaTypes": [],
                 "responseMediaTypes": []
               }
@@ -939,336 +1315,452 @@
     },
     {
       "kind": "Interface",
-      "name": { "value": "user" },
+      "name": { "kind": "StringLiteral", "value": "user" },
       "methods": [
         {
           "kind": "Method",
-          "name": { "value": "createUser" },
+          "name": { "kind": "StringLiteral", "value": "createUser" },
           "security": [],
           "parameters": [
             {
               "kind": "Parameter",
-              "name": { "value": "body" },
-              "description": { "value": "Created user object" },
-              "typeName": { "value": "User" },
-              "isPrimitive": false,
-              "isArray": false,
-              "rules": []
+              "name": { "kind": "StringLiteral", "value": "undefined" },
+              "description": [
+                { "kind": "StringLiteral", "value": "Created user object" }
+              ],
+              "value": {
+                "kind": "ComplexValue",
+                "typeName": { "kind": "StringLiteral", "value": "User" },
+                "rules": []
+              }
             }
           ],
           "description": [
-            { "value": "Create user" },
-            { "value": "This can only be done by the logged in user." }
+            { "kind": "StringLiteral", "value": "Create user" },
+            {
+              "kind": "StringLiteral",
+              "value": "This can only be done by the logged in user."
+            }
           ],
-          "returnType": {
-            "kind": "ReturnType",
-            "typeName": { "value": "User" },
-            "isPrimitive": false,
-            "isArray": false,
-            "rules": []
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "ComplexValue",
+              "typeName": { "kind": "StringLiteral", "value": "User" },
+              "rules": []
+            }
           }
         },
         {
           "kind": "Method",
-          "name": { "value": "createUsersWithListInput" },
+          "name": {
+            "kind": "StringLiteral",
+            "value": "createUsersWithListInput"
+          },
           "security": [],
           "parameters": [
             {
               "kind": "Parameter",
-              "name": { "value": "body" },
-              "typeName": { "value": "User" },
-              "isPrimitive": false,
-              "isArray": true,
-              "rules": []
+              "name": { "kind": "StringLiteral", "value": "undefined" },
+              "value": {
+                "kind": "ComplexValue",
+                "typeName": { "kind": "StringLiteral", "value": "User" },
+                "rules": [],
+                "isArray": { "kind": "TrueLiteral", "value": true }
+              }
             }
           ],
           "description": [
-            { "value": "Creates list of users with given input array" },
-            { "value": "Creates list of users with given input array" }
+            {
+              "kind": "StringLiteral",
+              "value": "Creates list of users with given input array"
+            },
+            {
+              "kind": "StringLiteral",
+              "value": "Creates list of users with given input array"
+            }
           ]
         },
         {
           "kind": "Method",
-          "name": { "value": "loginUser" },
+          "name": { "kind": "StringLiteral", "value": "loginUser" },
           "security": [],
           "parameters": [
             {
               "kind": "Parameter",
-              "name": { "value": "username" },
-              "description": { "value": "The user name for login" },
-              "typeName": { "value": "string" },
-              "isPrimitive": true,
-              "isArray": false,
-              "rules": []
+              "name": { "kind": "StringLiteral", "value": "username" },
+              "description": [
+                { "kind": "StringLiteral", "value": "The user name for login" }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "rules": []
+              }
             },
             {
               "kind": "Parameter",
-              "name": { "value": "password" },
-              "description": {
-                "value": "The password for login in clear text"
-              },
-              "typeName": { "value": "string" },
-              "isPrimitive": true,
-              "isArray": false,
-              "rules": []
+              "name": { "kind": "StringLiteral", "value": "password" },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "The password for login in clear text"
+                }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "rules": []
+              }
             }
           ],
           "description": [
-            { "value": "Logs user into the system" },
-            { "value": "" }
+            { "kind": "StringLiteral", "value": "Logs user into the system" },
+            { "kind": "StringLiteral", "value": "" }
           ],
-          "returnType": {
-            "kind": "ReturnType",
-            "typeName": { "value": "string" },
-            "isPrimitive": true,
-            "isArray": false,
-            "rules": []
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "PrimitiveValue",
+              "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+              "rules": []
+            }
           }
         },
         {
           "kind": "Method",
-          "name": { "value": "logoutUser" },
+          "name": { "kind": "StringLiteral", "value": "logoutUser" },
           "security": [],
           "parameters": [],
           "description": [
-            { "value": "Logs out current logged in user session" },
-            { "value": "" }
+            {
+              "kind": "StringLiteral",
+              "value": "Logs out current logged in user session"
+            },
+            { "kind": "StringLiteral", "value": "" }
           ]
         },
         {
           "kind": "Method",
-          "name": { "value": "getUserByName" },
+          "name": { "kind": "StringLiteral", "value": "getUserByName" },
           "security": [],
           "parameters": [
             {
               "kind": "Parameter",
-              "name": { "value": "username" },
-              "description": {
-                "value": "The name that needs to be fetched. Use user1 for testing. "
-              },
-              "typeName": { "value": "string" },
-              "isPrimitive": true,
-              "isArray": false,
-              "rules": [{ "kind": "ValidationRule", "id": "required" }]
+              "name": { "kind": "StringLiteral", "value": "username" },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "The name that needs to be fetched. Use user1 for testing. "
+                }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+              }
             }
           ],
           "description": [
-            { "value": "Get user by user name" },
-            { "value": "" }
+            { "kind": "StringLiteral", "value": "Get user by user name" },
+            { "kind": "StringLiteral", "value": "" }
           ],
-          "returnType": {
-            "kind": "ReturnType",
-            "typeName": { "value": "User" },
-            "isPrimitive": false,
-            "isArray": false,
-            "rules": []
+          "returns": {
+            "kind": "ReturnValue",
+            "value": {
+              "kind": "ComplexValue",
+              "typeName": { "kind": "StringLiteral", "value": "User" },
+              "rules": []
+            }
           }
         },
         {
           "kind": "Method",
-          "name": { "value": "updateUser" },
+          "name": { "kind": "StringLiteral", "value": "updateUser" },
           "security": [],
           "parameters": [
             {
               "kind": "Parameter",
-              "name": { "value": "body" },
-              "description": {
-                "value": "Update an existent user in the store"
-              },
-              "typeName": { "value": "User" },
-              "isPrimitive": false,
-              "isArray": false,
-              "rules": []
+              "name": { "kind": "StringLiteral", "value": "undefined" },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "Update an existent user in the store"
+                }
+              ],
+              "value": {
+                "kind": "ComplexValue",
+                "typeName": { "kind": "StringLiteral", "value": "User" },
+                "rules": []
+              }
             },
             {
               "kind": "Parameter",
-              "name": { "value": "username" },
-              "description": { "value": "name that need to be deleted" },
-              "typeName": { "value": "string" },
-              "isPrimitive": true,
-              "isArray": false,
-              "rules": [{ "kind": "ValidationRule", "id": "required" }]
+              "name": { "kind": "StringLiteral", "value": "username" },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "name that need to be deleted"
+                }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+              }
             }
           ],
           "description": [
-            { "value": "Update user" },
-            { "value": "This can only be done by the logged in user." }
+            { "kind": "StringLiteral", "value": "Update user" },
+            {
+              "kind": "StringLiteral",
+              "value": "This can only be done by the logged in user."
+            }
           ]
         },
         {
           "kind": "Method",
-          "name": { "value": "deleteUser" },
+          "name": { "kind": "StringLiteral", "value": "deleteUser" },
           "security": [],
           "parameters": [
             {
               "kind": "Parameter",
-              "name": { "value": "username" },
-              "description": { "value": "The name that needs to be deleted" },
-              "typeName": { "value": "string" },
-              "isPrimitive": true,
-              "isArray": false,
-              "rules": [{ "kind": "ValidationRule", "id": "required" }]
+              "name": { "kind": "StringLiteral", "value": "username" },
+              "description": [
+                {
+                  "kind": "StringLiteral",
+                  "value": "The name that needs to be deleted"
+                }
+              ],
+              "value": {
+                "kind": "PrimitiveValue",
+                "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+              }
             }
           ],
           "description": [
-            { "value": "Delete user" },
-            { "value": "This can only be done by the logged in user." }
+            { "kind": "StringLiteral", "value": "Delete user" },
+            {
+              "kind": "StringLiteral",
+              "value": "This can only be done by the logged in user."
+            }
           ]
         }
       ],
       "protocols": {
+        "kind": "InterfaceProtocols",
         "http": [
           {
-            "kind": "HttpPath",
-            "path": { "value": "/user" },
+            "kind": "HttpRoute",
+            "pattern": { "kind": "StringLiteral", "value": "/user" },
             "methods": [
               {
                 "kind": "HttpMethod",
-                "name": { "value": "createUser" },
-                "verb": { "value": "post" },
+                "name": { "kind": "StringLiteral", "value": "createUser" },
+                "verb": { "kind": "HttpVerbLiteral", "value": "post" },
                 "parameters": [
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "body" },
-                    "in": { "value": "body" }
+                    "name": { "kind": "StringLiteral", "value": "undefined" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "body"
+                    }
                   }
                 ],
-                "successCode": { "value": 201 },
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 201
+                },
                 "requestMediaTypes": [
-                  { "value": "application/json" },
-                  { "value": "application/xml" },
-                  { "value": "application/x-www-form-urlencoded" }
+                  { "kind": "StringLiteral", "value": "application/json" },
+                  { "kind": "StringLiteral", "value": "application/xml" },
+                  {
+                    "kind": "StringLiteral",
+                    "value": "application/x-www-form-urlencoded"
+                  }
                 ],
                 "responseMediaTypes": [
-                  { "value": "application/json" },
-                  { "value": "application/xml" }
+                  { "kind": "StringLiteral", "value": "application/json" },
+                  { "kind": "StringLiteral", "value": "application/xml" }
                 ]
               }
             ]
           },
           {
-            "kind": "HttpPath",
-            "path": { "value": "/user/createWithList" },
+            "kind": "HttpRoute",
+            "pattern": {
+              "kind": "StringLiteral",
+              "value": "/user/createWithList"
+            },
             "methods": [
               {
                 "kind": "HttpMethod",
-                "name": { "value": "createUsersWithListInput" },
-                "verb": { "value": "post" },
+                "name": {
+                  "kind": "StringLiteral",
+                  "value": "createUsersWithListInput"
+                },
+                "verb": { "kind": "HttpVerbLiteral", "value": "post" },
                 "parameters": [
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "body" },
-                    "in": { "value": "body" }
+                    "name": { "kind": "StringLiteral", "value": "undefined" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "body"
+                    }
                   }
                 ],
-                "successCode": { "value": 204 },
-                "requestMediaTypes": [{ "value": "application/json" }],
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 204
+                },
+                "requestMediaTypes": [
+                  { "kind": "StringLiteral", "value": "application/json" }
+                ],
                 "responseMediaTypes": []
               }
             ]
           },
           {
-            "kind": "HttpPath",
-            "path": { "value": "/user/login" },
+            "kind": "HttpRoute",
+            "pattern": { "kind": "StringLiteral", "value": "/user/login" },
             "methods": [
               {
                 "kind": "HttpMethod",
-                "name": { "value": "loginUser" },
-                "verb": { "value": "get" },
+                "name": { "kind": "StringLiteral", "value": "loginUser" },
+                "verb": { "kind": "HttpVerbLiteral", "value": "get" },
                 "parameters": [
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "username" },
-                    "in": { "value": "query" }
+                    "name": { "kind": "StringLiteral", "value": "username" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query"
+                    }
                   },
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "password" },
-                    "in": { "value": "query" }
+                    "name": { "kind": "StringLiteral", "value": "password" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "query"
+                    }
                   }
                 ],
-                "successCode": { "value": 200 },
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200
+                },
                 "requestMediaTypes": [],
                 "responseMediaTypes": [
-                  { "value": "application/xml" },
-                  { "value": "application/json" }
+                  { "kind": "StringLiteral", "value": "application/xml" },
+                  { "kind": "StringLiteral", "value": "application/json" }
                 ]
               }
             ]
           },
           {
-            "kind": "HttpPath",
-            "path": { "value": "/user/logout" },
+            "kind": "HttpRoute",
+            "pattern": { "kind": "StringLiteral", "value": "/user/logout" },
             "methods": [
               {
                 "kind": "HttpMethod",
-                "name": { "value": "logoutUser" },
-                "verb": { "value": "get" },
+                "name": { "kind": "StringLiteral", "value": "logoutUser" },
+                "verb": { "kind": "HttpVerbLiteral", "value": "get" },
                 "parameters": [],
-                "successCode": { "value": 204 },
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 204
+                },
                 "requestMediaTypes": [],
                 "responseMediaTypes": []
               }
             ]
           },
           {
-            "kind": "HttpPath",
-            "path": { "value": "/user/{username}" },
+            "kind": "HttpRoute",
+            "pattern": { "kind": "StringLiteral", "value": "/user/{username}" },
             "methods": [
               {
                 "kind": "HttpMethod",
-                "name": { "value": "getUserByName" },
-                "verb": { "value": "get" },
+                "name": { "kind": "StringLiteral", "value": "getUserByName" },
+                "verb": { "kind": "HttpVerbLiteral", "value": "get" },
                 "parameters": [
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "username" },
-                    "in": { "value": "path" }
+                    "name": { "kind": "StringLiteral", "value": "username" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path"
+                    }
                   }
                 ],
-                "successCode": { "value": 200 },
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200
+                },
                 "requestMediaTypes": [],
                 "responseMediaTypes": [
-                  { "value": "application/json" },
-                  { "value": "application/xml" }
+                  { "kind": "StringLiteral", "value": "application/json" },
+                  { "kind": "StringLiteral", "value": "application/xml" }
                 ]
               },
               {
                 "kind": "HttpMethod",
-                "name": { "value": "updateUser" },
-                "verb": { "value": "put" },
+                "name": { "kind": "StringLiteral", "value": "updateUser" },
+                "verb": { "kind": "HttpVerbLiteral", "value": "put" },
                 "parameters": [
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "body" },
-                    "in": { "value": "body" }
+                    "name": { "kind": "StringLiteral", "value": "undefined" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "body"
+                    }
                   },
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "username" },
-                    "in": { "value": "path" }
+                    "name": { "kind": "StringLiteral", "value": "username" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path"
+                    }
                   }
                 ],
-                "successCode": { "value": 204 },
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 204
+                },
                 "requestMediaTypes": [
-                  { "value": "application/json" },
-                  { "value": "application/xml" },
-                  { "value": "application/x-www-form-urlencoded" }
+                  { "kind": "StringLiteral", "value": "application/json" },
+                  { "kind": "StringLiteral", "value": "application/xml" },
+                  {
+                    "kind": "StringLiteral",
+                    "value": "application/x-www-form-urlencoded"
+                  }
                 ],
                 "responseMediaTypes": []
               },
               {
                 "kind": "HttpMethod",
-                "name": { "value": "deleteUser" },
-                "verb": { "value": "delete" },
+                "name": { "kind": "StringLiteral", "value": "deleteUser" },
+                "verb": { "kind": "HttpVerbLiteral", "value": "delete" },
                 "parameters": [
                   {
                     "kind": "HttpParameter",
-                    "name": { "value": "username" },
-                    "in": { "value": "path" }
+                    "name": { "kind": "StringLiteral", "value": "username" },
+                    "location": {
+                      "kind": "HttpLocationLiteral",
+                      "value": "path"
+                    }
                   }
                 ],
-                "successCode": { "value": 200 },
+                "successCode": {
+                  "kind": "HttpStatusCodeLiteral",
+                  "value": 200
+                },
                 "requestMediaTypes": [],
                 "responseMediaTypes": []
               }
@@ -1281,364 +1773,406 @@
   "types": [
     {
       "kind": "Type",
-      "name": { "value": "Order" },
+      "name": { "kind": "StringLiteral", "value": "Order" },
       "properties": [
         {
           "kind": "Property",
-          "name": { "value": "id" },
-          "typeName": { "value": "long" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "id" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "petId" },
-          "typeName": { "value": "long" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "petId" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "quantity" },
-          "typeName": { "value": "integer" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "quantity" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "integer" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "shipDate" },
-          "typeName": { "value": "date-time" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": [
-            {
-              "kind": "ValidationRule",
-              "id": "string-format",
-              "format": { "value": "date-time" }
-            }
-          ]
+          "name": { "kind": "StringLiteral", "value": "shipDate" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "date-time" },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "StringFormat",
+                "format": {
+                  "kind": "NonEmptyStringLiteral",
+                  "value": "date-time"
+                }
+              }
+            ]
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "status" },
-          "description": { "value": "Order Status" },
-          "typeName": { "value": "orderStatus" },
-          "isPrimitive": false,
-          "isArray": false,
-          "rules": [
-            {
-              "kind": "ValidationRule",
-              "id": "string-enum",
-              "values": [
-                { "value": "placed" },
-                { "value": "approved" },
-                { "value": "delivered" }
-              ]
-            }
-          ]
+          "name": { "kind": "StringLiteral", "value": "status" },
+          "description": [{ "kind": "StringLiteral", "value": "Order Status" }],
+          "value": {
+            "kind": "ComplexValue",
+            "typeName": { "kind": "StringLiteral", "value": "orderStatus" },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "StringEnum",
+                "values": [
+                  { "kind": "StringLiteral", "value": "placed" },
+                  { "kind": "StringLiteral", "value": "approved" },
+                  { "kind": "StringLiteral", "value": "delivered" }
+                ]
+              }
+            ]
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "complete" },
-          "typeName": { "value": "boolean" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "complete" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "boolean" },
+            "rules": []
+          }
         }
       ],
       "rules": []
     },
     {
       "kind": "Type",
-      "name": { "value": "Customer" },
+      "name": { "kind": "StringLiteral", "value": "Customer" },
       "properties": [
         {
           "kind": "Property",
-          "name": { "value": "id" },
-          "typeName": { "value": "long" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "id" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "username" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "username" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "address" },
-          "typeName": { "value": "Address" },
-          "isPrimitive": false,
-          "isArray": true,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "address" },
+          "value": {
+            "kind": "ComplexValue",
+            "typeName": { "kind": "StringLiteral", "value": "Address" },
+            "rules": [],
+            "isArray": { "kind": "TrueLiteral", "value": true }
+          }
         }
       ],
       "rules": []
     },
     {
       "kind": "Type",
-      "name": { "value": "Address" },
+      "name": { "kind": "StringLiteral", "value": "Address" },
       "properties": [
         {
           "kind": "Property",
-          "name": { "value": "street" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "street" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "city" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "city" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "state" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "state" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "zip" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "zip" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": []
+          }
         }
       ],
       "rules": []
     },
     {
       "kind": "Type",
-      "name": { "value": "Category" },
+      "name": { "kind": "StringLiteral", "value": "Category" },
       "properties": [
         {
           "kind": "Property",
-          "name": { "value": "id" },
-          "typeName": { "value": "long" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "id" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "name" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "name" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": []
+          }
         }
       ],
       "rules": []
     },
     {
       "kind": "Type",
-      "name": { "value": "User" },
+      "name": { "kind": "StringLiteral", "value": "User" },
       "properties": [
         {
           "kind": "Property",
-          "name": { "value": "id" },
-          "typeName": { "value": "long" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "id" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "username" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "username" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "firstName" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "firstName" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "lastName" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "lastName" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "email" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "email" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "password" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "password" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "phone" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "phone" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "userStatus" },
-          "description": { "value": "User Status" },
-          "typeName": { "value": "integer" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "userStatus" },
+          "description": [{ "kind": "StringLiteral", "value": "User Status" }],
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "integer" },
+            "rules": []
+          }
         }
       ],
       "rules": []
     },
     {
       "kind": "Type",
-      "name": { "value": "Tag" },
+      "name": { "kind": "StringLiteral", "value": "Tag" },
       "properties": [
         {
           "kind": "Property",
-          "name": { "value": "id" },
-          "typeName": { "value": "long" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "id" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "name" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "name" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": []
+          }
         }
       ],
       "rules": []
     },
     {
       "kind": "Type",
-      "name": { "value": "Pet" },
+      "name": { "kind": "StringLiteral", "value": "Pet" },
       "properties": [
         {
           "kind": "Property",
-          "name": { "value": "id" },
-          "typeName": { "value": "long" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "id" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "name" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": [{ "kind": "ValidationRule", "id": "required" }]
+          "name": { "kind": "StringLiteral", "value": "name" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "category" },
-          "typeName": { "value": "Category" },
-          "isPrimitive": false,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "category" },
+          "value": {
+            "kind": "ComplexValue",
+            "typeName": { "kind": "StringLiteral", "value": "Category" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "photoUrls" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": true,
-          "rules": [{ "kind": "ValidationRule", "id": "required" }]
+          "name": { "kind": "StringLiteral", "value": "photoUrls" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": [],
+            "isArray": { "kind": "TrueLiteral", "value": true }
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "tags" },
-          "typeName": { "value": "Tag" },
-          "isPrimitive": false,
-          "isArray": true,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "tags" },
+          "value": {
+            "kind": "ComplexValue",
+            "typeName": { "kind": "StringLiteral", "value": "Tag" },
+            "rules": [],
+            "isArray": { "kind": "TrueLiteral", "value": true }
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "status" },
-          "description": { "value": "pet status in the store" },
-          "typeName": { "value": "petStatus" },
-          "isPrimitive": false,
-          "isArray": false,
-          "rules": [
-            {
-              "kind": "ValidationRule",
-              "id": "string-enum",
-              "values": [
-                { "value": "available" },
-                { "value": "pending" },
-                { "value": "sold" }
-              ]
-            }
-          ]
+          "name": { "kind": "StringLiteral", "value": "status" },
+          "description": [
+            { "kind": "StringLiteral", "value": "pet status in the store" }
+          ],
+          "value": {
+            "kind": "ComplexValue",
+            "typeName": { "kind": "StringLiteral", "value": "petStatus" },
+            "rules": [
+              {
+                "kind": "ValidationRule",
+                "id": "StringEnum",
+                "values": [
+                  { "kind": "StringLiteral", "value": "available" },
+                  { "kind": "StringLiteral", "value": "pending" },
+                  { "kind": "StringLiteral", "value": "sold" }
+                ]
+              }
+            ]
+          }
         }
       ],
       "rules": []
     },
     {
       "kind": "Type",
-      "name": { "value": "ApiResponse" },
+      "name": { "kind": "StringLiteral", "value": "ApiResponse" },
       "properties": [
         {
           "kind": "Property",
-          "name": { "value": "code" },
-          "typeName": { "value": "integer" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "code" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "integer" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "type" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "type" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": []
+          }
         },
         {
           "kind": "Property",
-          "name": { "value": "message" },
-          "typeName": { "value": "string" },
-          "isPrimitive": true,
-          "isArray": false,
-          "rules": []
+          "name": { "kind": "StringLiteral", "value": "message" },
+          "value": {
+            "kind": "PrimitiveValue",
+            "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "rules": []
+          }
         }
       ],
       "rules": []
     },
     {
       "kind": "Type",
-      "name": { "value": "getInventoryResponse" },
+      "name": { "kind": "StringLiteral", "value": "getInventoryResponse" },
       "properties": [],
       "rules": []
     }
@@ -1646,29 +2180,56 @@
   "enums": [
     {
       "kind": "Enum",
-      "name": { "value": "findPetsByStatusStatus" },
-      "values": [
-        { "kind": "EnumValue", "content": { "value": "available" } },
-        { "kind": "EnumValue", "content": { "value": "pending" } },
-        { "kind": "EnumValue", "content": { "value": "sold" } }
+      "name": { "kind": "StringLiteral", "value": "findPetsByStatusStatus" },
+      "members": [
+        {
+          "kind": "EnumMember",
+          "content": { "kind": "StringLiteral", "value": "available" }
+        },
+        {
+          "kind": "EnumMember",
+          "content": { "kind": "StringLiteral", "value": "pending" }
+        },
+        {
+          "kind": "EnumMember",
+          "content": { "kind": "StringLiteral", "value": "sold" }
+        }
       ]
     },
     {
       "kind": "Enum",
-      "name": { "value": "orderStatus" },
-      "values": [
-        { "kind": "EnumValue", "content": { "value": "placed" } },
-        { "kind": "EnumValue", "content": { "value": "approved" } },
-        { "kind": "EnumValue", "content": { "value": "delivered" } }
+      "name": { "kind": "StringLiteral", "value": "orderStatus" },
+      "members": [
+        {
+          "kind": "EnumMember",
+          "content": { "kind": "StringLiteral", "value": "placed" }
+        },
+        {
+          "kind": "EnumMember",
+          "content": { "kind": "StringLiteral", "value": "approved" }
+        },
+        {
+          "kind": "EnumMember",
+          "content": { "kind": "StringLiteral", "value": "delivered" }
+        }
       ]
     },
     {
       "kind": "Enum",
-      "name": { "value": "petStatus" },
-      "values": [
-        { "kind": "EnumValue", "content": { "value": "available" } },
-        { "kind": "EnumValue", "content": { "value": "pending" } },
-        { "kind": "EnumValue", "content": { "value": "sold" } }
+      "name": { "kind": "StringLiteral", "value": "petStatus" },
+      "members": [
+        {
+          "kind": "EnumMember",
+          "content": { "kind": "StringLiteral", "value": "available" }
+        },
+        {
+          "kind": "EnumMember",
+          "content": { "kind": "StringLiteral", "value": "pending" }
+        },
+        {
+          "kind": "EnumMember",
+          "content": { "kind": "StringLiteral", "value": "sold" }
+        }
       ]
     }
   ],
