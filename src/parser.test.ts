@@ -157,7 +157,7 @@ describe('parser', () => {
     // ARRANGE
 
     const sourcePath =
-      'https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.json';
+      'https://raw.githubusercontent.com/swagger-api/swagger-petstore/refs/heads/master/src/main/resources/openapi.yaml';
     const sourceContent = await getText(sourcePath);
 
     const service = parser(sourceContent, sourcePath).service;
