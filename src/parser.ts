@@ -1255,8 +1255,8 @@ export class OAS3Parser {
     oneOf: (OAS3.RefNode | OAS3.ObjectSchemaNode)[],
     nameLoc: string | undefined,
   ): void {
-    const members: TypedValue[] = oneOf.map((subDef) =>
-      this.parseType(subDef, name, ''),
+    const members: TypedValue[] = oneOf.map((subDef, i) =>
+      this.parseType(subDef, `${i + 1}`, name),
     );
 
     if (node.discriminator) {
