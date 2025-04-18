@@ -168,6 +168,146 @@ describe('parser', () => {
     // ASSERT
     expect(errors).toEqual([]);
   });
+
+  describe('unions', () => {
+    it('correctly parses a oneOf without $refs in a body parameter', () => {
+      const oas = {
+        openapi: '3.0.1',
+        info: { title: 'Test', version: '1.0.0', description: 'test' },
+        paths: {
+          '/test': {
+            post: {
+              operationId: 'test',
+              parameters: [
+                {
+                  name: 'testBody',
+                  in: 'body',
+                  required: true,
+                  schema: {
+                    oneOf: [
+                      {
+                        type: 'object',
+                        properties: {
+                          typeA: {
+                            type: 'string',
+                            example: 'exampleValueA',
+                          },
+                        },
+                        required: ['typeA'],
+                      },
+                      {
+                        type: 'object',
+                        properties: {
+                          typeB: { type: 'number', example: 42 },
+                        },
+                        required: ['typeB'],
+                      },
+                    ],
+                  },
+                },
+              ],
+              responses: { '200': { description: 'success' } },
+            },
+          },
+        },
+      };
+
+      // ACT
+      const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+      // ASSERT
+      expect(service).toEqual(
+        partial<Service>({
+          types: [
+            { kind: 'Type', name: { value: 'testTestBody1' } },
+            { kind: 'Type', name: { value: 'testTestBody2' } },
+          ],
+          unions: [
+            {
+              kind: 'Union',
+              name: { value: 'testTestBody' },
+              members: [
+                { typeName: { value: 'testTestBody1' } },
+                { typeName: { value: 'testTestBody1' } },
+              ],
+            },
+          ],
+        }),
+      );
+    });
+
+    it('correctly parses a oneOf with $refs in a body parameter', () => {
+      const oas = {
+        openapi: '3.0.1',
+        info: { title: 'Test', version: '1.0.0', description: 'test' },
+        paths: {
+          '/test': {
+            post: {
+              operationId: 'test',
+              parameters: [
+                {
+                  name: 'testBody',
+                  in: 'body',
+                  required: true,
+                  schema: {
+                    oneOf: [
+                      { $ref: '#/components/schemas/typeA' },
+                      { $ref: '#/components/schemas/typeB' },
+                    ],
+                  },
+                },
+              ],
+              responses: { '200': { description: 'success' } },
+            },
+          },
+        },
+        components: {
+          schemas: {
+            typeA: {
+              type: 'object',
+              properties: {
+                typeA: {
+                  type: 'string',
+                  example: 'exampleValueA',
+                },
+              },
+              required: ['typeA'],
+            },
+            typeB: {
+              type: 'object',
+              properties: {
+                typeB: { type: 'number', example: 42 },
+              },
+              required: ['typeB'],
+            },
+          },
+        },
+      };
+
+      // ACT
+      const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+      // ASSERT
+      expect(service).toEqual(
+        partial<Service>({
+          types: [
+            { kind: 'Type', name: { value: 'typeA' } },
+            { kind: 'Type', name: { value: 'typeB' } },
+          ],
+          unions: [
+            {
+              kind: 'Union',
+              name: { value: 'testTestBody' },
+              members: [
+                { typeName: { value: 'typeA' } },
+                { typeName: { value: 'typeB' } },
+              ],
+            },
+          ],
+        }),
+      );
+    });
+  });
 });
 
 function getText(url: string): Promise<string> {
@@ -192,4 +332,30 @@ function getText(url: string): Promise<string> {
 
 function removeLoc(key: string, value: any): any {
   return key === 'loc' ? undefined : value;
+}
+
+type DeepPartial<T> = T extends Function
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends object
+  ? { [P in keyof T]?: DeepPartial<T[P]> }
+  : T;
+
+function partial<T = any>(input: DeepPartial<T>): any {
+  if (Array.isArray(input)) {
+    return expect.arrayContaining(input.map(partial));
+  }
+
+  if (input && typeof input === 'object' && !(input instanceof Date)) {
+    const entries = Object.entries(input).map(([key, value]) => [
+      key,
+      partial(value),
+    ]);
+    return expect.objectContaining(Object.fromEntries(entries));
+  }
+
+  return input;
 }
