@@ -2,12 +2,11 @@ import { major } from 'semver';
 import { singular } from 'pluralize';
 import { camel, kebab, pascal } from 'case';
 
-import { AST, DocumentNode, parse } from '@basketry/ast';
+import { AST, DocumentNode, NodeConstructor, parse } from '@basketry/ast';
 import * as OAS3 from './types';
 
 import {
   CustomValue,
-  decodeRange,
   encodeRange,
   Enum,
   EnumValue,
@@ -42,7 +41,10 @@ function range(node: AST.ASTNode | DocumentNode): string {
 
 export class OAS3Parser {
   constructor(schema: string, private readonly sourcePath: string) {
-    this.schema = new OAS3.OpenAPINode(parse(schema));
+    this.schema = new OAS3.OpenAPINode(parse(schema), {
+      root: undefined,
+      parentKey: undefined,
+    });
   }
 
   public readonly violations: Violation[] = [];
@@ -75,19 +77,34 @@ export class OAS3Parser {
       {},
     );
 
-    this.schema.info.title.loc;
+    const title = this.schema.info?.title;
+    const version = this.schema.info?.version;
 
-    return {
+    const openapi = this.schema.openapi;
+    if (openapi) {
+      const semverV3Regex = /^3\.\d+\.\d+$/;
+      if (!semverV3Regex.test(openapi.value)) {
+        this.violations.push({
+          code: 'openapi-3/invalid-schema',
+          message: `OpenAPI version ${openapi.value} is not supported.`,
+          range: openapi.loc,
+          severity: 'error',
+          sourcePath: this.sourcePath,
+        });
+      }
+    }
+
+    const service: Service = {
       kind: 'Service',
       basketry: '1.1-rc',
       sourcePath: relative(process.cwd(), this.sourcePath),
       title: {
-        value: pascal(this.schema.info.title.value),
-        loc: range(this.schema.info.title),
+        value: title ? pascal(title.value) : 'untitled',
+        loc: title ? range(title) : undefined,
       },
       majorVersion: {
-        value: major(this.schema.info.version.value),
-        loc: range(this.schema.info.version),
+        value: version ? major(version.value) : 1,
+        loc: version ? range(version) : undefined,
       },
       interfaces,
       types: Object.keys(typesByName).map((name) => typesByName[name]),
@@ -96,6 +113,18 @@ export class OAS3Parser {
       loc: range(this.schema),
       meta: this.parseMeta(this.schema),
     };
+
+    for (const violation of OAS3.getViolations(this.schema.root)) {
+      this.violations.push({
+        code: 'openapi-3/invalid-schema',
+        message: violation.message,
+        range: violation.range,
+        severity: violation.severity,
+        sourcePath: this.sourcePath,
+      });
+    }
+
+    return service;
   }
 
   private parseMeta(node: DocumentNode): Meta | undefined {
@@ -138,7 +167,7 @@ export class OAS3Parser {
     if (typeof primary?.value === 'number') {
       return primary as Scalar<number>;
     } else if (primary?.value === 'default') {
-      const res = operation.responses.read(primary.value);
+      const res = operation.responses?.read(primary.value);
       if (res && this.resolve(res, OAS3.ResponseNode)?.content?.keys?.length) {
         switch (verb) {
           case 'delete':
@@ -166,10 +195,12 @@ export class OAS3Parser {
     const httpPaths: HttpPath[] = [];
 
     for (const path of paths) {
-      const pathItem = this.resolve(
-        this.schema.paths.read(path)!,
-        OAS3.PathItemNode,
-      );
+      const pathOrRef = this.schema.paths.read(path);
+      if (!pathOrRef) continue;
+
+      const pathItem = this.resolve(pathOrRef, OAS3.PathItemNode);
+      if (!pathItem) continue;
+
       const keyLoc = this.schema.paths.keyRange(path);
       const loc = this.schema.paths.propRange(path)!;
       const commonParameters = pathItem.parameters || [];
@@ -183,7 +214,9 @@ export class OAS3Parser {
 
       for (const verb of pathItem.keys) {
         if (verb === 'parameters') continue;
-        const operation = pathItem[verb]! as OAS3.OperationNode;
+        const operation = pathItem[verb] as OAS3.OperationNode | undefined;
+        if (!operation) continue;
+
         if (this.parseInterfaceName(path, operation) !== interfaceName) {
           continue;
         }
@@ -232,9 +265,10 @@ export class OAS3Parser {
           const name = this.parseParameterName(param);
 
           const resolved = OAS3.resolveParam(this.schema.node, param);
-          if (!resolved) throw new Error('Cannot resolve reference');
+          if (!resolved) continue;
 
           const location = this.parseParameterLocation(param);
+          if (!location) continue;
 
           const locationValue = location.value;
 
@@ -251,6 +285,9 @@ export class OAS3Parser {
             continue;
           }
 
+          const value = name?.value ?? 'unnamed';
+          const nameLoc = name ? range(name) : undefined;
+
           if (
             (resolved.in.value === 'header' ||
               resolved.in.value === 'path' ||
@@ -259,7 +296,7 @@ export class OAS3Parser {
           ) {
             httpMethod.parameters.push({
               kind: 'HttpParameter',
-              name: { value: name.value, loc: range(name) },
+              name: { value, loc: nameLoc },
               in: { value: locationValue, loc: range(location) },
               array: this.parseArrayStyle(resolved),
               loc: range(resolved),
@@ -267,7 +304,7 @@ export class OAS3Parser {
           } else {
             httpMethod.parameters.push({
               kind: 'HttpParameter',
-              name: { value: name.value, loc: range(name) },
+              name: { value, loc: nameLoc },
               in: { value: locationValue, loc: range(location) },
               loc: range(resolved),
             });
@@ -287,7 +324,7 @@ export class OAS3Parser {
   ): Scalar<string>[] {
     if (!operation.requestBody) return [];
     const body = this.resolve(operation.requestBody, OAS3.RequestBodyNode);
-    return body.content ? this.parseMediaType(body.content) : [];
+    return body?.content ? this.parseMediaType(body.content) : [];
   }
 
   private parseHttpResponseMediaType(
@@ -297,7 +334,7 @@ export class OAS3Parser {
     if (!response) return [];
 
     const res = this.resolve(response, OAS3.ResponseNode);
-    return res.content ? this.parseMediaType(res.content) : [];
+    return res?.content ? this.parseMediaType(res.content) : [];
   }
 
   private parseMediaType(
@@ -353,10 +390,14 @@ export class OAS3Parser {
     const pathsNode = this.schema.paths;
     if (!pathsNode) return;
     for (const path of pathsNode.keys) {
-      for (const verb of pathsNode.read(path)!.keys) {
+      const pathNode = pathsNode.read(path);
+      if (!pathNode) continue;
+
+      for (const verb of pathNode.keys) {
         if (verb === 'parameters' || verb.startsWith('x-')) continue;
 
-        const operation: OAS3.OperationNode = pathsNode.read(path)![verb];
+        const operation: OAS3.OperationNode = pathNode[verb];
+        if (!operation) continue;
 
         yield { path, verb, operation };
       }
@@ -375,7 +416,8 @@ export class OAS3Parser {
     path: string,
     operation: OAS3.OperationNode,
   ): string {
-    return operation.tags?.[0].value || path.split('/')[1];
+    const segments = path.split('/');
+    return operation.tags?.[0].value || segments[1] || segments[0] || 'default';
   }
 
   private parseDeprecated(node: {
@@ -396,23 +438,22 @@ export class OAS3Parser {
 
     for (const { path, verb, operation } of this.allOperations()) {
       const pathNode = this.resolve(pathsNode.read(path)!, OAS3.PathItemNode);
-      const commonParameters = pathNode.parameters || [];
+      const commonParameters = pathNode?.parameters ?? [];
 
       if (this.parseInterfaceName(path, operation) !== interfaceName) {
         continue;
       }
 
-      operation.deprecated;
-
       const nameLoc = operation.operationId
         ? range(operation.operationId)
         : undefined;
+
+      const operationId = operation.operationId?.value;
+      if (!operationId) continue;
+
       methods.push({
         kind: 'Method',
-        name: {
-          value: operation.operationId?.value || 'UNNAMED',
-          loc: nameLoc,
-        },
+        name: { value: operationId, loc: nameLoc },
         security: this.parseSecurity(operation),
         parameters: this.parseParameters(operation, commonParameters),
         description: this.parseDescription(
@@ -631,9 +672,9 @@ export class OAS3Parser {
       .map((p) => OAS3.resolveParam(this.schema.node, p))
       .filter((p): p is OAS3.ParameterNode => !!p);
 
-    const nonBodyParams = parameters.map((p) =>
-      this.parseParameter(p, operation.operationId?.value || ''),
-    );
+    const nonBodyParams = parameters
+      .map((p) => this.parseParameter(p, operation.operationId?.value || ''))
+      .filter((x): x is Parameter => !!x);
 
     const bodyParam = this.parseRequestBody(
       operation.requestBody,
@@ -657,26 +698,25 @@ export class OAS3Parser {
   private parseParameter(
     param: OAS3.ParameterNode,
     methodName: string,
-  ): Parameter {
-    // const unresolved = isBodyParameter(param) ? param.schema : param;
-    // const resolved = OAS3.resolveParamOrSchema(this.schema.node, unresolved);
-
-    if (!param.schema) throw new Error('Unexpected undefined schema');
+  ): Parameter | undefined {
+    if (!param.schema) return;
 
     const unresolved = param.schema;
     const resolved = OAS3.resolveSchema(this.schema.node, param.schema);
+    if (!resolved) return;
 
-    if (!resolved) throw new Error('Cannot resolve reference');
-    // if (resolved.nodeType === 'BodyParameter') {
-    //   throw new Error('Unexpected body parameter');
-    // }
+    const name = param.name;
 
-    const x = this.parseType(unresolved, param.name.value, methodName);
+    const value = param.name?.value ?? 'unnamed';
+    const loc = param.name ? range(param.name) : undefined;
+
+    const x = this.parseType(unresolved, value, methodName);
+    if (!x) return;
 
     if (x.isPrimitive) {
       return {
         kind: 'Parameter',
-        name: { value: param.name.value, loc: range(param.name) },
+        name: { value, loc },
         description: this.parseDescription(undefined, param.description),
         typeName: x.typeName,
         isPrimitive: x.isPrimitive,
@@ -690,7 +730,7 @@ export class OAS3Parser {
     } else {
       return {
         kind: 'Parameter',
-        name: { value: param.name.value, loc: range(param.name) },
+        name: { value, loc },
         description: this.parseDescription(undefined, param.description),
         typeName: x.typeName,
         isPrimitive: x.isPrimitive,
@@ -711,14 +751,16 @@ export class OAS3Parser {
     if (!bodyOrRef) return;
 
     const body = this.resolve(bodyOrRef, OAS3.RequestBodyNode);
+    if (!body) return;
 
-    const schemaOrRef = this.getSchemaOrRef(body.content);
+    const schemaOrRef = this.getSchemaOrRef(body?.content);
     if (!schemaOrRef) return;
 
     const schema = OAS3.resolveSchema(this.schema.node, schemaOrRef);
     if (!schema) return;
 
     const x = this.parseType(schemaOrRef, paramName.value, methodName);
+    if (!x) return;
 
     if (x.isPrimitive) {
       return {
@@ -749,46 +791,40 @@ export class OAS3Parser {
 
   private parseParameterLocation(
     def: OAS3.ParameterNode | OAS3.RefNode,
-  ): OAS3.ParameterNode['in'] {
+  ): OAS3.ParameterNode['in'] | undefined {
     const resolved = OAS3.resolveParam(this.schema.node, def);
-    if (!resolved) throw new Error('Cannot resolve reference');
+    if (!resolved) return;
 
     return resolved.in;
   }
 
   private parseParameterName(
     def: OAS3.ParameterNode | OAS3.RefNode,
-  ): OAS3.ParameterNode['name'] {
+  ): OAS3.ParameterNode['name'] | undefined {
     const resolved = OAS3.resolveParam(this.schema.node, def);
-    if (!resolved) throw new Error('Cannot resolve reference');
+    if (!resolved) return;
 
     return resolved.name;
   }
 
   private parseType(
-    schemaOrRef: // | Exclude<OAS3.ParameterNodeUnion, OAS3.BodyParameterNode>
-    OAS3.SchemaNodeUnion | OAS3.RefNode,
+    schemaOrRef: OAS3.SchemaNodeUnion | OAS3.RefNode,
     localName: string,
     parentName: string,
-  ): {
-    enumValues?: Scalar<string>[];
-    rules: ValidationRule[];
-    loc: string;
-  } & TypedValue {
+  ):
+    | ({
+        enumValues?: Scalar<string>[];
+        rules: ValidationRule[];
+        loc: string;
+      } & TypedValue)
+    | undefined {
     if (OAS3.isRefNode(schemaOrRef)) {
       const schema = OAS3.resolveSchema(this.schema.node, schemaOrRef);
-      if (!schema) {
-        throw new Error(
-          `Cannot resolve reference: '${schemaOrRef.$ref.value}'`,
-        );
-      }
-      // if (res.nodeType === 'BodyParameter') {
-      //   throw new Error('Unexpected body parameter');
-      // }
+      if (!schema) return;
 
       // TODO: do a better job of detecting a definitions ref
       const prefix = '#/components/schemas/';
-      if (schemaOrRef.$ref.value.startsWith(prefix)) {
+      if (schemaOrRef.$ref?.value.startsWith(prefix)) {
         if (OAS3.isObject(schema)) {
           return {
             typeName: {
@@ -828,10 +864,12 @@ export class OAS3Parser {
           return this.parseType(schema, localName, parentName);
         }
       } else {
+        // TODO: what is this?
+        const { $ref } = schemaOrRef;
         return {
           typeName: {
-            value: schemaOrRef.$ref.value,
-            loc: OAS3.refRange(this.schema.node, schemaOrRef.$ref.value),
+            value: $ref?.value ?? 'untyped',
+            loc: $ref ? OAS3.refRange(this.schema.node, $ref.value) : undefined,
           },
           isPrimitive: false,
           isArray: false,
@@ -847,8 +885,10 @@ export class OAS3Parser {
       case 'StringSchema':
         if (schemaOrRef.enum) {
           if (!schemaOrRef.const && schemaOrRef.enum.length === 1) {
+            const stringName = this.parseStringName(schemaOrRef);
+            if (!stringName) return;
             return {
-              ...this.parseStringName(schemaOrRef),
+              ...stringName,
               isArray: false,
               default: toScalar(schemaOrRef.default),
               constant: toScalar(schemaOrRef.enum[0]),
@@ -878,8 +918,10 @@ export class OAS3Parser {
             };
           }
         } else {
+          const stringName = this.parseStringName(schemaOrRef);
+          if (!stringName) return;
           return {
-            ...this.parseStringName(schemaOrRef),
+            ...stringName,
             isArray: false,
             default: toScalar(schemaOrRef.default),
             constant: toScalar(schemaOrRef.const),
@@ -914,10 +956,10 @@ export class OAS3Parser {
         };
       // case 'ArrayParameter':
       case 'ArraySchema':
-        if (!schemaOrRef.items) {
-          throw new Error('Expected array items but found undefined');
-        }
+        if (!schemaOrRef.items) return;
+
         const items = this.parseType(schemaOrRef.items, localName, parentName);
+        if (!items) return;
 
         if (items.isPrimitive) {
           return {
@@ -988,7 +1030,7 @@ export class OAS3Parser {
 
   private parseStringName(
     def: OAS3.ParameterNode | OAS3.StringSchemaNode,
-  ): Omit<PrimitiveValue, 'isArray' | 'rules'> {
+  ): Omit<PrimitiveValue, 'isArray' | 'rules'> | undefined {
     const { type, format } = (() => {
       if (def.nodeType === 'StringSchema') return def;
       if (!def.schema) {
@@ -1116,6 +1158,9 @@ export class OAS3Parser {
     code: Scalar<string> | undefined;
     response: OAS3.RefNode | OAS3.ResponseNode | undefined;
   } {
+    const responses = operation.responses;
+    if (!responses) return { code: undefined, response: undefined };
+
     const defaultResponse = operation.responses.read('default');
     if (defaultResponse) {
       return {
@@ -1175,27 +1220,30 @@ export class OAS3Parser {
     operation: OAS3.OperationNode,
   ): ReturnType | undefined {
     const primaryCode = this.parsePrimaryResponseKey(operation);
-    const success = operation.responses.read(`${primaryCode?.value}`);
+    const success = operation.responses?.read(`${primaryCode?.value}`);
     if (!success) return;
 
     const response = this.resolve(success, OAS3.ResponseNode);
     const prefix = '#/components/responses/';
     const name =
-      OAS3.isRefNode(success) && success.$ref.value.startsWith(prefix)
+      OAS3.isRefNode(success) && success.$ref?.value.startsWith(prefix)
         ? success.$ref.value.substring(prefix.length)
         : undefined;
 
-    const schemaOrRef = this.getSchemaOrRef(response.content);
+    const schemaOrRef = this.getSchemaOrRef(response?.content);
 
     if (!schemaOrRef) return;
 
+    const type = this.parseType(
+      schemaOrRef,
+      'response',
+      name || operation.operationId?.value || '',
+    );
+    if (!type) return;
+
     return {
       kind: 'ReturnType',
-      ...this.parseType(
-        schemaOrRef,
-        'response',
-        name || operation.operationId?.value || '',
-      ),
+      ...type,
     };
   }
 
@@ -1255,9 +1303,17 @@ export class OAS3Parser {
     oneOf: (OAS3.RefNode | OAS3.ObjectSchemaNode)[],
     nameLoc: string | undefined,
   ): void {
-    const members: TypedValue[] = oneOf.map((subDef, i) =>
-      this.parseType(subDef, `${i + 1}`, name),
-    );
+    const members: TypedValue[] = oneOf
+      .map((subDef, i) => this.parseType(subDef, `${i + 1}`, name))
+      .filter(
+        (
+          x,
+        ): x is {
+          enumValues?: Scalar<string>[];
+          rules: ValidationRule[];
+          loc: string;
+        } & TypedValue => !!x,
+      );
 
     if (node.discriminator) {
       const { propertyName, mapping } = node.discriminator;
@@ -1349,14 +1405,14 @@ export class OAS3Parser {
     parentName?: string,
   ): Property[] {
     if (allOf) {
-      return allOf
-        .map((subDef) => {
-          const resolved = this.resolve(subDef, OAS3.ObjectSchemaNode);
-          const p = resolved.properties;
-          const r = safeConcat(resolved.required, required);
-          return this.parseProperties(p, r, resolved.allOf, parentName);
-        })
-        .reduce((a, b) => a.concat(b), []);
+      return allOf.flatMap((subDef) => {
+        const resolved = this.resolve(subDef, OAS3.ObjectSchemaNode);
+        if (!resolved) return [];
+
+        const p = resolved.properties;
+        const r = safeConcat(resolved.required, required);
+        return this.parseProperties(p, r, resolved.allOf, parentName);
+      });
     } else {
       const requiredSet = new Set<string>(required?.map((r) => r.value) || []);
       const props: Property[] = [];
@@ -1366,9 +1422,11 @@ export class OAS3Parser {
         if (!prop) continue;
 
         const resolvedProp = OAS3.resolveSchema(this.schema.node, prop);
-        if (!resolvedProp) throw new Error('Cannot resolve reference');
+        if (!resolvedProp) continue;
 
         const x = this.parseType(prop, name, parentName || '');
+        if (!x) continue;
+
         if (x.isPrimitive) {
           props.push({
             kind: 'Property',
@@ -1428,8 +1486,8 @@ export class OAS3Parser {
 
   private resolve<T extends OAS3.DocumentNode>(
     itemOrRef: T | OAS3.RefNode,
-    Node: new (n: AST.ASTNode) => T,
-  ): T {
+    Node: NodeConstructor<T>,
+  ): T | undefined {
     return OAS3.resolve(this.schema.node, itemOrRef, Node);
   }
 
@@ -1771,26 +1829,6 @@ function literal<
     value: node.value,
     loc: range(node),
   };
-}
-
-class EmptyObject implements AST.ASTNode {
-  public readonly type: AST.NodeType = 'Object';
-  public readonly loc = decodeRange(null);
-  isObject(): this is AST.ObjectNode {
-    return true;
-  }
-  isProperty(): this is AST.PropertyNode {
-    throw new Error('Method not implemented.');
-  }
-  isIdentifier(): this is AST.IdentifierNode {
-    throw new Error('Method not implemented.');
-  }
-  isArray(): this is AST.ArrayNode {
-    throw new Error('Method not implemented.');
-  }
-  isLiteral(): this is AST.LiteralNode {
-    throw new Error('Method not implemented.');
-  }
 }
 
 function toScalar<T extends string | number | boolean | null>(

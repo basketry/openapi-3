@@ -1,11 +1,61 @@
-import { encodeRange } from 'basketry';
+import { encodeRange, Violation } from 'basketry';
 import {
   AST,
   DocumentNode as AbstractDocumentNode,
   LiteralNode,
+  NodeConstructor,
+  NodeContext,
 } from '@basketry/ast';
 
 export { LiteralNode };
+
+export type PartialViolation = Pick<
+  Violation,
+  'message' | 'range' | 'severity'
+>;
+
+const violations = new WeakMap<
+  AbstractDocumentNode,
+  Map<string, PartialViolation>
+>();
+
+function violationKey(violation: PartialViolation): string {
+  return `${violation.message}|${violation.range.start.offset}|${violation.range.end.offset}`;
+}
+
+function error(
+  root: AbstractDocumentNode,
+  violation: Omit<PartialViolation, 'severity'>,
+): void {
+  addViolation(root, { ...violation, severity: 'error' });
+}
+
+function warning(
+  root: AbstractDocumentNode,
+  violation: Omit<PartialViolation, 'severity'>,
+): void {
+  addViolation(root, { ...violation, severity: 'warning' });
+}
+
+function addViolation(
+  root: AbstractDocumentNode,
+  violation: PartialViolation,
+): void {
+  const map = violations.get(root);
+  if (map) {
+    map.set(violationKey(violation), violation);
+  } else {
+    violations.set(root, new Map([[violationKey(violation), violation]]));
+    return;
+  }
+}
+
+export function getViolations(node: AbstractDocumentNode): PartialViolation[] {
+  const map = violations.get(node);
+  if (!map) return [];
+
+  return Array.from(map.values());
+}
 
 export function refRange(root: AST.ASTNode, ref: string): string {
   if (!ref.startsWith('#')) throw new Error(`Cannot resolve ref '${ref}'`);
@@ -32,8 +82,11 @@ export function refRange(root: AST.ASTNode, ref: string): string {
   return result;
 }
 
-export function resolveRef(root: AST.ASTNode, ref: string): AST.ASTNode {
-  if (!ref.startsWith('#')) throw new Error(`Cannot resolve ref '${ref}'`);
+export function resolveRef(
+  root: AST.ASTNode,
+  ref: string,
+): AST.ASTNode | undefined {
+  if (!ref.startsWith('#')) return undefined;
 
   let result: AST.ASTNode = root;
 
@@ -43,10 +96,10 @@ export function resolveRef(root: AST.ASTNode, ref: string): AST.ASTNode {
     } else {
       if (result.isObject()) {
         const child = result.children.find((n) => n.key.value === segment);
-        if (!child) throw new Error(`Cannot resolve ref '${ref}'`);
+        if (!child) return undefined;
         result = child.value;
       } else {
-        throw new Error(`Cannot resolve ref '${ref}'`);
+        return undefined;
       }
     }
   }
@@ -57,23 +110,49 @@ export function resolveRef(root: AST.ASTNode, ref: string): AST.ASTNode {
 export function resolve<T extends DocumentNode>(
   root: AST.ASTNode,
   itemOrRef: T | RefNode,
-  Node: new (n: AST.ASTNode) => T,
-): T {
-  return isRefNode(itemOrRef)
-    ? new Node(resolveRef(root, itemOrRef.$ref.value))
-    : itemOrRef;
+  Node: NodeConstructor<T>,
+): T | undefined {
+  try {
+    if (isRefNode(itemOrRef)) {
+      const { $ref } = itemOrRef;
+      if (!$ref) {
+        error(itemOrRef.root, {
+          message: 'Missing property "$ref".',
+          range: itemOrRef.loc,
+        });
+        return;
+      }
+
+      const resolved = resolveRef(root, $ref.value);
+      if (!resolved) {
+        error(itemOrRef.root, {
+          message: `Cannot resolve reference "${$ref.value}".`,
+          range: $ref.loc,
+        });
+        return;
+      }
+
+      return new Node(resolved, {
+        root: itemOrRef.root,
+        parentKey: undefined,
+      });
+    } else {
+      return itemOrRef;
+    }
+  } catch {
+    error(itemOrRef.root, {
+      message: 'Invalid reference.',
+      range: itemOrRef.loc,
+    });
+    return;
+  }
 }
 
 export function resolveParam(
   root: AST.ASTNode,
   paramOrRef: RefNode | ParameterNode,
 ): ParameterNode | undefined {
-  if (!isRefNode(paramOrRef)) return paramOrRef;
-
-  const node = resolveRef(root, paramOrRef.$ref.value);
-  if (!node.isObject()) return;
-
-  return new ParameterNode(node);
+  return resolve(root, paramOrRef, ParameterNode);
 }
 
 export type SchemaNodeUnion =
@@ -95,29 +174,48 @@ export function resolveSchema(
 ): SchemaNodeUnion | undefined {
   if (!isRefNode(schemaOrRef)) return schemaOrRef;
 
-  const node = resolveRef(root, schemaOrRef.$ref.value);
+  const { $ref } = schemaOrRef;
+  if (!$ref) {
+    error(schemaOrRef.root, {
+      message: 'Missing property "$ref".',
+      range: schemaOrRef.loc,
+    });
+    return;
+  }
+
+  const node = resolveRef(root, $ref.value);
+  if (!node) {
+    error(schemaOrRef.root, {
+      message: `Cannot resolve reference "${$ref.value}".`,
+      range: $ref.loc,
+    });
+    return;
+  }
   if (!node.isObject()) return;
 
   const typeNode = node.children.find((n) => n.key.value === 'type')?.value;
+
+  const context: NodeContext = { root: schemaOrRef.root, parentKey: undefined };
+
   if (!typeNode) {
     // Probably an allOf, anyOf, or oneOf
-    return new ObjectSchemaNode(node);
+    return new ObjectSchemaNode(node, context);
   }
 
   if (!typeNode?.isLiteral()) return;
 
   switch (typeNode.value) {
     case 'string':
-      return new StringSchemaNode(node);
+      return new StringSchemaNode(node, context);
     case 'integer':
     case 'number':
-      return new NumberSchemaNode(node);
+      return new NumberSchemaNode(node, context);
     case 'boolean':
-      return new BooleanSchemaNode(node);
+      return new BooleanSchemaNode(node, context);
     case 'array':
-      return new ArraySchemaNode(node);
+      return new ArraySchemaNode(node, context);
     case 'object':
-      return new ObjectSchemaNode(node);
+      return new ObjectSchemaNode(node, context);
     default:
       return;
   }
@@ -129,7 +227,23 @@ export function resolveParamOrSchema(
 ): ParameterNode | SchemaNodeUnion | undefined {
   if (!isRefNode(itemOrRef)) return itemOrRef;
 
-  const node = resolveRef(root, itemOrRef.$ref.value);
+  const { $ref } = itemOrRef;
+  if (!$ref) {
+    error(itemOrRef.root, {
+      message: 'Missing property "$ref".',
+      range: itemOrRef.loc,
+    });
+    return;
+  }
+
+  const node = resolveRef(root, $ref.value);
+  if (!node) {
+    error(itemOrRef.root, {
+      message: `Cannot resolve reference "${$ref.value}".`,
+      range: $ref.loc,
+    });
+    return;
+  }
   if (!node.isObject()) return;
 
   const inNode = node.children.find((n) => n.key.value === 'in')?.value;
@@ -156,30 +270,33 @@ export function toJson(node: AST.ASTNode | undefined) {
 
 function toSchemaOrRef(
   value: AST.ValueNode | undefined,
+  root: AbstractDocumentNode,
 ): SchemaNodeUnion | RefNode | undefined {
   if (!value) return;
 
-  if (isRef(value)) return new RefNode(value);
+  const context: NodeContext = { root, parentKey: undefined }; // TODO: verify parentKey
+
+  if (isRef(value)) return new RefNode(value, context);
 
   if (value.isObject()) {
     const typeNode = value.children.find((n) => n.key.value === 'type')?.value;
     if (!typeNode) {
       // Probably an allOf, anyOf, or oneOf
-      return new ObjectSchemaNode(value);
+      return new ObjectSchemaNode(value, context);
     }
     if (typeNode?.isLiteral()) {
       switch (typeNode.value) {
         case 'string':
-          return new StringSchemaNode(value);
+          return new StringSchemaNode(value, context);
         case 'number':
         case 'integer':
-          return new NumberSchemaNode(value);
+          return new NumberSchemaNode(value, context);
         case 'boolean':
-          return new BooleanSchemaNode(value);
+          return new BooleanSchemaNode(value, context);
         case 'array':
-          return new ArraySchemaNode(value);
+          return new ArraySchemaNode(value, context);
         case 'object':
-          return new ObjectSchemaNode(value);
+          return new ObjectSchemaNode(value, context);
       }
     }
   }
@@ -189,23 +306,26 @@ function toSchemaOrRef(
 
 function toSecuritySchemeOrRef(
   value: AST.ValueNode | undefined,
+  root: AbstractDocumentNode,
 ): SecuritySchemeNode | RefNode | undefined {
   if (!value) return;
 
-  if (isRef(value)) return new RefNode(value);
+  const context: NodeContext = { root, parentKey: undefined }; // TODO: verify parentKey
+
+  if (isRef(value)) return new RefNode(value, context);
 
   if (value.isObject()) {
     const typeNode = value.children.find((n) => n.key.value === 'type')?.value;
     if (typeNode?.isLiteral()) {
       switch (typeNode.value) {
         case 'apiKey':
-          return new ApiKeySecuritySchemeNode(value);
+          return new ApiKeySecuritySchemeNode(value, context);
         case 'http':
-          return new HttpSecuritySchemeNode(value);
+          return new HttpSecuritySchemeNode(value, context);
         case 'oauth2':
-          return new OAuth2SecuritySchemeNode(value);
+          return new OAuth2SecuritySchemeNode(value, context);
         case 'openIdConnect':
-          return new OpenIdConnectSecuritySchemeNode(value);
+          return new OpenIdConnectSecuritySchemeNode(value, context);
       }
     }
   }
@@ -213,15 +333,158 @@ function toSecuritySchemeOrRef(
   throw new Error('Unknown security scheme type');
 }
 
+type KeyPattern = {
+  regex: RegExp;
+  message: string;
+};
+
 export abstract class DocumentNode extends AbstractDocumentNode {
+  constructor(value: AST.ASTNode, context: NodeContext) {
+    super(value, context);
+    this.validate();
+  }
+
+  private validate(): void {
+    for (const key of this.keys) {
+      let missingRequiredPattern = false;
+      for (const pattern of this.requiredPatterns) {
+        if (!pattern.regex.test(key)) {
+          missingRequiredPattern = true;
+          warning(this.root, {
+            message: pattern.message,
+            range: this.getProperty(key)?.key.loc ?? {
+              start: this.loc.start,
+              end: this.loc.start,
+            },
+          });
+        }
+      }
+      if (missingRequiredPattern) continue;
+
+      if (this.allowedKeys.has(key)) continue;
+
+      let isDisallowed = false;
+      for (const pattern of this.disallowedPatterns) {
+        if (pattern.regex.test(key)) {
+          isDisallowed = true;
+          warning(this.root, {
+            message: pattern.message,
+            range: this.getProperty(key)?.key.loc ?? {
+              start: this.loc.start,
+              end: this.loc.start,
+            },
+          });
+        }
+      }
+      if (isDisallowed) continue;
+
+      if (this.allowedPatterns.some((pattern) => pattern.test(key))) continue;
+
+      warning(this.root, {
+        message: `Property ${key} is not allowed.`,
+        range: this.getProperty(key)?.key.loc ?? {
+          start: this.loc.start,
+          end: this.loc.start,
+        },
+      });
+    }
+  }
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(this.keys);
+  }
+  protected get allowedPatterns(): ReadonlyArray<RegExp> {
+    return [/^x-/];
+  }
+  protected get requiredPatterns(): ReadonlyArray<KeyPattern> {
+    return [];
+  }
+  protected get disallowedPatterns(): ReadonlyArray<KeyPattern> {
+    return [];
+  }
+
+  protected getRequiredChild<T extends AbstractDocumentNode>(
+    key: string,
+    Node: NodeConstructor<T>,
+  ): T | undefined {
+    const node = super.getChild(key, Node);
+
+    if (!node) {
+      error(this.root, {
+        message: `Missing property "${key}".`,
+        range: this.parentKey
+          ? this.parentKey.loc
+          : { start: this.loc.start, end: this.loc.start },
+      });
+    }
+
+    return node;
+  }
+
+  protected getRequiredArray<T extends AbstractDocumentNode>(
+    key: string,
+    Node: NodeConstructor<T>,
+  ): T[] | undefined {
+    const nodes = super.getArray(key, Node);
+
+    if (!nodes) {
+      error(this.root, {
+        message: `Missing property "${key}".`,
+        range: this.parentKey
+          ? this.parentKey.loc
+          : { start: this.loc.start, end: this.loc.start },
+      });
+    }
+
+    return nodes;
+  }
+
+  protected getRequiredProperty(key: string): AST.PropertyNode | undefined {
+    const node = super.getProperty(key);
+
+    if (!node) {
+      error(this.root, {
+        message: `Missing property "${key}".`,
+        range: this.parentKey
+          ? this.parentKey.loc
+          : { start: this.loc.start, end: this.loc.start },
+      });
+    }
+
+    return node;
+  }
+
+  protected getRequiredLiteral<T extends string | number | boolean | null>(
+    key: string,
+  ): LiteralNode<T> | undefined {
+    const literal = super.getLiteral<T>(key);
+
+    if (!literal) {
+      error(this.root, {
+        message: `Missing property "${key}".`,
+        range: this.parentKey
+          ? this.parentKey.loc
+          : { start: this.loc.start, end: this.loc.start },
+      });
+    }
+
+    return literal;
+  }
+
   protected getChildOrRef<T extends AbstractDocumentNode>(
     key: string,
-    Node: new (n: AST.ASTNode) => T,
+    Node: NodeConstructor<T>,
   ): T | RefNode | undefined {
-    const value = this.getProperty(key)?.value;
-    if (!value) return undefined;
-    if (isRef(value)) return new RefNode(value);
-    return new Node(value);
+    const prop = this.getProperty(key);
+    if (!prop) return undefined;
+
+    const context: NodeContext = { root: this.root, parentKey: prop.key };
+
+    if (isRef(prop.value)) {
+      return new RefNode(prop.value, context);
+    } else {
+      return new Node(prop.value, context);
+    }
   }
 }
 
@@ -243,12 +506,25 @@ export abstract class RefIndexNode<
 export class OpenAPINode extends DocumentNode {
   public readonly nodeType = 'Schema';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'openapi',
+      'info',
+      'servers',
+      'paths',
+      'components',
+      'security',
+      'tags',
+      'externalDocs',
+    ]);
+  }
+
   get openapi() {
-    return this.getLiteral<string>('openapi')!;
+    return this.getRequiredLiteral<string>('openapi');
   }
 
   get info() {
-    return this.getChild('info', InfoNode)!;
+    return this.getRequiredChild('info', InfoNode);
   }
 
   get servers() {
@@ -280,8 +556,19 @@ export class OpenAPINode extends DocumentNode {
 export class InfoNode extends DocumentNode {
   public readonly nodeType = 'Info';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'title',
+      'description',
+      'termsOfService',
+      'contact',
+      'license',
+      'version',
+    ]);
+  }
+
   get title() {
-    return this.getLiteral<string>('title')!;
+    return this.getRequiredLiteral<string>('title');
   }
 
   get description() {
@@ -301,13 +588,17 @@ export class InfoNode extends DocumentNode {
   }
 
   get version() {
-    return this.getLiteral<string>('version')!;
+    return this.getRequiredLiteral<string>('version');
   }
 }
 
 // Done
 export class ContactNode extends DocumentNode {
   public readonly nodeType = 'Contact';
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['name', 'url', 'email']);
+  }
 
   get name() {
     return this.getLiteral<string>('name');
@@ -326,8 +617,12 @@ export class ContactNode extends DocumentNode {
 export class LicenseNode extends DocumentNode {
   public readonly nodeType = 'License';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['name', 'url']);
+  }
+
   get name() {
-    return this.getLiteral<string>('name')!;
+    return this.getRequiredLiteral<string>('name');
   }
 
   get url() {
@@ -339,8 +634,12 @@ export class LicenseNode extends DocumentNode {
 export class ServerNode extends DocumentNode {
   public readonly nodeType = 'Server';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['url', 'description', 'variables']);
+  }
+
   get url() {
-    return this.getLiteral<string>('url')!;
+    return this.getRequiredLiteral<string>('url');
   }
 
   get description() {
@@ -356,6 +655,10 @@ export class ServerNode extends DocumentNode {
 export class ServerVariablesNode extends DocumentNode {
   public readonly nodeType = 'ServerVariables';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['url', 'description']);
+  }
+
   read(key: string) {
     return this.getChild(key, ServerVariableNode);
   }
@@ -364,6 +667,10 @@ export class ServerVariablesNode extends DocumentNode {
 // Done
 export class ServerVariableNode extends DocumentNode {
   public readonly nodeType = 'ServerVariable';
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['enum', 'default', 'description']);
+  }
 
   get enum() {
     return this.getArray<LiteralNode<string>>('enum', LiteralNode);
@@ -381,6 +688,20 @@ export class ServerVariableNode extends DocumentNode {
 // Done
 export class ComponentsNode extends DocumentNode {
   public readonly nodeType = 'Components';
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'schemas',
+      'responses',
+      'parameters',
+      'examples',
+      'requestBodies',
+      'headers',
+      'securitySchemes',
+      'links',
+      'callbacks',
+    ]);
+  }
 
   get schemas() {
     return this.getChild('schemas', SchemaIndexNode);
@@ -423,6 +744,10 @@ export class ComponentsNode extends DocumentNode {
 export class PathsNode extends RefIndexNode<PathItemNode> {
   public readonly nodeType = 'Paths';
 
+  protected get requiredPatterns(): ReadonlyArray<KeyPattern> {
+    return [{ regex: /^\/.+/, message: 'Path must start with a "/".' }];
+  }
+
   read(key: string) {
     return this.getChildOrRef(key, PathItemNode);
   }
@@ -431,6 +756,31 @@ export class PathsNode extends RefIndexNode<PathItemNode> {
 // Done
 export class PathItemNode extends DocumentNode {
   public readonly nodeType = 'PathItem';
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'summary',
+      'description',
+      'get',
+      'put',
+      'post',
+      'delete',
+      'options',
+      'head',
+      'patch',
+      'trace',
+      'servers',
+      'parameters',
+    ]);
+  }
+  protected get disallowedPatterns(): ReadonlyArray<KeyPattern> {
+    return [
+      {
+        regex: /[A-Z]/,
+        message: 'Method must be lowercase.',
+      },
+    ];
+  }
 
   get summary() {
     return this.getLiteral<string>('summary');
@@ -483,7 +833,9 @@ export class PathItemNode extends DocumentNode {
     if (!array.isArray()) throw new Error('Value is not an array');
 
     return array.children.map((value) =>
-      isRef(value) ? new RefNode(value) : new ParameterNode(value),
+      isRef(value)
+        ? new RefNode(value, this.root)
+        : new ParameterNode(value, this.root),
     );
   }
 }
@@ -491,8 +843,22 @@ export class PathItemNode extends DocumentNode {
 // Done
 export class OperationNode extends DocumentNode {
   public readonly nodeType = 'Operation';
-  constructor(node: AST.ASTNode) {
-    super(node);
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'tags',
+      'summary',
+      'description',
+      'externalDocs',
+      'operationId',
+      'parameters',
+      'requestBody',
+      'responses',
+      'callbacks',
+      'deprecated',
+      'security',
+      'servers',
+    ]);
   }
 
   get tags() {
@@ -512,7 +878,7 @@ export class OperationNode extends DocumentNode {
   }
 
   get operationId() {
-    return this.getLiteral<string>('operationId');
+    return this.getRequiredLiteral<string>('operationId');
   }
 
   get parameters() {
@@ -522,7 +888,9 @@ export class OperationNode extends DocumentNode {
     if (!array.isArray()) throw new Error('Value is not an array');
 
     return array.children.map((value) =>
-      isRef(value) ? new RefNode(value) : new ParameterNode(value),
+      isRef(value)
+        ? new RefNode(value, this.root)
+        : new ParameterNode(value, this.root),
     );
   }
 
@@ -531,7 +899,7 @@ export class OperationNode extends DocumentNode {
   }
 
   get responses() {
-    return this.getChild('responses', ResponsesNode)!;
+    return this.getRequiredChild('responses', ResponsesNode);
   }
 
   get callbacks() {
@@ -555,12 +923,16 @@ export class OperationNode extends DocumentNode {
 export class ExternalDocumentationNode extends DocumentNode {
   public readonly nodeType = 'ExternalDocumentation';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['url', 'description']);
+  }
+
   get description() {
     return this.getLiteral<string>('description');
   }
 
   get url() {
-    return this.getLiteral<string>('url')!;
+    return this.getRequiredLiteral<string>('url');
   }
 }
 
@@ -568,12 +940,32 @@ export class ExternalDocumentationNode extends DocumentNode {
 export class ParameterNode extends DocumentNode {
   public readonly nodeType = 'Parameter';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'name',
+      'in',
+      'description',
+      'required',
+      'deprecated',
+      'allowEmptyValue',
+      'style',
+      'explode',
+      'allowReserved',
+      'schema',
+      'example',
+      'examples',
+      'content',
+    ]);
+  }
+
   get name() {
-    return this.getLiteral<string>('name')!;
+    return this.getRequiredLiteral<string>('name');
   }
 
   get in() {
-    return this.getLiteral<'query' | 'header' | 'path' | 'cookie'>('in')!;
+    return this.getRequiredLiteral<'query' | 'header' | 'path' | 'cookie'>(
+      'in',
+    )!;
   }
 
   get description() {
@@ -613,7 +1005,7 @@ export class ParameterNode extends DocumentNode {
   }
 
   get schema() {
-    return toSchemaOrRef(this.getProperty('schema')?.value);
+    return toSchemaOrRef(this.getProperty('schema')?.value, this.root);
   }
 
   get example() {
@@ -632,8 +1024,9 @@ export class ParameterNode extends DocumentNode {
 // Done
 export class RequestBodyNode extends DocumentNode {
   public readonly nodeType = 'RequestBody';
-  constructor(node: AST.ASTNode) {
-    super(node);
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['description', 'content', 'required']);
   }
 
   get description() {
@@ -641,7 +1034,7 @@ export class RequestBodyNode extends DocumentNode {
   }
 
   get content() {
-    return this.getChild('content', MediaTypeIndexNode)!;
+    return this.getRequiredChild('content', MediaTypeIndexNode);
   }
 
   get required() {
@@ -653,8 +1046,12 @@ export class RequestBodyNode extends DocumentNode {
 export class MediaTypeNode extends DocumentNode {
   public readonly nodeType = 'MediaType';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['schema', 'example', 'examples', 'encoding']);
+  }
+
   get schema() {
-    return toSchemaOrRef(this.getProperty('schema')?.value);
+    return toSchemaOrRef(this.getProperty('schema')?.value, this.root);
   }
 
   get example() {
@@ -669,6 +1066,16 @@ export class MediaTypeNode extends DocumentNode {
 // Done
 export class EncodingNode extends DocumentNode {
   public readonly nodeType = 'Encoding';
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'contentType',
+      'headers',
+      'style',
+      'explode',
+      'allowReserved',
+    ]);
+  }
 
   get contentType() {
     return this.getLiteral<string>('contentType');
@@ -711,12 +1118,13 @@ export class ResponsesNode extends RefIndexNode<ResponseNode> {
 // Done
 export class ResponseNode extends DocumentNode {
   public readonly nodeType = 'Response';
-  constructor(node: AST.ASTNode) {
-    super(node);
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['description', 'headers', 'content', 'links']);
   }
 
   get description() {
-    return this.getLiteral<string>('description')!;
+    return this.getRequiredLiteral<string>('description');
   }
 
   get headers() {
@@ -745,6 +1153,10 @@ export class CallbackNode extends IndexNode<PathItemNode> {
 export class ExampleNode extends DocumentNode {
   public readonly nodeType = 'Example';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['summary', 'description', 'value', 'externalValue']);
+  }
+
   get summary() {
     return this.getLiteral<string>('summary');
   }
@@ -766,6 +1178,17 @@ export class ExampleNode extends DocumentNode {
 export class LinkNode extends DocumentNode {
   public readonly nodeType = 'Link';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'operationRef',
+      'operationId',
+      'parameters',
+      'requestBody',
+      'description',
+      'server',
+    ]);
+  }
+
   get operationRef() {
     return this.getLiteral<string>('operationRef');
   }
@@ -780,6 +1203,22 @@ export class LinkNode extends DocumentNode {
 // Done
 export class HeaderNode extends DocumentNode {
   public readonly nodeType = 'Header';
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'description',
+      'required',
+      'deprecated',
+      'allowEmptyValue',
+      'style',
+      'explode',
+      'allowReserved',
+      'schema',
+      'example',
+      'examples',
+      'content',
+    ]);
+  }
 
   get description() {
     return this.getLiteral<string>('description');
@@ -818,7 +1257,7 @@ export class HeaderNode extends DocumentNode {
   }
 
   get schema() {
-    return toSchemaOrRef(this.getProperty('schema')?.value);
+    return toSchemaOrRef(this.getProperty('schema')?.value, this.root);
   }
 
   get example() {
@@ -838,8 +1277,12 @@ export class HeaderNode extends DocumentNode {
 export class TagNode extends DocumentNode {
   public readonly nodeType = 'Tag';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['name', 'description', 'externalDocs']);
+  }
+
   get name() {
-    return this.getLiteral<string>('name')!;
+    return this.getRequiredLiteral<string>('name');
   }
 
   get description() {
@@ -878,8 +1321,26 @@ export abstract class SchemaNode extends DocumentNode {
 export class StringSchemaNode extends SchemaNode {
   public readonly nodeType = 'StringSchema';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'description',
+      'nullable',
+      'externalDocs',
+      'example',
+      'deprecated',
+      'type',
+      'default',
+      'const',
+      'minLength',
+      'maxLength',
+      'pattern',
+      'format',
+      'enum',
+    ]);
+  }
+
   get type() {
-    return this.getLiteral<'string'>('type')!;
+    return this.getRequiredLiteral<'string'>('type')!;
   }
 
   get default() {
@@ -915,8 +1376,27 @@ export class StringSchemaNode extends SchemaNode {
 export class NumberSchemaNode extends SchemaNode {
   public readonly nodeType = 'NumberSchema';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'description',
+      'nullable',
+      'externalDocs',
+      'example',
+      'deprecated',
+      'type',
+      'default',
+      'const',
+      'multipleOf',
+      'minimum',
+      'exclusiveMinimum',
+      'maximum',
+      'exclusiveMaximum',
+      'format',
+    ]);
+  }
+
   get type() {
-    return this.getLiteral<'integer' | 'number'>('type')!;
+    return this.getRequiredLiteral<'integer' | 'number'>('type')!;
   }
 
   get default() {
@@ -956,8 +1436,21 @@ export class NumberSchemaNode extends SchemaNode {
 export class BooleanSchemaNode extends SchemaNode {
   public readonly nodeType = 'BooleanSchema';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'description',
+      'nullable',
+      'externalDocs',
+      'example',
+      'deprecated',
+      'type',
+      'default',
+      'const',
+    ]);
+  }
+
   get type() {
-    return this.getLiteral<'boolean'>('type')!;
+    return this.getRequiredLiteral<'boolean'>('type')!;
   }
 
   get default() {
@@ -973,8 +1466,23 @@ export class BooleanSchemaNode extends SchemaNode {
 export class ArraySchemaNode extends SchemaNode {
   public readonly nodeType = 'ArraySchema';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'description',
+      'nullable',
+      'externalDocs',
+      'example',
+      'deprecated',
+      'type',
+      'items',
+      'minItems',
+      'maxItems',
+      'uniqueItems',
+    ]);
+  }
+
   get type() {
-    return this.getLiteral<'array'>('type')!;
+    return this.getRequiredLiteral<'array'>('type');
   }
 
   get description() {
@@ -982,7 +1490,7 @@ export class ArraySchemaNode extends SchemaNode {
   }
 
   get items() {
-    return toSchemaOrRef(this.getProperty('items')?.value);
+    return toSchemaOrRef(this.getProperty('items')?.value, this.root);
   }
 
   get minItems() {
@@ -1008,6 +1516,29 @@ function isObjectSchemaOrRef(
 export class ObjectSchemaNode extends SchemaNode {
   public readonly nodeType = 'ObjectSchema';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'description',
+      'nullable',
+      'externalDocs',
+      'example',
+      'deprecated',
+      'type',
+      'properties',
+      'description',
+      'required',
+      'additionalProperties',
+      'allOf',
+      'oneOf',
+      'anyOf',
+      'minProperties',
+      'maxProperties',
+      'discriminator',
+      'readOnly',
+      'writeOnly',
+    ]);
+  }
+
   get type() {
     return this.getLiteral<'object'>('type') || { value: 'type' };
   }
@@ -1028,21 +1559,27 @@ export class ObjectSchemaNode extends SchemaNode {
     const prop = this.getProperty('allOf')?.value;
     if (!prop?.isArray()) return;
 
-    return prop.children.map(toSchemaOrRef).filter(isObjectSchemaOrRef);
+    return prop.children
+      .map((c) => toSchemaOrRef(c, this.root))
+      .filter(isObjectSchemaOrRef);
   }
 
   get oneOf() {
     const prop = this.getProperty('oneOf')?.value;
     if (!prop?.isArray()) return;
 
-    return prop.children.map(toSchemaOrRef).filter(isObjectSchemaOrRef);
+    return prop.children
+      .map((c) => toSchemaOrRef(c, this.root))
+      .filter(isObjectSchemaOrRef);
   }
 
   get anyOf() {
     const prop = this.getProperty('oneOf')?.value;
     if (!prop?.isArray()) return;
 
-    return prop.children.map(toSchemaOrRef).filter(isObjectSchemaOrRef);
+    return prop.children
+      .map((c) => toSchemaOrRef(c, this.root))
+      .filter(isObjectSchemaOrRef);
   }
 
   get minProperties() {
@@ -1058,7 +1595,7 @@ export class ObjectSchemaNode extends SchemaNode {
     if (value?.isLiteral()) {
       return this.getLiteral<boolean>('additionalProperties');
     } else if (value?.isObject()) {
-      return toSchemaOrRef(value);
+      return toSchemaOrRef(value, this.root);
     }
     return;
   }
@@ -1080,8 +1617,12 @@ export class ObjectSchemaNode extends SchemaNode {
 export class DiscriminatorNode extends DocumentNode {
   public readonly nodeType = 'Discriminator';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['propertyName', 'mapping']);
+  }
+
   get propertyName() {
-    return this.getLiteral<string>('propertyName')!;
+    return this.getRequiredLiteral<string>('propertyName');
   }
 
   get mapping() {
@@ -1092,28 +1633,37 @@ export class DiscriminatorNode extends DocumentNode {
 // Done
 export class HttpSecuritySchemeNode extends DocumentNode {
   public readonly nodeType = 'HttpSecurityScheme';
-  constructor(node: AST.ASTNode) {
-    super(node);
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'type',
+      'description',
+      'scheme',
+      'bearerFormat',
+      'name',
+      'in',
+    ]);
   }
 
   get type() {
-    return this.getLiteral<'http'>('type')!;
+    return this.getRequiredLiteral<'http'>('type')!;
   }
 
   get description() {
-    return this.getLiteral<string>('description')!;
+    return this.getRequiredLiteral<string>('description');
   }
 }
 
 // Done
 export class ApiKeySecuritySchemeNode extends DocumentNode {
   public readonly nodeType = 'ApiKeySecurityScheme';
-  constructor(node: AST.ASTNode) {
-    super(node);
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['type', 'description', 'name', 'in']);
   }
 
   get type() {
-    return this.getLiteral<'apiKey'>('type')!;
+    return this.getRequiredLiteral<'apiKey'>('type')!;
   }
 
   get description() {
@@ -1121,23 +1671,24 @@ export class ApiKeySecuritySchemeNode extends DocumentNode {
   }
 
   get name() {
-    return this.getLiteral<string>('name')!;
+    return this.getRequiredLiteral<string>('name')!;
   }
 
   get in() {
-    return this.getLiteral<'header' | 'query' | 'cookie'>('in')!;
+    return this.getRequiredLiteral<'header' | 'query' | 'cookie'>('in')!;
   }
 }
 
 // Done
 export class OAuth2SecuritySchemeNode extends DocumentNode {
   public readonly nodeType = 'OAuth2SecurityScheme';
-  constructor(node: AST.ASTNode) {
-    super(node);
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['type', 'description', 'flows']);
   }
 
   get type() {
-    return this.getLiteral<'oauth2'>('type')!;
+    return this.getRequiredLiteral<'oauth2'>('type')!;
   }
 
   get description() {
@@ -1145,19 +1696,20 @@ export class OAuth2SecuritySchemeNode extends DocumentNode {
   }
 
   get flows() {
-    return this.getChild('flows', OAuthFlowsNode)!;
+    return this.getRequiredChild('flows', OAuthFlowsNode)!;
   }
 }
 
 // Done
 export class OpenIdConnectSecuritySchemeNode extends DocumentNode {
   public readonly nodeType = 'OpenIdConnectSecurityScheme';
-  constructor(node: AST.ASTNode) {
-    super(node);
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['type', 'description', 'openIdConnectUrl']);
   }
 
   get type() {
-    return this.getLiteral<'openIdConnect'>('type')!;
+    return this.getRequiredLiteral<'openIdConnect'>('type');
   }
 
   get description() {
@@ -1165,13 +1717,22 @@ export class OpenIdConnectSecuritySchemeNode extends DocumentNode {
   }
 
   get openIdConnectUrl() {
-    return this.getLiteral<string>('openIdConnectUrl')!;
+    return this.getRequiredLiteral<string>('openIdConnectUrl');
   }
 }
 
 // Done
 export class OAuthFlowsNode extends DocumentNode {
   public readonly nodeType = 'OAuthFlowsNode';
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'implicit',
+      'password',
+      'clientCredentials',
+      'authorizationCode',
+    ]);
+  }
 
   get implicit() {
     return this.getChild('implicit', ImplicitFlowNode);
@@ -1197,7 +1758,7 @@ export abstract class OAuthFlowNode extends DocumentNode {
   }
 
   get scopes() {
-    return this.getChild('scopes', StringMappingNode)!;
+    return this.getRequiredChild('scopes', StringMappingNode)!;
   }
 }
 
@@ -1205,8 +1766,12 @@ export abstract class OAuthFlowNode extends DocumentNode {
 export class ImplicitFlowNode extends OAuthFlowNode {
   public readonly nodeType = 'ImplicitFlow';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['authorizationUrl', 'refreshUrl', 'scopes']);
+  }
+
   get authorizationUrl() {
-    return this.getLiteral<string>('authorizationUrl')!;
+    return this.getRequiredLiteral<string>('authorizationUrl')!;
   }
 }
 
@@ -1214,8 +1779,12 @@ export class ImplicitFlowNode extends OAuthFlowNode {
 export class PasswordFlowNode extends OAuthFlowNode {
   public readonly nodeType = 'PasswordFlow';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['tokenUrl', 'refreshUrl', 'scopes']);
+  }
+
   get tokenUrl() {
-    return this.getLiteral<string>('tokenUrl')!;
+    return this.getRequiredLiteral<string>('tokenUrl')!;
   }
 }
 
@@ -1223,8 +1792,12 @@ export class PasswordFlowNode extends OAuthFlowNode {
 export class ClientCredentialsFlowNode extends OAuthFlowNode {
   public readonly nodeType = 'ClientCredentialsFlow';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['tokenUrl', 'refreshUrl', 'scopes']);
+  }
+
   get tokenUrl() {
-    return this.getLiteral<string>('tokenUrl')!;
+    return this.getRequiredLiteral<string>('tokenUrl')!;
   }
 }
 
@@ -1232,12 +1805,16 @@ export class ClientCredentialsFlowNode extends OAuthFlowNode {
 export class AuthorizationCodeFlowNode extends OAuthFlowNode {
   public readonly nodeType = 'AuthorizationCodeFlow';
 
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['authorizationUrl', 'tokenUrl', 'refreshUrl', 'scopes']);
+  }
+
   get authorizationUrl() {
-    return this.getLiteral<string>('authorizationUrl')!;
+    return this.getRequiredLiteral<string>('authorizationUrl')!;
   }
 
   get tokenUrl() {
-    return this.getLiteral<string>('tokenUrl')!;
+    return this.getRequiredLiteral<string>('tokenUrl')!;
   }
 }
 
@@ -1256,7 +1833,7 @@ export class SchemaIndexNode extends RefIndexNode<SchemaNodeUnion> {
   public readonly nodeType = 'SchemaIndex';
 
   read(key: string) {
-    return toSchemaOrRef(this.getProperty(key)?.value);
+    return toSchemaOrRef(this.getProperty(key)?.value, this.root);
   }
 }
 
@@ -1304,7 +1881,7 @@ export class SecuritySchemeIndexNode extends RefIndexNode<SecuritySchemeNode> {
   public readonly nodeType = 'SecuritySchemeIndex';
 
   read(key: string) {
-    return toSecuritySchemeOrRef(this.getProperty(key)?.value);
+    return toSecuritySchemeOrRef(this.getProperty(key)?.value, this.root);
   }
 }
 
@@ -1344,18 +1921,22 @@ export class PropertiesNode extends RefIndexNode<SchemaNodeUnion> {
   public readonly nodeType = 'Properties';
 
   read(key: string) {
-    return toSchemaOrRef(this.getProperty(key)?.value);
+    return toSchemaOrRef(this.getProperty(key)?.value, this.root);
   }
 }
 
 export class RefNode extends DocumentNode {
   public readonly nodeType = 'Ref';
-  constructor(node: AST.ASTNode) {
-    super(node);
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set(['$ref']);
+  }
+  protected get allowExtensions(): boolean {
+    return false;
   }
 
   get $ref() {
-    return this.getLiteral<string>('$ref')!;
+    return this.getRequiredLiteral<string>('$ref');
   }
 }
 
