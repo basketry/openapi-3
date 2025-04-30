@@ -11,7 +11,7 @@ export { LiteralNode };
 
 export type PartialViolation = Pick<
   Violation,
-  'message' | 'range' | 'severity'
+  'code' | 'message' | 'range' | 'severity'
 >;
 
 const violations = new WeakMap<
@@ -25,16 +25,35 @@ function violationKey(violation: PartialViolation): string {
 
 function error(
   root: AbstractDocumentNode,
-  violation: Omit<PartialViolation, 'severity'>,
+  violation: Omit<PartialViolation, 'code' | 'severity'>,
 ): void {
-  addViolation(root, { ...violation, severity: 'error' });
+  addViolation(root, {
+    code: 'openapi-3/invalid-schema',
+    ...violation,
+    severity: 'error',
+  });
 }
 
 function warning(
   root: AbstractDocumentNode,
-  violation: Omit<PartialViolation, 'severity'>,
+  violation: Omit<PartialViolation, 'code' | 'severity'>,
 ): void {
-  addViolation(root, { ...violation, severity: 'warning' });
+  addViolation(root, {
+    code: 'openapi-3/invalid-schema',
+    ...violation,
+    severity: 'warning',
+  });
+}
+
+function unsupported(
+  root: AbstractDocumentNode,
+  violation: Omit<PartialViolation, 'code' | 'severity'>,
+): void {
+  addViolation(root, {
+    code: 'openapi-3/unsupported-feature',
+    ...violation,
+    severity: 'warning',
+  });
 }
 
 function addViolation(
@@ -346,6 +365,18 @@ export abstract class DocumentNode extends AbstractDocumentNode {
 
   private validate(): void {
     for (const key of this.keys) {
+      for (const unsupportedKey of this.unsupportedKeys) {
+        if (key === unsupportedKey) {
+          unsupported(this.root, {
+            message: `Property "${key}" is not yet supported and will have no effect.`,
+            range: this.getProperty(key)?.key.loc ?? {
+              start: this.loc.start,
+              end: this.loc.start,
+            },
+          });
+        }
+      }
+
       let missingRequiredPattern = false;
       for (const pattern of this.requiredPatterns) {
         if (!pattern.regex.test(key)) {
@@ -401,6 +432,10 @@ export abstract class DocumentNode extends AbstractDocumentNode {
   }
   protected get disallowedPatterns(): ReadonlyArray<KeyPattern> {
     return [];
+  }
+
+  protected get unsupportedKeys(): ReadonlySet<string> {
+    return new Set([]);
   }
 
   protected getRequiredChild<T extends AbstractDocumentNode>(
@@ -1296,6 +1331,10 @@ export class TagNode extends DocumentNode {
 
 // Done
 export abstract class SchemaNode extends DocumentNode {
+  protected get unsupportedKeys(): ReadonlySet<string> {
+    return new Set(['nullable', 'anyOf']);
+  }
+
   get description() {
     return this.getLiteral<string>('description');
   }
@@ -1527,6 +1566,7 @@ export class ObjectSchemaNode extends SchemaNode {
       'properties',
       'description',
       'required',
+      'propertyNames',
       'additionalProperties',
       'allOf',
       'oneOf',
@@ -1588,6 +1628,14 @@ export class ObjectSchemaNode extends SchemaNode {
 
   get maxProperties() {
     return this.getLiteral<number>('maxProperties');
+  }
+
+  get propertyNames() {
+    const value = this.getProperty('propertyNames')?.value;
+    if (value?.isObject()) {
+      return toSchemaOrRef(value, this.root);
+    }
+    return;
   }
 
   get additionalProperties() {
