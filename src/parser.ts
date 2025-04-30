@@ -14,6 +14,9 @@ import {
   HttpParameter,
   HttpPath,
   Interface,
+  MapKey,
+  MapProperties,
+  MapValue,
   Meta,
   Method,
   OAuth2Flow,
@@ -116,7 +119,7 @@ export class OAS3Parser {
 
     for (const violation of OAS3.getViolations(this.schema.root)) {
       this.violations.push({
-        code: 'openapi-3/invalid-schema',
+        code: violation.code,
         message: violation.message,
         range: violation.range,
         severity: violation.severity,
@@ -998,6 +1001,7 @@ export class OAS3Parser {
               schemaOrRef.allOf,
               typeName.value,
             ),
+            mapProperties: this.parseMapProperties(schemaOrRef, typeName.value),
             description: schemaOrRef.description
               ? {
                   value: schemaOrRef.description.value,
@@ -1391,6 +1395,7 @@ export class OAS3Parser {
               name,
             )
           : [],
+      mapProperties: this.parseMapProperties(node, name),
       deprecated: this.parseDeprecated(node),
       rules: this.parseObjectRules(node),
       loc: defLoc,
@@ -1458,6 +1463,163 @@ export class OAS3Parser {
         }
       }
       return props;
+    }
+  }
+
+  private parseMapProperties(
+    node: OAS3.SchemaNodeUnion,
+    parentName: string,
+  ): MapProperties | undefined {
+    if (node.nodeType !== 'ObjectSchema') return;
+
+    const required = node.required ?? [];
+    const definedPropNames = new Set(node.properties?.keys);
+    const requiredMapKeys = required.filter(
+      (r) => !definedPropNames.has(r.value),
+    );
+
+    const emitInvalidRequired = () => {
+      for (const mapKey of requiredMapKeys) {
+        this.violations.push({
+          code: 'openapi-3/invalid-schema',
+          message: `Property "${mapKey.value}" is required but not defined.`,
+          range: mapKey.loc,
+          severity: 'warning',
+          sourcePath: this.sourcePath,
+        });
+      }
+    };
+
+    const additionalProperties = node.additionalProperties;
+    if (!additionalProperties) {
+      emitInvalidRequired();
+      return;
+    }
+
+    const requiredKeys: Scalar<string>[] = requiredMapKeys.map((r) =>
+      toScalar<string>(r),
+    );
+
+    if (additionalProperties.nodeType === 'Literal') {
+      if (additionalProperties.value === false) {
+        emitInvalidRequired();
+        return;
+      }
+
+      return {
+        kind: 'MapProperties',
+        key: {
+          kind: 'MapKey',
+          isPrimitive: true,
+          typeName: { value: 'string' },
+          isArray: false,
+          rules: [],
+        },
+        requiredKeys,
+        value: {
+          kind: 'MapValue',
+          isPrimitive: true,
+          typeName: { value: 'untyped' },
+          isArray: false,
+          rules: [],
+        },
+        loc: range(additionalProperties),
+      };
+    }
+
+    return {
+      kind: 'MapProperties',
+      key: this.parseMapKey(node.propertyNames, parentName),
+      requiredKeys,
+      value: this.parseMapValue(additionalProperties, parentName),
+      loc: range(additionalProperties),
+      meta: this.parseMeta(additionalProperties),
+    };
+  }
+
+  private parseMapKey(
+    schemaOrRef: OAS3.RefNode | OAS3.SchemaNodeUnion | undefined,
+    parentName: string,
+  ): MapKey {
+    const typeOrPrimitive = schemaOrRef
+      ? this.parseType(schemaOrRef, 'mapKeys', parentName)
+      : undefined;
+    if (!typeOrPrimitive) {
+      return {
+        kind: 'MapKey',
+        isPrimitive: true,
+        typeName: { value: 'string' },
+        isArray: false,
+        rules: [],
+      };
+    }
+
+    if (typeOrPrimitive.isPrimitive) {
+      return {
+        kind: 'MapKey',
+        isPrimitive: true,
+        typeName: typeOrPrimitive.typeName,
+        isArray: typeOrPrimitive.isArray,
+        rules: typeOrPrimitive.rules,
+        default: typeOrPrimitive.default,
+        constant: typeOrPrimitive.constant,
+        loc: schemaOrRef ? range(schemaOrRef) : undefined,
+        meta: schemaOrRef ? this.parseMeta(schemaOrRef) : undefined,
+      };
+    } else {
+      return {
+        kind: 'MapKey',
+        isPrimitive: false,
+        typeName: typeOrPrimitive.typeName,
+        isArray: typeOrPrimitive.isArray,
+        rules: typeOrPrimitive.rules,
+        loc: schemaOrRef ? range(schemaOrRef) : undefined,
+        meta: schemaOrRef ? this.parseMeta(schemaOrRef) : undefined,
+      };
+    }
+  }
+
+  private parseMapValue(
+    schemaOrRef: OAS3.SchemaNodeUnion | OAS3.RefNode,
+    parentName: string,
+  ): MapValue {
+    const typeOrPrimitive = this.parseType(
+      schemaOrRef,
+      'mapValues',
+      parentName,
+    );
+    if (!typeOrPrimitive) {
+      return {
+        kind: 'MapValue',
+        isPrimitive: true,
+        typeName: { value: 'untyped' },
+        isArray: false,
+        rules: [],
+      };
+    }
+
+    if (typeOrPrimitive.isPrimitive) {
+      return {
+        kind: 'MapValue',
+        isPrimitive: true,
+        typeName: typeOrPrimitive.typeName,
+        isArray: typeOrPrimitive.isArray,
+        rules: typeOrPrimitive.rules,
+        default: typeOrPrimitive.default,
+        constant: typeOrPrimitive.constant,
+        loc: range(schemaOrRef),
+        meta: this.parseMeta(schemaOrRef),
+      };
+    } else {
+      return {
+        kind: 'MapValue',
+        isPrimitive: false,
+        typeName: typeOrPrimitive.typeName,
+        isArray: typeOrPrimitive.isArray,
+        rules: typeOrPrimitive.rules,
+        loc: range(schemaOrRef),
+        meta: this.parseMeta(schemaOrRef),
+      };
     }
   }
 

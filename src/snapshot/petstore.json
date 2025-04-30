@@ -1640,6 +1640,24 @@
       "kind": "Type",
       "name": { "value": "getInventoryResponse" },
       "properties": [],
+      "mapProperties": {
+        "kind": "MapProperties",
+        "key": {
+          "kind": "MapKey",
+          "isPrimitive": true,
+          "typeName": { "value": "string" },
+          "isArray": false,
+          "rules": []
+        },
+        "requiredKeys": [],
+        "value": {
+          "kind": "MapValue",
+          "isPrimitive": true,
+          "typeName": { "value": "integer" },
+          "isArray": false,
+          "rules": []
+        }
+      },
       "rules": []
     }
   ],
