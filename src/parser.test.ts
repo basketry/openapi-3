@@ -3,6 +3,7 @@ import { join } from 'path';
 import * as https from 'https';
 
 import {
+  Property,
   ReturnType,
   Scalar,
   Service,
@@ -175,6 +176,628 @@ describe('parser', () => {
 
       // ASSERT
       expect(errors).toEqual([]);
+    });
+  });
+
+  describe('types', () => {
+    describe('sources', () => {
+      describe('schema', () => {
+        it('creates a type from a schema component', () => {
+          // ARRANGE
+          const oas = {
+            openapi: '3.0.1',
+            info: { title: 'Test', version: '1.0.0', description: 'test' },
+            components: {
+              schemas: {
+                typeA: { type: 'object' },
+              },
+            },
+          };
+
+          // ACT
+          const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+          // ASSERT
+          expect(service).toEqual(
+            partial<Service>({
+              types: [
+                {
+                  kind: 'Type',
+                  name: { value: 'typeA' },
+                  properties: exact([]),
+                },
+              ],
+            }),
+          );
+        });
+        it('creates primitive properties', () => {
+          // ARRANGE
+          const oas = {
+            openapi: '3.0.1',
+            info: { title: 'Test', version: '1.0.0', description: 'test' },
+            components: {
+              schemas: {
+                typeA: {
+                  type: 'object',
+                  properties: { foo: { type: 'string' } },
+                },
+              },
+            },
+          };
+
+          // ACT
+          const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+          // ASSERT
+          expect(service).toEqual(
+            partial<Service>({
+              types: [
+                {
+                  kind: 'Type',
+                  name: { value: 'typeA' },
+                  properties: exact([
+                    partial<Property>({
+                      kind: 'Property',
+                      name: { value: 'foo' },
+                      typeName: { value: 'string' },
+                      isPrimitive: true,
+                    }),
+                  ]),
+                },
+              ],
+            }),
+          );
+        });
+        it('creates object properties', () => {
+          // ARRANGE
+          const oas = {
+            openapi: '3.0.1',
+            info: { title: 'Test', version: '1.0.0', description: 'test' },
+            components: {
+              schemas: {
+                typeA: {
+                  type: 'object',
+                  properties: { foo: { type: 'object' } },
+                },
+              },
+            },
+          };
+
+          // ACT
+          const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+          // ASSERT
+          expect(service).toEqual(
+            partial<Service>({
+              types: [
+                {
+                  kind: 'Type',
+                  name: { value: 'typeA' },
+                  properties: exact([
+                    partial<Property>({
+                      kind: 'Property',
+                      name: { value: 'foo' },
+                      typeName: { value: 'typeAFoo' },
+                      isPrimitive: false,
+                    }),
+                  ]),
+                },
+                {
+                  kind: 'Type',
+                  name: { value: 'typeAFoo' },
+                  properties: exact([]),
+                },
+              ],
+            }),
+          );
+        });
+      });
+      describe('nested', () => {
+        it('creates a type from a nested schema component', () => {
+          // ARRANGE
+          const oas = {
+            openapi: '3.0.1',
+            info: { title: 'Test', version: '1.0.0', description: 'test' },
+            components: {
+              schemas: {
+                typeA: {
+                  type: 'object',
+                  properties: {
+                    foo: {
+                      type: 'object',
+                    },
+                  },
+                },
+              },
+            },
+          };
+
+          // ACT
+          const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+          // ASSERT
+          expect(service).toEqual(
+            partial<Service>({
+              types: [
+                {
+                  kind: 'Type',
+                  name: { value: 'typeA' },
+                  properties: exact([
+                    partial<Property>({
+                      kind: 'Property',
+                      name: { value: 'foo' },
+                      typeName: { value: 'typeAFoo' },
+                      isPrimitive: false,
+                    }),
+                  ]),
+                },
+                {
+                  kind: 'Type',
+                  name: { value: 'typeAFoo' },
+                  properties: exact([]),
+                },
+              ],
+            }),
+          );
+        });
+        it('creates primitive properties', () => {
+          // ARRANGE
+          const oas = {
+            openapi: '3.0.1',
+            info: { title: 'Test', version: '1.0.0', description: 'test' },
+            components: {
+              schemas: {
+                typeA: {
+                  type: 'object',
+                  properties: {
+                    foo: {
+                      type: 'object',
+                      properties: { bar: { type: 'string' } },
+                    },
+                  },
+                },
+              },
+            },
+          };
+
+          // ACT
+          const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+          // ASSERT
+          expect(service).toEqual(
+            partial<Service>({
+              types: [
+                {
+                  kind: 'Type',
+                  name: { value: 'typeA' },
+                  properties: exact([
+                    partial<Property>({
+                      kind: 'Property',
+                      name: { value: 'foo' },
+                      typeName: { value: 'typeAFoo' },
+                      isPrimitive: false,
+                    }),
+                  ]),
+                },
+                {
+                  kind: 'Type',
+                  name: { value: 'typeAFoo' },
+                  properties: exact([
+                    partial<Property>({
+                      kind: 'Property',
+                      name: { value: 'bar' },
+                      typeName: { value: 'string' },
+                      isPrimitive: true,
+                    }),
+                  ]),
+                },
+              ],
+            }),
+          );
+        });
+        it('creates object properties', () => {
+          // ARRANGE
+          const oas = {
+            openapi: '3.0.1',
+            info: { title: 'Test', version: '1.0.0', description: 'test' },
+            components: {
+              schemas: {
+                typeA: {
+                  type: 'object',
+                  properties: {
+                    foo: {
+                      type: 'object',
+                      properties: { bar: { type: 'object' } },
+                    },
+                  },
+                },
+              },
+            },
+          };
+
+          // ACT
+          const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+          // ASSERT
+          expect(service).toEqual(
+            partial<Service>({
+              types: [
+                {
+                  kind: 'Type',
+                  name: { value: 'typeA' },
+                  properties: exact([
+                    partial<Property>({
+                      kind: 'Property',
+                      name: { value: 'foo' },
+                      typeName: { value: 'typeAFoo' },
+                      isPrimitive: false,
+                    }),
+                  ]),
+                },
+                {
+                  kind: 'Type',
+                  name: { value: 'typeAFoo' },
+                  properties: exact([
+                    partial<Property>({
+                      kind: 'Property',
+                      name: { value: 'bar' },
+                      typeName: { value: 'typeAFooBar' },
+                      isPrimitive: false,
+                    }),
+                  ]),
+                },
+                {
+                  kind: 'Type',
+                  name: { value: 'typeAFooBar' },
+                  properties: exact([]),
+                },
+              ],
+            }),
+          );
+        });
+      });
+      describe('request body', () => {
+        it('creates a type from a operation body', () => {
+          // ARRANGE
+          const oas = {
+            openapi: '3.0.1',
+            info: { title: 'Test', version: '1.0.0', description: 'test' },
+            paths: {
+              '/thing': {
+                post: {
+                  operationId: 'createThing',
+                  requestBody: {
+                    content: {
+                      '*/*': {
+                        schema: { type: 'object' },
+                      },
+                    },
+                  },
+                  responses: { '200': { description: 'success' } },
+                },
+              },
+            },
+          };
+
+          // ACT
+          const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+          // ASSERT
+          expect(service).toEqual(
+            partial<Service>({
+              types: [
+                {
+                  kind: 'Type',
+                  name: { value: 'createThingBody' },
+                  properties: exact([]),
+                },
+              ],
+            }),
+          );
+        });
+        it('creates a type from a named operation body', () => {
+          // ARRANGE
+          const oas = {
+            openapi: '3.0.1',
+            info: { title: 'Test', version: '1.0.0', description: 'test' },
+            paths: {
+              '/thing': {
+                post: {
+                  operationId: 'createThing',
+                  'x-codegen-request-body-name': 'payload',
+                  requestBody: {
+                    content: {
+                      '*/*': {
+                        schema: { type: 'object' },
+                      },
+                    },
+                  },
+                  responses: { '200': { description: 'success' } },
+                },
+              },
+            },
+          };
+
+          // ACT
+          const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+          // ASSERT
+          expect(service).toEqual(
+            partial<Service>({
+              types: [
+                {
+                  kind: 'Type',
+                  name: { value: 'createThingPayload' },
+                  properties: exact([]),
+                },
+              ],
+            }),
+          );
+        });
+        it('creates primitive properties', () => {
+          // ARRANGE
+          const oas = {
+            openapi: '3.0.1',
+            info: { title: 'Test', version: '1.0.0', description: 'test' },
+            paths: {
+              '/thing': {
+                post: {
+                  operationId: 'createThing',
+                  requestBody: {
+                    content: {
+                      '*/*': {
+                        schema: {
+                          type: 'object',
+                          properties: { foo: { type: 'string' } },
+                        },
+                      },
+                    },
+                  },
+                  responses: { '200': { description: 'success' } },
+                },
+              },
+            },
+          };
+
+          // ACT
+          const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+          // ASSERT
+          expect(service).toEqual(
+            partial<Service>({
+              types: [
+                {
+                  kind: 'Type',
+                  name: { value: 'createThingBody' },
+                  properties: exact([
+                    partial<Property>({
+                      kind: 'Property',
+                      name: { value: 'foo' },
+                      typeName: { value: 'string' },
+                      isPrimitive: true,
+                    }),
+                  ]),
+                },
+              ],
+            }),
+          );
+        });
+        it('creates object properties', () => {
+          // ARRANGE
+          const oas = {
+            openapi: '3.0.1',
+            info: { title: 'Test', version: '1.0.0', description: 'test' },
+            paths: {
+              '/thing': {
+                post: {
+                  operationId: 'createThing',
+                  requestBody: {
+                    content: {
+                      '*/*': {
+                        schema: {
+                          type: 'object',
+                          properties: { foo: { type: 'object' } },
+                        },
+                      },
+                    },
+                  },
+                  responses: { '200': { description: 'success' } },
+                },
+              },
+            },
+          };
+
+          // ACT
+          const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+          // ASSERT
+          expect(service).toEqual(
+            partial<Service>({
+              types: [
+                {
+                  kind: 'Type',
+                  name: { value: 'createThingBody' },
+                  properties: exact([
+                    partial<Property>({
+                      kind: 'Property',
+                      name: { value: 'foo' },
+                      typeName: { value: 'createThingBodyFoo' },
+                      isPrimitive: false,
+                    }),
+                  ]),
+                },
+                {
+                  kind: 'Type',
+                  name: { value: 'createThingBodyFoo' },
+                  properties: exact([]),
+                },
+              ],
+            }),
+          );
+        });
+      });
+      describe('response', () => {
+        it('creates a type from a referenced response component', () => {
+          // ARRANGE
+          const oas = {
+            openapi: '3.0.1',
+            info: { title: 'Test', version: '1.0.0', description: 'test' },
+            paths: {
+              '/thing': {
+                get: {
+                  operationId: 'getThing',
+                  responses: {
+                    '200': { $ref: '#/components/responses/thing' },
+                  },
+                },
+              },
+            },
+            components: {
+              responses: {
+                thing: {
+                  content: {
+                    '*/*': {
+                      schema: { type: 'object' },
+                    },
+                  },
+                },
+              },
+            },
+          };
+
+          // ACT
+          const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+          // ASSERT
+          expect(service).toEqual(
+            partial<Service>({
+              types: [
+                {
+                  kind: 'Type',
+                  name: { value: 'thingResponse' },
+                  properties: exact([]),
+                },
+              ],
+            }),
+          );
+        });
+        it('creates primitive properties', () => {
+          // ARRANGE
+          const oas = {
+            openapi: '3.0.1',
+            info: { title: 'Test', version: '1.0.0', description: 'test' },
+            paths: {
+              '/thing': {
+                get: {
+                  operationId: 'getThing',
+                  responses: {
+                    '200': { $ref: '#/components/responses/thing' },
+                  },
+                },
+              },
+            },
+            components: {
+              responses: {
+                thing: {
+                  content: {
+                    '*/*': {
+                      schema: {
+                        type: 'object',
+                        properties: { foo: { type: 'string' } },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          };
+
+          // ACT
+          const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+          // ASSERT
+          expect(service).toEqual(
+            partial<Service>({
+              types: [
+                {
+                  kind: 'Type',
+                  name: { value: 'thingResponse' },
+                  properties: exact([
+                    partial<Property>({
+                      kind: 'Property',
+                      name: { value: 'foo' },
+                      typeName: { value: 'string' },
+                      isPrimitive: true,
+                    }),
+                  ]),
+                },
+              ],
+            }),
+          );
+        });
+        it('creates object properties', () => {
+          // ARRANGE
+          const oas = {
+            openapi: '3.0.1',
+            info: { title: 'Test', version: '1.0.0', description: 'test' },
+            paths: {
+              '/thing': {
+                get: {
+                  operationId: 'getThing',
+                  responses: {
+                    '200': { $ref: '#/components/responses/thing' },
+                  },
+                },
+              },
+            },
+            components: {
+              responses: {
+                thing: {
+                  content: {
+                    '*/*': {
+                      schema: {
+                        type: 'object',
+                        properties: { foo: { type: 'object' } },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          };
+
+          // ACT
+          const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+          // ASSERT
+          expect(service).toEqual(
+            partial<Service>({
+              types: [
+                {
+                  kind: 'Type',
+                  name: { value: 'thingResponse' },
+                  properties: exact([
+                    partial<Property>({
+                      kind: 'Property',
+                      name: { value: 'foo' },
+                      typeName: { value: 'thingResponseFoo' },
+                      isPrimitive: false,
+                    }),
+                  ]),
+                },
+                {
+                  kind: 'Type',
+                  name: { value: 'thingResponseFoo' },
+                  properties: exact([]),
+                },
+              ],
+            }),
+          );
+        });
+      });
+    });
+    describe('properties', () => {
+      // TODO: add tests for parsing properties (eg. arrays, defaults, etc.)
     });
   });
 
