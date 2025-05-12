@@ -179,7 +179,8 @@ export type SchemaNodeUnion =
   | NumberSchemaNode
   | BooleanSchemaNode
   | ArraySchemaNode
-  | ObjectSchemaNode;
+  | ObjectSchemaNode
+  | NullSchemaNode;
 
 export type SecuritySchemeNode =
   | HttpSecuritySchemeNode
@@ -316,11 +317,23 @@ function toSchemaOrRef(
           return new ArraySchemaNode(value, context);
         case 'object':
           return new ObjectSchemaNode(value, context);
+        case 'null':
+          return new NullSchemaNode(value, context);
       }
     }
+
+    error(root, {
+      message: 'Invalid schema type.',
+      range: typeNode.loc,
+    });
   }
 
-  throw new Error('Unknown schema definition');
+  error(root, {
+    message: 'Invalid schema',
+    range: value.loc,
+  });
+
+  return undefined;
 }
 
 function toSecuritySchemeOrRef(

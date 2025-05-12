@@ -1040,6 +1040,24 @@ export class OAS3Parser {
           rules,
           loc: range(schemaOrRef),
         };
+      case 'NullSchema': {
+        return {
+          typeName: {
+            value: schemaOrRef.type.value,
+            loc: range(schemaOrRef.type),
+          },
+          isPrimitive: true,
+          isArray: false,
+          default: toScalar(schemaOrRef.default),
+          constant:
+            schemaOrRef.const === null
+              ? toScalar(schemaOrRef.const)
+              : undefined,
+          rules,
+          loc: range(schemaOrRef),
+        };
+        break;
+      }
       default:
         return {
           typeName: { value: 'untyped' },
