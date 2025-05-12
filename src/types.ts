@@ -1425,6 +1425,7 @@ export class NumberSchemaNode extends SchemaNode {
       'type',
       'default',
       'const',
+      'enum',
       'multipleOf',
       'minimum',
       'exclusiveMinimum',
@@ -1444,6 +1445,10 @@ export class NumberSchemaNode extends SchemaNode {
 
   get const() {
     return this.getLiteral<number>('const');
+  }
+
+  get enum() {
+    return this.getArray<LiteralNode<number>>('enum', LiteralNode);
   }
 
   get multipleOf() {
@@ -1485,6 +1490,7 @@ export class BooleanSchemaNode extends SchemaNode {
       'type',
       'default',
       'const',
+      'enum',
     ]);
   }
 
@@ -1498,6 +1504,10 @@ export class BooleanSchemaNode extends SchemaNode {
 
   get const() {
     return this.getLiteral<boolean>('const');
+  }
+
+  get enum() {
+    return this.getArray<LiteralNode<boolean>>('enum', LiteralNode);
   }
 }
 

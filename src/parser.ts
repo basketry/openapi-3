@@ -810,6 +810,25 @@ export class OAS3Parser {
     return resolved.name;
   }
 
+  private parseConst<T extends string | number | boolean | null>(schema: {
+    enum?: OAS3.LiteralNode<T>[];
+    const?: OAS3.LiteralNode<T>;
+  }): Scalar<T> | undefined {
+    if (schema.const) {
+      return {
+        value: schema.const.value,
+        loc: range(schema.const),
+      };
+    } else if (schema.enum && schema.enum.length === 1) {
+      return {
+        value: schema.enum[0].value,
+        loc: range(schema.enum[0]),
+      };
+    } else {
+      return;
+    }
+  }
+
   private parseType(
     schemaOrRef: OAS3.SchemaNodeUnion | OAS3.RefNode,
     localName: string,
@@ -938,7 +957,7 @@ export class OAS3Parser {
           ...this.parseNumberName(schemaOrRef),
           isArray: false,
           default: toScalar(schemaOrRef.default),
-          constant: toScalar(schemaOrRef.const),
+          constant: this.parseConst(schemaOrRef),
           rules,
           loc: range(schemaOrRef),
         };
@@ -953,7 +972,7 @@ export class OAS3Parser {
           isPrimitive: true,
           isArray: false,
           default: toScalar(schemaOrRef.default),
-          constant: toScalar(schemaOrRef.const),
+          constant: this.parseConst(schemaOrRef),
           rules,
           loc: range(schemaOrRef),
         };
