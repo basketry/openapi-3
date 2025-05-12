@@ -1473,7 +1473,7 @@ export class NumberSchemaNode extends SchemaNode {
   }
 
   get exclusiveMinimum() {
-    return this.getLiteral<boolean>('exclusiveMinimum');
+    return this.getLiteral<boolean | number>('exclusiveMinimum');
   }
 
   get maximum() {
@@ -1565,6 +1565,40 @@ export class ArraySchemaNode extends SchemaNode {
 
   get uniqueItems() {
     return this.getLiteral<boolean>('uniqueItems');
+  }
+}
+
+export class NullSchemaNode extends SchemaNode {
+  public readonly nodeType = 'NullSchema';
+
+  protected get allowedKeys(): ReadonlySet<string> {
+    return new Set([
+      'description',
+      'nullable',
+      'externalDocs',
+      'example',
+      'deprecated',
+      'type',
+      'default',
+      'const',
+      'enum',
+    ]);
+  }
+
+  get type() {
+    return this.getRequiredLiteral<'string'>('type')!;
+  }
+
+  get default() {
+    return this.getLiteral<null>('default');
+  }
+
+  get const() {
+    return this.getLiteral<null>('const');
+  }
+
+  get enum() {
+    return this.getArray<LiteralNode<null>>('enum', LiteralNode);
   }
 }
 

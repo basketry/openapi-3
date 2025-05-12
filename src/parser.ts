@@ -1862,29 +1862,59 @@ const numberMultipleOfFactory: ValidationRuleFactory = (def) => {
 };
 
 const numberGreaterThanFactory: ValidationRuleFactory = (def) => {
-  if (OAS3.isNumber(def) && typeof def.minimum?.value === 'number') {
-    return {
-      kind: 'ValidationRule',
-      id: def.exclusiveMinimum?.value ? 'number-gt' : 'number-gte',
-      value: { value: def.minimum.value, loc: range(def.minimum) },
-      loc: def.propRange('minimum')!,
-    };
-  } else {
-    return;
+  if (OAS3.isNumber(def)) {
+    if (
+      typeof def.minimum?.value === 'number' &&
+      typeof def.exclusiveMinimum?.value !== 'number'
+    ) {
+      return {
+        kind: 'ValidationRule',
+        id: def.exclusiveMinimum?.value ? 'number-gt' : 'number-gte',
+        value: { value: def.minimum.value, loc: range(def.minimum) },
+        loc: def.propRange('minimum')!,
+      };
+    } else if (typeof def.exclusiveMinimum?.value === 'number') {
+      return {
+        kind: 'ValidationRule',
+        id: 'number-gt',
+        value: {
+          value: def.exclusiveMinimum.value,
+          loc: range(def.exclusiveMinimum),
+        },
+        loc: def.propRange('exclusiveMinimum')!,
+      };
+    }
   }
+
+  return;
 };
 
 const numberLessThanFactory: ValidationRuleFactory = (def) => {
-  if (OAS3.isNumber(def) && typeof def.maximum?.value === 'number') {
-    return {
-      kind: 'ValidationRule',
-      id: def.exclusiveMinimum?.value ? 'number-lt' : 'number-lte',
-      value: { value: def.maximum.value, loc: range(def.maximum) },
-      loc: def.propRange('maximum')!,
-    };
-  } else {
-    return;
+  if (OAS3.isNumber(def)) {
+    if (
+      typeof def.maximum?.value === 'number' &&
+      typeof def.exclusiveMaximum?.value !== 'number'
+    ) {
+      return {
+        kind: 'ValidationRule',
+        id: def.exclusiveMaximum?.value ? 'number-lt' : 'number-lte',
+        value: { value: def.maximum.value, loc: range(def.maximum) },
+        loc: def.propRange('maximum')!,
+      };
+    } else if (typeof def.exclusiveMaximum?.value === 'number') {
+      return {
+        kind: 'ValidationRule',
+        id: 'number-lt',
+        value: {
+          value: def.exclusiveMaximum.value,
+          loc: range(def.exclusiveMaximum),
+        },
+        loc: def.propRange('exclusiveMaximum')!,
+      };
+    }
   }
+
+  return;
 };
 
 const arrayMinItemsFactory: ValidationRuleFactory = (def) => {
