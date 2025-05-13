@@ -1340,8 +1340,8 @@ export class OAS3Parser {
 
   private parseAsUnion(
     name: string,
-    node: OAS3.ObjectSchemaNode,
-    oneOf: (OAS3.RefNode | OAS3.ObjectSchemaNode)[],
+    node: OAS3.SchemaNodeUnion,
+    oneOf: (OAS3.RefNode | OAS3.SchemaNodeUnion)[],
     nameLoc: string | undefined,
   ): void {
     const members: TypedValue[] = oneOf
@@ -1356,7 +1356,7 @@ export class OAS3Parser {
         } & TypedValue => !!x,
       );
 
-    if (node.discriminator) {
+    if (node.nodeType === 'ObjectSchema' && node.discriminator) {
       const { propertyName, mapping } = node.discriminator;
 
       if (mapping) {

@@ -1665,9 +1665,7 @@ export class ObjectSchemaNode extends SchemaNode {
     const prop = this.getProperty('oneOf')?.value;
     if (!prop?.isArray()) return;
 
-    return prop.children
-      .map((c) => toSchemaOrRef(c, this.root))
-      .filter(isObjectSchemaOrRef);
+    return prop.children.map((c) => toSchemaOrRef(c, this.root)).filter(truthy);
   }
 
   get anyOf() {
@@ -2075,4 +2073,8 @@ function isRef(node: AST.ASTNode | undefined): boolean {
   return !!(
     node?.isObject() && node.children.some((n) => n.key.value === '$ref')
   );
+}
+
+function truthy<T>(x: T): x is NonNullable<T> {
+  return !!x;
 }
