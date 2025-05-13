@@ -5957,6 +5957,118 @@ describe('parser', () => {
         }),
       );
     });
+
+    describe('primitive', () => {
+      it('parses a primitive union from oneOf', () => {
+        // ARRANGE
+        const oas = {
+          openapi: '3.0.1',
+          info: { title: 'Test', version: '1.0.0', description: 'test' },
+          components: {
+            schemas: {
+              typeA: {
+                type: 'object',
+                properties: {
+                  foo: { oneOf: [{ type: 'string' }, { type: 'number' }] },
+                },
+              },
+            },
+          },
+        };
+
+        // ACT
+        const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+        // ASSERT
+        expect(service).toEqual(
+          partial<Service>({
+            types: [
+              {
+                kind: 'Type',
+                name: { value: 'typeA' },
+                properties: exact([
+                  partial<Property>({
+                    kind: 'Property',
+                    name: { value: 'foo' },
+                    typeName: { value: 'typeAFoo' },
+                    isPrimitive: false,
+                    isArray: false,
+                  }),
+                ]),
+              },
+            ],
+            unions: [
+              {
+                kind: 'Union',
+                name: { value: 'typeAFoo' },
+                members: [
+                  { typeName: { value: 'string' }, isPrimitive: true },
+                  { typeName: { value: 'number' }, isPrimitive: true },
+                ],
+              },
+            ],
+          }),
+        );
+      });
+    });
+
+    describe('mixed', () => {
+      it('parses a mixed union (primitive and complex) from oneOf', () => {
+        // ARRANGE
+        const oas = {
+          openapi: '3.0.1',
+          info: { title: 'Test', version: '1.0.0', description: 'test' },
+          components: {
+            schemas: {
+              typeA: {
+                type: 'object',
+                properties: {
+                  foo: { oneOf: [{ type: 'string' }, { type: 'object' }] },
+                },
+              },
+            },
+          },
+        };
+
+        // ACT
+        const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+        // ASSERT
+        expect(service).toEqual(
+          partial<Service>({
+            types: [
+              {
+                kind: 'Type',
+                name: { value: 'typeA' },
+                properties: exact([
+                  partial<Property>({
+                    kind: 'Property',
+                    name: { value: 'foo' },
+                    typeName: { value: 'typeAFoo' },
+                    isPrimitive: false,
+                    isArray: false,
+                  }),
+                ]),
+              },
+              {
+                kind: 'Type',
+                name: { value: 'typeAFoo2' },
+              },
+            ],
+            unions: [
+              {
+                kind: 'Union',
+                name: { value: 'typeAFoo' },
+                members: [
+                  { typeName: { value: 'string' }, isPrimitive: true },
+                  { typeName: { value: 'typeAFoo2' }, isPrimitive: false },
+                ],
+              },
+            ],
+          }),
+        );
+      });
+    });
   });
 
   describe('additionalProperties', () => {
