@@ -6010,6 +6010,58 @@ describe('parser', () => {
           }),
         );
       });
+
+      it('parses a primitive union from anyOf', () => {
+        // ARRANGE
+        const oas = {
+          openapi: '3.0.1',
+          info: { title: 'Test', version: '1.0.0', description: 'test' },
+          components: {
+            schemas: {
+              typeA: {
+                type: 'object',
+                properties: {
+                  foo: { anyOf: [{ type: 'string' }, { type: 'number' }] },
+                },
+              },
+            },
+          },
+        };
+
+        // ACT
+        const { service } = parser(JSON.stringify(oas), 'source/path.ext');
+
+        // ASSERT
+        expect(service).toEqual(
+          partial<Service>({
+            types: [
+              {
+                kind: 'Type',
+                name: { value: 'typeA' },
+                properties: exact([
+                  partial<Property>({
+                    kind: 'Property',
+                    name: { value: 'foo' },
+                    typeName: { value: 'typeAFoo' },
+                    isPrimitive: false,
+                    isArray: false,
+                  }),
+                ]),
+              },
+            ],
+            unions: [
+              {
+                kind: 'Union',
+                name: { value: 'typeAFoo' },
+                members: [
+                  { typeName: { value: 'string' }, isPrimitive: true },
+                  { typeName: { value: 'number' }, isPrimitive: true },
+                ],
+              },
+            ],
+          }),
+        );
+      });
     });
 
     describe('mixed', () => {

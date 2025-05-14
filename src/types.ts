@@ -1345,7 +1345,7 @@ export class TagNode extends DocumentNode {
 // Done
 export abstract class SchemaNode extends DocumentNode {
   protected get unsupportedKeys(): ReadonlySet<string> {
-    return new Set(['nullable', 'anyOf']);
+    return new Set(['nullable']);
   }
 
   get description() {
@@ -1669,12 +1669,10 @@ export class ObjectSchemaNode extends SchemaNode {
   }
 
   get anyOf() {
-    const prop = this.getProperty('oneOf')?.value;
+    const prop = this.getProperty('anyOf')?.value;
     if (!prop?.isArray()) return;
 
-    return prop.children
-      .map((c) => toSchemaOrRef(c, this.root))
-      .filter(isObjectSchemaOrRef);
+    return prop.children.map((c) => toSchemaOrRef(c, this.root)).filter(truthy);
   }
 
   get minProperties() {
