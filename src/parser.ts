@@ -1010,6 +1010,13 @@ export class OAS3Parser {
             schemaOrRef.oneOf,
             undefined,
           );
+        } else if (schemaOrRef.anyOf) {
+          this.parseAsUnion(
+            typeName.value,
+            schemaOrRef,
+            schemaOrRef.anyOf,
+            undefined,
+          );
         } else {
           this.anonymousTypes.push({
             kind: 'Type',
@@ -1330,6 +1337,8 @@ export class OAS3Parser {
 
       if (node.oneOf) {
         this.parseAsUnion(name, node, node.oneOf, nameLoc);
+      } else if (node.anyOf) {
+        this.parseAsUnion(name, node, node.anyOf, nameLoc);
       } else {
         types.push(this.parseAsType(name, node, nameLoc, defLoc));
       }
