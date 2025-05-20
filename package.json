@@ -32,6 +32,7 @@
     "url": "https://github.com/basketry/openapi-3/issues"
   },
   "homepage": "https://github.com/basketry/openapi-3#readme",
+  "funding": "https://github.com/sponsors/basketry",
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "@types/json-to-ast": "^2.1.2",
