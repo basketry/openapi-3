@@ -8,7 +8,6 @@ import {
   Scalar,
   Service,
   validate,
-  ValidationRule,
   Violation,
 } from 'basketry';
 import parser from '.';
@@ -7054,10 +7053,7 @@ describe('parser', () => {
         };
 
         // ACT
-        const { service, violations } = parser(
-          JSON.stringify(oas),
-          'source/path.ext',
-        );
+        const { violations } = parser(JSON.stringify(oas), 'source/path.ext');
 
         // ASSERT
         expect(violations).toEqual(

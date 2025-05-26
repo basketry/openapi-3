@@ -435,7 +435,6 @@ export class OAS3Parser {
   private parseMethods(interfaceName: string): Method[] {
     const pathsNode = this.schema.paths;
     if (!pathsNode) return [];
-    const paths = pathsNode.keys;
 
     const methods: Method[] = [];
 
@@ -707,8 +706,6 @@ export class OAS3Parser {
     const unresolved = param.schema;
     const resolved = OAS3.resolveSchema(this.schema.node, param.schema);
     if (!resolved) return;
-
-    const name = param.name;
 
     const value = param.name?.value ?? 'unnamed';
     const loc = param.name ? range(param.name) : undefined;
@@ -1316,8 +1313,6 @@ export class OAS3Parser {
   private parseDefinitions(): Type[] {
     const schemas = this.getSchemas();
     if (!schemas) return [];
-
-    const indexNode = this.getSchemas();
 
     const definitions = schemas.keys
       .map<[string, OAS3.SchemaNodeUnion, string | undefined, string]>(
