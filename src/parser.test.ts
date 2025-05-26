@@ -7158,12 +7158,12 @@ function removeLoc(key: string, value: any): any {
 type DeepPartial<T> = T extends Function
   ? T
   : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends object
-  ? { [P in keyof T]?: DeepPartial<T[P]> }
-  : T;
+    ? Array<DeepPartial<U>>
+    : T extends ReadonlyArray<infer U>
+      ? ReadonlyArray<DeepPartial<U>>
+      : T extends object
+        ? { [P in keyof T]?: DeepPartial<T[P]> }
+        : T;
 
 const exactSet = new Set<unknown>();
 function exact<T>(input: T): T {
