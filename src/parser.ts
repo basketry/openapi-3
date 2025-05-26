@@ -43,7 +43,10 @@ function range(node: AST.ASTNode | DocumentNode): string {
 }
 
 export class OAS3Parser {
-  constructor(schema: string, private readonly sourcePath: string) {
+  constructor(
+    schema: string,
+    private readonly sourcePath: string,
+  ) {
     this.schema = new OAS3.OpenAPINode(parse(schema), {
       root: undefined,
       parentKey: undefined,
@@ -1315,14 +1318,9 @@ export class OAS3Parser {
     if (!schemas) return [];
 
     const definitions = schemas.keys
-      .map<[string, OAS3.SchemaNodeUnion, string | undefined, string]>(
-        (name) => [
-          name,
-          this.getSchema(name)!,
-          schemas.keyRange(name),
-          schemas.propRange(name)!,
-        ],
-      )
+      .map<
+        [string, OAS3.SchemaNodeUnion, string | undefined, string]
+      >((name) => [name, this.getSchema(name)!, schemas.keyRange(name), schemas.propRange(name)!])
       .filter(([, node]) => node.nodeType === 'ObjectSchema');
 
     const types: Type[] = [];
@@ -2046,12 +2044,10 @@ function safeConcat<T>(
   }
 }
 
-type MirrorUndefined<Input, Output> = Exclude<
-  Input,
-  Exclude<Input, undefined>
-> extends never
-  ? Output
-  : Output | undefined;
+type MirrorUndefined<Input, Output> =
+  Exclude<Input, Exclude<Input, undefined>> extends never
+    ? Output
+    : Output | undefined;
 
 function literal<
   Primitive extends string | number | boolean | null,
