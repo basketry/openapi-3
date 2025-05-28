@@ -14,7 +14,7 @@ import parser from '.';
 import { dump as yamlStringify } from 'yaml-ast-parser';
 
 describe('parser', () => {
-  describe.skip('snapshots', () => {
+  describe('snapshots', () => {
     it('recreates a valid exhaustive snapshot', async () => {
       // ARRANGE
       const snapshot = JSON.parse(
