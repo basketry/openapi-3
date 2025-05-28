@@ -31,7 +31,7 @@
   "bugs": {
     "url": "https://github.com/basketry/openapi-3/issues"
   },
-  "homepage": "https://github.com/basketry/openapi-3#readme",
+  "homepage": "https://basketry.io/docs/components/@basketry/openapi-3",
   "funding": "https://github.com/sponsors/basketry",
   "devDependencies": {
     "@types/jest": "^29.5.12",
