@@ -513,6 +513,15 @@ export class OAS3Parser {
     return;
   }
 
+  private parseNullable(schema: OAS3.SchemaNodeUnion): TrueLiteral | undefined {
+    if (!schema.nullable?.value) return;
+    return {
+      kind: 'TrueLiteral',
+      value: true,
+      loc: range(schema.nullable),
+    };
+  }
+
   private parseMethods(interfaceName: string): Method[] {
     const pathsNode = this.schema.paths;
     if (!pathsNode) return [];
@@ -1067,6 +1076,7 @@ export class OAS3Parser {
             if (!stringName) return;
             return {
               ...stringName,
+              isNullable: this.parseNullable(schemaOrRef),
               default: toStringLiteral(schemaOrRef.default),
               constant: toStringLiteral(schemaOrRef.enum[0]),
               rules,
@@ -1101,8 +1111,10 @@ export class OAS3Parser {
         } else {
           const stringName = this.parseStringName(schemaOrRef);
           if (!stringName) return;
+          console.log(stringName,'==============================>>>>>>>>>>>>>>>>>>>>>>>>>');
           return {
             ...stringName,
+            // isNullable: { kind: 'TrueLiteral', value: true }, //this.parseNullable(schemaOrRef),
             default: toStringLiteral(schemaOrRef.default),
             constant: toStringLiteral(schemaOrRef.const),
             rules,
@@ -1113,6 +1125,7 @@ export class OAS3Parser {
       case 'NumberSchema':
         return {
           ...this.parseNumberName(schemaOrRef),
+          isNullable: this.parseNullable(schemaOrRef),
           default: toNumberLiteral(schemaOrRef.default),
           constant: this.parseConst(schemaOrRef),
           rules,
@@ -1128,6 +1141,7 @@ export class OAS3Parser {
             value: schemaOrRef.type.value,
             loc: range(schemaOrRef.type),
           },
+          isNullable: this.parseNullable(schemaOrRef),
           default: toBooleanLiteral(schemaOrRef.default),
           constant: this.parseConst(schemaOrRef),
           rules,
@@ -1149,6 +1163,7 @@ export class OAS3Parser {
               value: true,
               // TODO: loc
             },
+            // drop for now: isNullable: items.isNullable,
             rules,
             loc: range(schemaOrRef),
           };
@@ -1225,6 +1240,7 @@ export class OAS3Parser {
             value: schemaOrRef.type.value,
             loc: range(schemaOrRef.type),
           },
+          isNullable: this.parseNullable(schemaOrRef),
           default: toNullLiteral(schemaOrRef.default),
           constant:
             schemaOrRef.const === null
@@ -1239,6 +1255,7 @@ export class OAS3Parser {
         return {
           kind: 'PrimitiveValue',
           typeName: { kind: 'PrimitiveLiteral', value: 'untyped' },
+          isNullable: this.parseNullable(schemaOrRef),
           rules,
           loc: range(schemaOrRef),
         };
@@ -1267,6 +1284,8 @@ export class OAS3Parser {
       return schema;
     })();
 
+    const isNullable = def.nodeType === 'StringSchema' ? this.parseNullable(def) : (def.schema ? this.parseNullable(OAS3.resolveSchema(this.schema.node, def.schema)!) : undefined);
+
     if (format?.value === 'date') {
       return {
         kind: 'PrimitiveValue',
@@ -1275,6 +1294,7 @@ export class OAS3Parser {
           value: 'date',
           loc: range(def),
         },
+        isNullable,
       };
     } else if (format?.value === 'date-time') {
       return {
@@ -1284,6 +1304,7 @@ export class OAS3Parser {
           value: 'date-time',
           loc: range(def),
         },
+        isNullable,
       };
     } else if (format?.value === 'binary') {
       return {
@@ -1293,6 +1314,7 @@ export class OAS3Parser {
           value: 'binary',
           loc: range(def),
         },
+        isNullable,
       };
     } else {
       return {
@@ -1302,6 +1324,7 @@ export class OAS3Parser {
           value: type.value,
           loc: range(type),
         },
+        isNullable,
       };
     }
   }
@@ -1328,6 +1351,8 @@ export class OAS3Parser {
       return schema;
     })();
 
+    const isNullable = def.nodeType === 'NumberSchema' ? this.parseNullable(def) : (def.schema ? this.parseNullable(OAS3.resolveSchema(this.schema.node, def.schema)!) : undefined);
+
     if (type.value === 'integer') {
       if (format?.value === 'int32') {
         return {
@@ -1337,6 +1362,7 @@ export class OAS3Parser {
             value: 'integer',
             loc: range(def),
           },
+          isNullable,
         };
       } else if (format?.value === 'int64') {
         return {
@@ -1346,6 +1372,7 @@ export class OAS3Parser {
             value: 'long',
             loc: range(def),
           },
+          isNullable,
         };
       }
     } else if (type.value === 'number') {
@@ -1357,6 +1384,7 @@ export class OAS3Parser {
             value: 'float',
             loc: range(def),
           },
+          isNullable,
         };
       } else if (format?.value === 'double') {
         return {
@@ -1366,6 +1394,7 @@ export class OAS3Parser {
             value: 'double',
             loc: range(def),
           },
+          isNullable,
         };
       }
     }
@@ -1377,6 +1406,7 @@ export class OAS3Parser {
         value: type.value,
         loc: range(type),
       },
+      isNullable,
     };
   }
 

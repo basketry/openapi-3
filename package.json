@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "@basketry/ast": "^0.1.0",
-    "basketry": "^0.2.0-alpha.12",
+    "basketry": "^0.2.0-alpha.15",
     "case": "^1.6.3",
     "json-to-ast": "^2.1.0",
     "pluralize": "^8.0.0",

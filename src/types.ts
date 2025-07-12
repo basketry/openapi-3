@@ -1347,7 +1347,7 @@ export class TagNode extends DocumentNode {
 // Done
 export abstract class SchemaNode extends DocumentNode {
   protected get unsupportedKeys(): ReadonlySet<string> {
-    return new Set(['nullable']);
+    return new Set([]);
   }
 
   get description() {
