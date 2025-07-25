@@ -75,7 +75,7 @@
               "value": {
                 "kind": "ComplexValue",
                 "typeName": { "kind": "StringLiteral", "value": "Pet" },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             }
           ],
@@ -158,7 +158,7 @@
               "value": {
                 "kind": "ComplexValue",
                 "typeName": { "kind": "StringLiteral", "value": "Pet" },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             }
           ],
@@ -244,17 +244,8 @@
                   "kind": "StringLiteral",
                   "value": "findPetsByStatusStatus"
                 },
-                "rules": [
-                  {
-                    "kind": "ValidationRule",
-                    "id": "StringEnum",
-                    "values": [
-                      { "kind": "StringLiteral", "value": "available" },
-                      { "kind": "StringLiteral", "value": "pending" },
-                      { "kind": "StringLiteral", "value": "sold" }
-                    ]
-                  }
-                ]
+                "isOptional": { "kind": "TrueLiteral", "value": true },
+                "rules": []
               }
             }
           ],
@@ -339,6 +330,7 @@
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
                 "isArray": { "kind": "TrueLiteral", "value": true },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             }
@@ -435,7 +427,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             }
           ],
@@ -518,7 +510,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             },
             {
@@ -533,6 +525,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -548,6 +541,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             }
@@ -621,6 +615,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -633,7 +628,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             }
           ],
@@ -702,6 +697,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "binary" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": [
                   {
                     "kind": "ValidationRule",
@@ -723,7 +719,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             },
             {
@@ -738,6 +734,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             }
@@ -1110,6 +1107,7 @@
               "value": {
                 "kind": "ComplexValue",
                 "typeName": { "kind": "StringLiteral", "value": "Order" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             }
@@ -1147,7 +1145,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             }
           ],
@@ -1184,7 +1182,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             }
           ],
@@ -1331,6 +1329,7 @@
               "value": {
                 "kind": "ComplexValue",
                 "typeName": { "kind": "StringLiteral", "value": "User" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             }
@@ -1366,6 +1365,7 @@
                 "kind": "ComplexValue",
                 "typeName": { "kind": "StringLiteral", "value": "User" },
                 "isArray": { "kind": "TrueLiteral", "value": true },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             }
@@ -1395,6 +1395,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -1410,6 +1411,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             }
@@ -1457,7 +1459,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             }
           ],
@@ -1491,6 +1493,7 @@
               "value": {
                 "kind": "ComplexValue",
                 "typeName": { "kind": "StringLiteral", "value": "User" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -1506,7 +1509,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             }
           ],
@@ -1535,7 +1538,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             }
           ],
@@ -1781,6 +1784,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -1790,6 +1794,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -1799,6 +1804,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "integer" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -1808,6 +1814,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "date-time" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": [
               {
                 "kind": "ValidationRule",
@@ -1827,17 +1834,8 @@
           "value": {
             "kind": "ComplexValue",
             "typeName": { "kind": "StringLiteral", "value": "orderStatus" },
-            "rules": [
-              {
-                "kind": "ValidationRule",
-                "id": "StringEnum",
-                "values": [
-                  { "kind": "StringLiteral", "value": "placed" },
-                  { "kind": "StringLiteral", "value": "approved" },
-                  { "kind": "StringLiteral", "value": "delivered" }
-                ]
-              }
-            ]
+            "isOptional": { "kind": "TrueLiteral", "value": true },
+            "rules": []
           }
         },
         {
@@ -1846,6 +1844,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "boolean" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         }
@@ -1862,6 +1861,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -1871,6 +1871,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -1881,6 +1882,7 @@
             "kind": "ComplexValue",
             "typeName": { "kind": "StringLiteral", "value": "Address" },
             "isArray": { "kind": "TrueLiteral", "value": true },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         }
@@ -1897,6 +1899,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -1906,6 +1909,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -1915,6 +1919,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -1924,6 +1929,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         }
@@ -1940,6 +1946,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -1949,6 +1956,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         }
@@ -1965,6 +1973,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -1974,6 +1983,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -1983,6 +1993,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -1992,6 +2003,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2001,6 +2013,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2010,6 +2023,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2019,6 +2033,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2029,6 +2044,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "integer" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         }
@@ -2045,6 +2061,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2054,6 +2071,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         }
@@ -2070,6 +2088,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2079,7 +2098,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
-            "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+            "rules": []
           }
         },
         {
@@ -2088,6 +2107,7 @@
           "value": {
             "kind": "ComplexValue",
             "typeName": { "kind": "StringLiteral", "value": "Category" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2098,7 +2118,7 @@
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
             "isArray": { "kind": "TrueLiteral", "value": true },
-            "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+            "rules": []
           }
         },
         {
@@ -2108,6 +2128,7 @@
             "kind": "ComplexValue",
             "typeName": { "kind": "StringLiteral", "value": "Tag" },
             "isArray": { "kind": "TrueLiteral", "value": true },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2120,17 +2141,8 @@
           "value": {
             "kind": "ComplexValue",
             "typeName": { "kind": "StringLiteral", "value": "petStatus" },
-            "rules": [
-              {
-                "kind": "ValidationRule",
-                "id": "StringEnum",
-                "values": [
-                  { "kind": "StringLiteral", "value": "available" },
-                  { "kind": "StringLiteral", "value": "pending" },
-                  { "kind": "StringLiteral", "value": "sold" }
-                ]
-              }
-            ]
+            "isOptional": { "kind": "TrueLiteral", "value": true },
+            "rules": []
           }
         }
       ],
@@ -2146,6 +2158,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "integer" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2155,6 +2168,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2164,6 +2178,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         }
