@@ -13,6 +13,8 @@ import {
 import parser from '.';
 import { dump as yamlStringify } from 'yaml-ast-parser';
 
+const absoluteSourcePath = '/test/source/path.ext';
+
 describe('parser', () => {
   describe('snapshots', () => {
     it('recreates a valid exhaustive snapshot', async () => {
@@ -26,7 +28,10 @@ describe('parser', () => {
 
       // ACT
       const result = JSON.parse(
-        JSON.stringify((await parser(sourceContent)).service, removeLoc),
+        JSON.stringify(
+          (await parser(sourceContent, absoluteSourcePath)).service,
+          removeLoc,
+        ),
       );
 
       // ASSERT
@@ -45,11 +50,17 @@ describe('parser', () => {
 
       // ACT
       const jsonResult = JSON.parse(
-        JSON.stringify((await parser(jsonContent)).service, replacer),
+        JSON.stringify(
+          (await parser(jsonContent, absoluteSourcePath)).service,
+          replacer,
+        ),
       );
 
       const yamlResult = JSON.parse(
-        JSON.stringify((await parser(yamlContent)).service, replacer),
+        JSON.stringify(
+          (await parser(yamlContent, absoluteSourcePath)).service,
+          replacer,
+        ),
       );
 
       // ASSERT
@@ -67,7 +78,10 @@ describe('parser', () => {
 
       // ACT
       const result = JSON.parse(
-        JSON.stringify((await parser(sourceContent)).service, removeLoc),
+        JSON.stringify(
+          (await parser(sourceContent, absoluteSourcePath)).service,
+          removeLoc,
+        ),
       );
 
       // ASSERT
@@ -81,7 +95,7 @@ describe('parser', () => {
       const sourceContent = readFileSync(sourcePath).toString();
 
       // ACT
-      const { service } = await parser(sourceContent);
+      const { service } = await parser(sourceContent, absoluteSourcePath);
 
       // ASSERT
       const fromMethodParameters = new Set(
@@ -134,7 +148,7 @@ describe('parser', () => {
       const sourceContent = readFileSync(sourcePath).toString();
 
       // ACT
-      const { service } = await parser(sourceContent);
+      const { service } = await parser(sourceContent, absoluteSourcePath);
 
       // ASSERT
       const typeNames = service.types.map((t) => t.name);
@@ -147,7 +161,7 @@ describe('parser', () => {
       const sourcePath = join('src', 'snapshot', 'example.oas3.json');
       const sourceContent = readFileSync(sourcePath).toString();
 
-      const { service } = await parser(sourceContent);
+      const { service } = await parser(sourceContent, absoluteSourcePath);
 
       // ACT
       const { errors } = validate(service);
@@ -163,7 +177,7 @@ describe('parser', () => {
         'https://raw.githubusercontent.com/swagger-api/swagger-petstore/refs/heads/master/src/main/resources/openapi.yaml';
       const sourceContent = await getText(sourcePath);
 
-      const { service } = await parser(sourceContent);
+      const { service } = await parser(sourceContent, absoluteSourcePath);
 
       // ACT
       const { errors } = validate(service);
@@ -189,7 +203,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -220,7 +237,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -260,7 +280,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -311,7 +334,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -361,7 +387,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -420,7 +449,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -488,7 +520,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -527,7 +562,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -568,7 +606,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -618,7 +659,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -678,7 +722,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -725,7 +772,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -781,7 +831,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -831,7 +884,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -874,7 +930,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -918,7 +977,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -962,7 +1024,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -1009,7 +1074,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -1053,7 +1121,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -1095,7 +1166,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -1140,7 +1214,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -1185,7 +1262,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -1229,7 +1309,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -1273,7 +1356,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -1322,7 +1408,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -1369,7 +1458,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -1422,7 +1514,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -1476,7 +1571,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -1530,7 +1628,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -1576,7 +1677,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -1617,7 +1721,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -1659,7 +1766,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -1701,7 +1811,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -1745,7 +1858,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -1789,7 +1905,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -1831,7 +1950,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -1874,7 +1996,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -1917,7 +2042,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -1970,7 +2098,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2017,7 +2148,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2064,7 +2198,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2112,7 +2249,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2159,7 +2299,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2206,7 +2349,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2254,7 +2400,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2305,7 +2454,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2356,7 +2508,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2402,7 +2557,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -2443,7 +2601,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -2485,7 +2646,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -2527,7 +2691,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -2571,7 +2738,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -2615,7 +2785,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2657,7 +2830,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2700,7 +2876,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2743,7 +2922,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2795,7 +2977,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2842,7 +3027,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2889,7 +3077,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2937,7 +3128,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -2984,7 +3178,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -3031,7 +3228,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -3079,7 +3279,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -3130,7 +3333,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -3181,7 +3387,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -3227,7 +3436,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3270,7 +3482,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3314,7 +3529,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3358,7 +3576,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3405,7 +3626,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3449,7 +3673,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3492,7 +3719,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3536,7 +3766,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3580,7 +3813,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3627,7 +3863,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3671,7 +3910,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3714,7 +3956,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3758,7 +4003,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3802,7 +4050,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3849,7 +4100,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3893,7 +4147,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3934,7 +4191,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -3976,7 +4236,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -4018,7 +4281,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -4062,7 +4328,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -4106,7 +4375,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -4154,7 +4426,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -4203,7 +4478,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -4252,7 +4530,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -4297,7 +4578,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -4344,7 +4628,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -4392,7 +4679,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -4440,7 +4730,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -4487,7 +4780,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -4531,7 +4827,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -4579,7 +4878,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -4628,7 +4930,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -4677,7 +4982,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -4725,7 +5033,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -4772,7 +5083,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -4820,7 +5134,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -4868,7 +5185,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -4915,7 +5235,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -4961,7 +5284,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -5009,7 +5335,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -5058,7 +5387,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -5107,7 +5439,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -5153,7 +5488,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -5194,7 +5532,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -5242,7 +5583,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -5286,7 +5630,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -5334,7 +5681,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -5383,7 +5733,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -5432,7 +5785,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -5478,7 +5834,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -5524,7 +5883,10 @@ describe('parser', () => {
             };
 
             // ACT
-            const { service } = await parser(JSON.stringify(oas));
+            const { service } = await parser(
+              JSON.stringify(oas),
+              absoluteSourcePath,
+            );
 
             // ASSERT
             expectService(service).toEqual(
@@ -5568,7 +5930,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -5616,7 +5981,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -5665,7 +6033,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -5714,7 +6085,10 @@ describe('parser', () => {
               };
 
               // ACT
-              const { service } = await parser(JSON.stringify(oas));
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
 
               // ASSERT
               expectService(service).toEqual(
@@ -5790,7 +6164,7 @@ describe('parser', () => {
       };
 
       // ACT
-      const { service } = await parser(JSON.stringify(oas));
+      const { service } = await parser(JSON.stringify(oas), absoluteSourcePath);
 
       // ASSERT
       expectService(service).toEqual(
@@ -5862,7 +6236,7 @@ describe('parser', () => {
       };
 
       // ACT
-      const { service } = await parser(JSON.stringify(oas));
+      const { service } = await parser(JSON.stringify(oas), absoluteSourcePath);
 
       // ASSERT
       expectService(service).toEqual(
@@ -5904,7 +6278,10 @@ describe('parser', () => {
         };
 
         // ACT
-        const { service } = await parser(JSON.stringify(oas));
+        const { service } = await parser(
+          JSON.stringify(oas),
+          absoluteSourcePath,
+        );
 
         // ASSERT
         expectService(service).toEqual(
@@ -5957,7 +6334,10 @@ describe('parser', () => {
         };
 
         // ACT
-        const { service } = await parser(JSON.stringify(oas));
+        const { service } = await parser(
+          JSON.stringify(oas),
+          absoluteSourcePath,
+        );
 
         // ASSERT
         expectService(service).toEqual(
@@ -6012,7 +6392,10 @@ describe('parser', () => {
         };
 
         // ACT
-        const { service } = await parser(JSON.stringify(oas));
+        const { service } = await parser(
+          JSON.stringify(oas),
+          absoluteSourcePath,
+        );
 
         // ASSERT
         expectService(service).toEqual(
@@ -6071,7 +6454,10 @@ describe('parser', () => {
         };
 
         // ACT
-        const { service } = await parser(JSON.stringify(oas));
+        const { service } = await parser(
+          JSON.stringify(oas),
+          absoluteSourcePath,
+        );
 
         // ASSERT
         expectService(service).toEqual(
@@ -6108,7 +6494,10 @@ describe('parser', () => {
         };
 
         // ACT
-        const { service } = await parser(JSON.stringify(oas));
+        const { service } = await parser(
+          JSON.stringify(oas),
+          absoluteSourcePath,
+        );
 
         // ASSERT
         expectService(service).toEqual(
@@ -6159,7 +6548,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -6208,7 +6600,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -6256,7 +6651,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -6318,7 +6716,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -6378,7 +6779,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -6431,7 +6835,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -6487,7 +6894,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -6541,7 +6951,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -6608,7 +7021,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -6668,7 +7084,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -6736,7 +7155,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -6784,7 +7206,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -6835,7 +7260,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -6885,7 +7313,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -6944,7 +7375,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -7013,7 +7447,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -7105,7 +7542,10 @@ describe('parser', () => {
           };
 
           // ACT
-          const { service } = await parser(JSON.stringify(oas));
+          const { service } = await parser(
+            JSON.stringify(oas),
+            absoluteSourcePath,
+          );
 
           // ASSERT
           expectService(service).toEqual(
@@ -7198,7 +7638,10 @@ describe('parser', () => {
         };
 
         // ACT
-        const { violations } = await parser(JSON.stringify(oas));
+        const { violations } = await parser(
+          JSON.stringify(oas),
+          absoluteSourcePath,
+        );
 
         // ASSERT
         expect(violations).toEqual(
@@ -7234,7 +7677,10 @@ describe('parser', () => {
         };
 
         // ACT
-        const { service } = await parser(JSON.stringify(oas));
+        const { service } = await parser(
+          JSON.stringify(oas),
+          absoluteSourcePath,
+        );
 
         // ASSERT
         expectService(service).toEqual(
