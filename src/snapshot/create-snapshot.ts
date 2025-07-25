@@ -21,7 +21,7 @@ async function createSnapshot(
   const prettierOptions = JSON.parse(
     readFileSync(join(process.cwd(), '.prettierrc')).toString('utf8'),
   );
-  const { service, violations } = await parser(schema);
+  const { service, violations } = await parser(schema, '#');
   const snapshot = await format(
     JSON.stringify(service, (key, value) =>
       key === 'loc' ? undefined : value,

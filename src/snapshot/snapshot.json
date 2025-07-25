@@ -82,6 +82,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "default": { "kind": "StringLiteral", "value": "ASDF" },
                 "rules": []
               },
@@ -218,6 +219,7 @@
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
                 "isArray": { "kind": "TrueLiteral", "value": true },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": [
                   {
                     "kind": "ValidationRule",
@@ -329,18 +331,8 @@
                   "kind": "StringLiteral",
                   "value": "createGizmoSize"
                 },
-                "rules": [
-                  {
-                    "kind": "ValidationRule",
-                    "id": "StringEnum",
-                    "values": [
-                      { "kind": "StringLiteral", "value": "small" },
-                      { "kind": "StringLiteral", "value": "medium" },
-                      { "kind": "StringLiteral", "value": "big" },
-                      { "kind": "StringLiteral", "value": "XL" }
-                    ]
-                  }
-                ]
+                "isOptional": { "kind": "TrueLiteral", "value": true },
+                "rules": []
               }
             }
           ],
@@ -529,6 +521,7 @@
                   "kind": "StringLiteral",
                   "value": "createWidgetBody"
                 },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             }
@@ -572,7 +565,6 @@
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
                 "rules": [
-                  { "kind": "ValidationRule", "id": "Required" },
                   {
                     "kind": "ValidationRule",
                     "id": "StringMaxLength",
@@ -622,7 +614,6 @@
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
                 "rules": [
-                  { "kind": "ValidationRule", "id": "Required" },
                   {
                     "kind": "ValidationRule",
                     "id": "StringMaxLength",
@@ -779,6 +770,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -788,6 +780,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "date" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": [
                   {
                     "kind": "ValidationRule",
@@ -809,6 +802,7 @@
                   "kind": "PrimitiveLiteral",
                   "value": "date-time"
                 },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": [
                   {
                     "kind": "ValidationRule",
@@ -827,6 +821,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "integer" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -836,6 +831,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "integer" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -845,6 +841,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "long" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -854,6 +851,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -863,6 +861,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "float" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -872,6 +871,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "double" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             }
@@ -904,6 +904,7 @@
                   "kind": "StringLiteral",
                   "value": "exhaustiveParamsBody"
                 },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -913,6 +914,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -925,17 +927,8 @@
                   "kind": "StringLiteral",
                   "value": "exhaustiveParamsQueryEnum"
                 },
-                "rules": [
-                  {
-                    "kind": "ValidationRule",
-                    "id": "StringEnum",
-                    "values": [
-                      { "kind": "StringLiteral", "value": "one" },
-                      { "kind": "StringLiteral", "value": "two" },
-                      { "kind": "StringLiteral", "value": "three" }
-                    ]
-                  }
-                ]
+                "isOptional": { "kind": "TrueLiteral", "value": true },
+                "rules": []
               }
             },
             {
@@ -944,6 +937,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -953,6 +947,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "integer" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -962,6 +957,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "boolean" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -975,6 +971,7 @@
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
                 "isArray": { "kind": "TrueLiteral", "value": true },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -988,17 +985,8 @@
                   "value": "exhaustiveParamsQueryEnumArray"
                 },
                 "isArray": { "kind": "TrueLiteral", "value": true },
-                "rules": [
-                  {
-                    "kind": "ValidationRule",
-                    "id": "StringEnum",
-                    "values": [
-                      { "kind": "StringLiteral", "value": "one" },
-                      { "kind": "StringLiteral", "value": "two" },
-                      { "kind": "StringLiteral", "value": "three" }
-                    ]
-                  }
-                ]
+                "isOptional": { "kind": "TrueLiteral", "value": true },
+                "rules": []
               }
             },
             {
@@ -1011,6 +999,7 @@
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
                 "isArray": { "kind": "TrueLiteral", "value": true },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -1024,6 +1013,7 @@
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "integer" },
                 "isArray": { "kind": "TrueLiteral", "value": true },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -1037,6 +1027,7 @@
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "boolean" },
                 "isArray": { "kind": "TrueLiteral", "value": true },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -1046,7 +1037,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             },
             {
@@ -1058,18 +1049,7 @@
                   "kind": "StringLiteral",
                   "value": "exhaustiveParamsPathEnum"
                 },
-                "rules": [
-                  { "kind": "ValidationRule", "id": "Required" },
-                  {
-                    "kind": "ValidationRule",
-                    "id": "StringEnum",
-                    "values": [
-                      { "kind": "StringLiteral", "value": "one" },
-                      { "kind": "StringLiteral", "value": "two" },
-                      { "kind": "StringLiteral", "value": "three" }
-                    ]
-                  }
-                ]
+                "rules": []
               }
             },
             {
@@ -1078,7 +1058,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             },
             {
@@ -1087,7 +1067,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "integer" },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             },
             {
@@ -1096,7 +1076,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "boolean" },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             },
             {
@@ -1106,7 +1086,7 @@
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
                 "isArray": { "kind": "TrueLiteral", "value": true },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             },
             {
@@ -1119,18 +1099,7 @@
                   "value": "exhaustiveParamsPathEnumArray"
                 },
                 "isArray": { "kind": "TrueLiteral", "value": true },
-                "rules": [
-                  { "kind": "ValidationRule", "id": "Required" },
-                  {
-                    "kind": "ValidationRule",
-                    "id": "StringEnum",
-                    "values": [
-                      { "kind": "StringLiteral", "value": "one" },
-                      { "kind": "StringLiteral", "value": "two" },
-                      { "kind": "StringLiteral", "value": "three" }
-                    ]
-                  }
-                ]
+                "rules": []
               }
             },
             {
@@ -1140,7 +1109,7 @@
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
                 "isArray": { "kind": "TrueLiteral", "value": true },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             },
             {
@@ -1153,7 +1122,7 @@
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "integer" },
                 "isArray": { "kind": "TrueLiteral", "value": true },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             },
             {
@@ -1166,7 +1135,7 @@
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "boolean" },
                 "isArray": { "kind": "TrueLiteral", "value": true },
-                "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+                "rules": []
               }
             },
             {
@@ -1175,6 +1144,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -1187,17 +1157,8 @@
                   "kind": "StringLiteral",
                   "value": "exhaustiveParamsHeaderEnum"
                 },
-                "rules": [
-                  {
-                    "kind": "ValidationRule",
-                    "id": "StringEnum",
-                    "values": [
-                      { "kind": "StringLiteral", "value": "one" },
-                      { "kind": "StringLiteral", "value": "two" },
-                      { "kind": "StringLiteral", "value": "three" }
-                    ]
-                  }
-                ]
+                "isOptional": { "kind": "TrueLiteral", "value": true },
+                "rules": []
               }
             },
             {
@@ -1206,6 +1167,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -1215,6 +1177,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "integer" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -1224,6 +1187,7 @@
               "value": {
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "boolean" },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -1237,6 +1201,7 @@
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
                 "isArray": { "kind": "TrueLiteral", "value": true },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -1250,17 +1215,8 @@
                   "value": "exhaustiveParamsHeaderEnumArray"
                 },
                 "isArray": { "kind": "TrueLiteral", "value": true },
-                "rules": [
-                  {
-                    "kind": "ValidationRule",
-                    "id": "StringEnum",
-                    "values": [
-                      { "kind": "StringLiteral", "value": "one" },
-                      { "kind": "StringLiteral", "value": "two" },
-                      { "kind": "StringLiteral", "value": "three" }
-                    ]
-                  }
-                ]
+                "isOptional": { "kind": "TrueLiteral", "value": true },
+                "rules": []
               }
             },
             {
@@ -1273,6 +1229,7 @@
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
                 "isArray": { "kind": "TrueLiteral", "value": true },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -1286,6 +1243,7 @@
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "integer" },
                 "isArray": { "kind": "TrueLiteral", "value": true },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             },
@@ -1299,6 +1257,7 @@
                 "kind": "PrimitiveValue",
                 "typeName": { "kind": "PrimitiveLiteral", "value": "boolean" },
                 "isArray": { "kind": "TrueLiteral", "value": true },
+                "isOptional": { "kind": "TrueLiteral", "value": true },
                 "rules": []
               }
             }
@@ -2127,6 +2086,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": [
               {
                 "kind": "ValidationRule",
@@ -2142,6 +2102,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2151,17 +2112,8 @@
           "value": {
             "kind": "ComplexValue",
             "typeName": { "kind": "StringLiteral", "value": "productSize" },
-            "rules": [
-              {
-                "kind": "ValidationRule",
-                "id": "StringEnum",
-                "values": [
-                  { "kind": "StringLiteral", "value": "small" },
-                  { "kind": "StringLiteral", "value": "medium" },
-                  { "kind": "StringLiteral", "value": "large" }
-                ]
-              }
-            ]
+            "isOptional": { "kind": "TrueLiteral", "value": true },
+            "rules": []
           }
         }
       ],
@@ -2177,6 +2129,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": [
               {
                 "kind": "ValidationRule",
@@ -2192,6 +2145,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": [
               {
                 "kind": "ValidationRule",
@@ -2216,7 +2170,6 @@
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
             "rules": [
-              { "kind": "ValidationRule", "id": "Required" },
               {
                 "kind": "ValidationRule",
                 "id": "NumberMultipleOf",
@@ -2231,6 +2184,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": [
               {
                 "kind": "ValidationRule",
@@ -2246,6 +2200,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": [
               {
                 "kind": "ValidationRule",
@@ -2261,6 +2216,7 @@
           "value": {
             "kind": "ComplexValue",
             "typeName": { "kind": "StringLiteral", "value": "widgetFoo" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2270,17 +2226,8 @@
           "value": {
             "kind": "ComplexValue",
             "typeName": { "kind": "StringLiteral", "value": "productSize" },
-            "rules": [
-              {
-                "kind": "ValidationRule",
-                "id": "StringEnum",
-                "values": [
-                  { "kind": "StringLiteral", "value": "small" },
-                  { "kind": "StringLiteral", "value": "medium" },
-                  { "kind": "StringLiteral", "value": "large" }
-                ]
-              }
-            ]
+            "isOptional": { "kind": "TrueLiteral", "value": true },
+            "rules": []
           }
         }
       ],
@@ -2296,6 +2243,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": [
               {
                 "kind": "ValidationRule",
@@ -2320,7 +2268,6 @@
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
             "rules": [
-              { "kind": "ValidationRule", "id": "Required" },
               {
                 "kind": "ValidationRule",
                 "id": "NumberMultipleOf",
@@ -2335,6 +2282,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": [
               {
                 "kind": "ValidationRule",
@@ -2350,6 +2298,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": [
               {
                 "kind": "ValidationRule",
@@ -2365,6 +2314,7 @@
           "value": {
             "kind": "ComplexValue",
             "typeName": { "kind": "StringLiteral", "value": "newWidgetFoo" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2374,17 +2324,8 @@
           "value": {
             "kind": "ComplexValue",
             "typeName": { "kind": "StringLiteral", "value": "productSize" },
-            "rules": [
-              {
-                "kind": "ValidationRule",
-                "id": "StringEnum",
-                "values": [
-                  { "kind": "StringLiteral", "value": "small" },
-                  { "kind": "StringLiteral", "value": "medium" },
-                  { "kind": "StringLiteral", "value": "large" }
-                ]
-              }
-            ]
+            "isOptional": { "kind": "TrueLiteral", "value": true },
+            "rules": []
           }
         }
       ],
@@ -2400,6 +2341,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2412,6 +2354,7 @@
               "kind": "StringLiteral",
               "value": "someTypeNestedUnion"
             },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         }
@@ -2428,13 +2371,8 @@
           "value": {
             "kind": "ComplexValue",
             "typeName": { "kind": "StringLiteral", "value": "singleValueEnum" },
-            "rules": [
-              {
-                "kind": "ValidationRule",
-                "id": "StringEnum",
-                "values": [{ "kind": "StringLiteral", "value": "the value" }]
-              }
-            ]
+            "isOptional": { "kind": "TrueLiteral", "value": true },
+            "rules": []
           }
         },
         {
@@ -2443,16 +2381,8 @@
           "value": {
             "kind": "ComplexValue",
             "typeName": { "kind": "StringLiteral", "value": "multiValueEnum" },
-            "rules": [
-              {
-                "kind": "ValidationRule",
-                "id": "StringEnum",
-                "values": [
-                  { "kind": "StringLiteral", "value": "the value" },
-                  { "kind": "StringLiteral", "value": "another value" }
-                ]
-              }
-            ]
+            "isOptional": { "kind": "TrueLiteral", "value": true },
+            "rules": []
           }
         },
         {
@@ -2462,15 +2392,8 @@
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
             "constant": { "kind": "StringLiteral", "value": "the only value" },
-            "rules": [
-              {
-                "kind": "ValidationRule",
-                "id": "StringEnum",
-                "values": [
-                  { "kind": "StringLiteral", "value": "the only value" }
-                ]
-              }
-            ]
+            "isOptional": { "kind": "TrueLiteral", "value": true },
+            "rules": []
           }
         }
       ],
@@ -2486,6 +2409,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2495,6 +2419,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2504,6 +2429,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2513,6 +2439,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2522,6 +2449,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2531,6 +2459,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         }
@@ -2547,6 +2476,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2556,6 +2486,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2565,6 +2496,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2574,6 +2506,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         }
@@ -2590,6 +2523,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2599,6 +2533,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         }
@@ -2616,13 +2551,8 @@
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
             "constant": { "kind": "StringLiteral", "value": "cat" },
-            "rules": [
-              {
-                "kind": "ValidationRule",
-                "id": "StringEnum",
-                "values": [{ "kind": "StringLiteral", "value": "cat" }]
-              }
-            ]
+            "isOptional": { "kind": "TrueLiteral", "value": true },
+            "rules": []
           }
         },
         {
@@ -2631,6 +2561,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "integer" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         }
@@ -2648,13 +2579,8 @@
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
             "constant": { "kind": "StringLiteral", "value": "dog" },
-            "rules": [
-              {
-                "kind": "ValidationRule",
-                "id": "StringEnum",
-                "values": [{ "kind": "StringLiteral", "value": "dog" }]
-              }
-            ]
+            "isOptional": { "kind": "TrueLiteral", "value": true },
+            "rules": []
           }
         },
         {
@@ -2663,6 +2589,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "boolean" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         }
@@ -2680,7 +2607,7 @@
             "kind": "ComplexValue",
             "typeName": { "kind": "StringLiteral", "value": "gizmo" },
             "isArray": { "kind": "TrueLiteral", "value": true },
-            "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+            "rules": []
           }
         }
       ],
@@ -2696,7 +2623,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
-            "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+            "rules": []
           }
         }
       ],
@@ -2712,6 +2639,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2721,6 +2649,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "string" },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         }
@@ -2738,6 +2667,7 @@
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
             "constant": { "kind": "NumberLiteral", "value": 123456 },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2747,7 +2677,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
-            "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+            "rules": []
           }
         }
       ],
@@ -2764,6 +2694,7 @@
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
             "constant": { "kind": "NumberLiteral", "value": 123456 },
+            "isOptional": { "kind": "TrueLiteral", "value": true },
             "rules": []
           }
         },
@@ -2773,7 +2704,7 @@
           "value": {
             "kind": "PrimitiveValue",
             "typeName": { "kind": "PrimitiveLiteral", "value": "number" },
-            "rules": [{ "kind": "ValidationRule", "id": "Required" }]
+            "rules": []
           }
         }
       ],

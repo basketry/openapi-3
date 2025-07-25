@@ -847,8 +847,16 @@ export class OAS3Parser {
           kind: 'PrimitiveValue',
           typeName: x.typeName,
           isArray: x.isArray,
+          // TODO: parse isNullable
+          isOptional: param.required?.value
+            ? undefined
+            : {
+                kind: 'TrueLiteral',
+                value: true,
+                loc: encodeRange(0, param.required?.loc),
+              },
           default: x.default,
-          rules: this.parseRules(resolved, param.required?.value),
+          rules: this.parseRules(resolved),
         },
         deprecated: this.parseDeprecated(param),
         loc: range(param),
@@ -863,7 +871,15 @@ export class OAS3Parser {
           kind: 'ComplexValue',
           typeName: x.typeName,
           isArray: x.isArray,
-          rules: this.parseRules(resolved, param.required?.value),
+          // TODO: parse isNullable
+          isOptional: param.required?.value
+            ? undefined
+            : {
+                kind: 'TrueLiteral',
+                value: true,
+                loc: encodeRange(0, param.required?.loc),
+              },
+          rules: this.parseRules(resolved),
         },
         deprecated: this.parseDeprecated(param),
         loc: range(param),
@@ -900,7 +916,15 @@ export class OAS3Parser {
           kind: 'PrimitiveValue',
           typeName: x.typeName,
           isArray: x.isArray,
-          rules: this.parseRules(schema, body.required?.value),
+          // TODO: parse isNullable
+          isOptional: body.required?.value
+            ? undefined
+            : {
+                kind: 'TrueLiteral',
+                value: true,
+                loc: encodeRange(0, body.required?.loc),
+              },
+          rules: this.parseRules(schema),
         },
         loc: range(body),
         meta: this.parseMeta(body),
@@ -914,7 +938,15 @@ export class OAS3Parser {
           kind: 'ComplexValue',
           typeName: x.typeName,
           isArray: x.isArray,
-          rules: this.parseRules(schema, body.required?.value),
+          // TODO: parse isNullable
+          isOptional: body.required?.value
+            ? undefined
+            : {
+                kind: 'TrueLiteral',
+                value: true,
+                loc: encodeRange(0, body.required?.loc),
+              },
+          rules: this.parseRules(schema),
         },
         loc: range(body),
         meta: this.parseMeta(body),
@@ -1006,6 +1038,8 @@ export class OAS3Parser {
               value: schemaOrRef.$ref.value.substring(prefix.length),
               loc: OAS3.refRange(this.schema.node, schemaOrRef.$ref.value),
             },
+            // TODO: parse isNullable?
+            // TODO: parse isOptional?
             rules: this.parseRules(schema),
             loc: range(schema),
           };
@@ -1035,6 +1069,8 @@ export class OAS3Parser {
           return {
             kind: 'ComplexValue',
             typeName: name,
+            // TODO: parse isNullable?
+            // TODO: parse isOptional?
             rules: this.parseRules(schema),
             loc: range(schema),
           };
@@ -1051,6 +1087,8 @@ export class OAS3Parser {
             value: $ref?.value ?? 'untyped', // TODO: emit violation and/or return untyped primitive
             loc: $ref ? OAS3.refRange(this.schema.node, $ref.value) : undefined,
           },
+          // TODO: parse isNullable?
+          // TODO: parse isOptional?
           rules: this.parseRules(schema),
           loc: range(schema),
         };
@@ -1069,6 +1107,8 @@ export class OAS3Parser {
               ...stringName,
               default: toStringLiteral(schemaOrRef.default),
               constant: toStringLiteral(schemaOrRef.enum[0]),
+              // TODO: parse isNullable?
+              // TODO: parse isOptional?
               rules,
               loc: range(schemaOrRef),
             };
@@ -1094,6 +1134,8 @@ export class OAS3Parser {
             return {
               kind: 'ComplexValue',
               typeName: { kind: 'StringLiteral', value: enumName },
+              // TODO: parse isNullable?
+              // TODO: parse isOptional?
               rules,
               loc: range(schemaOrRef),
             };
@@ -1105,6 +1147,8 @@ export class OAS3Parser {
             ...stringName,
             default: toStringLiteral(schemaOrRef.default),
             constant: toStringLiteral(schemaOrRef.const),
+            // TODO: parse isNullable?
+            // TODO: parse isOptional?
             rules,
             loc: range(schemaOrRef),
           };
@@ -1130,6 +1174,8 @@ export class OAS3Parser {
           },
           default: toBooleanLiteral(schemaOrRef.default),
           constant: this.parseConst(schemaOrRef),
+          // TODO: parse isNullable?
+          // TODO: parse isOptional?
           rules,
           loc: range(schemaOrRef),
         };
@@ -1149,6 +1195,8 @@ export class OAS3Parser {
               value: true,
               // TODO: loc
             },
+            // TODO: parse isNullable?
+            // TODO: parse isOptional?
             rules,
             loc: range(schemaOrRef),
           };
@@ -1161,6 +1209,8 @@ export class OAS3Parser {
               value: true,
               // TODO: loc
             },
+            // TODO: parse isNullable?
+            // TODO: parse isOptional?
             rules,
             loc: range(schemaOrRef),
           };
@@ -1206,6 +1256,8 @@ export class OAS3Parser {
                 ]
               : undefined,
             deprecated: this.parseDeprecated(schemaOrRef),
+            // TODO: parse isNullable?
+            // TODO: parse isOptional?
             rules: this.parseObjectRules(schemaOrRef),
             loc: range(schemaOrRef),
           });
@@ -1214,6 +1266,8 @@ export class OAS3Parser {
         return {
           kind: 'ComplexValue',
           typeName,
+          // TODO: parse isNullable?
+          // TODO: parse isOptional?
           rules,
           loc: range(schemaOrRef),
         };
@@ -1230,6 +1284,8 @@ export class OAS3Parser {
             schemaOrRef.const === null
               ? toNullLiteral(schemaOrRef.const)
               : undefined,
+          // TODO: parse isNullable?
+          // TODO: parse isOptional?
           rules,
           loc: range(schemaOrRef),
         };
@@ -1239,6 +1295,8 @@ export class OAS3Parser {
         return {
           kind: 'PrimitiveValue',
           typeName: { kind: 'PrimitiveLiteral', value: 'untyped' },
+          // TODO: parse isNullable?
+          // TODO: parse isOptional?
           rules,
           loc: range(schemaOrRef),
         };
@@ -1672,7 +1730,14 @@ export class OAS3Parser {
               isArray: x.isArray,
               default: x.default,
               constant: this.parseConstant(prop, x),
-              rules: this.parseRules(resolvedProp, requiredSet.has(name)),
+              // TODO: parse isNullable
+              isOptional: requiredSet.has(name)
+                ? undefined
+                : {
+                    kind: 'TrueLiteral',
+                    value: true,
+                  },
+              rules: this.parseRules(resolvedProp),
             },
             deprecated: this.parseDeprecated(resolvedProp),
             loc: range(resolvedProp),
@@ -1691,7 +1756,14 @@ export class OAS3Parser {
               kind: 'ComplexValue',
               typeName: x.typeName,
               isArray: x.isArray,
-              rules: this.parseRules(resolvedProp, requiredSet.has(name)),
+              // TODO: parse isNullable
+              isOptional: requiredSet.has(name)
+                ? undefined
+                : {
+                    kind: 'TrueLiteral',
+                    value: true,
+                  },
+              rules: this.parseRules(resolvedProp),
             },
             deprecated: this.parseDeprecated(resolvedProp),
             loc: range(resolvedProp),
@@ -1904,34 +1976,15 @@ export class OAS3Parser {
 
   private parseRules(
     def: OAS3.SchemaNodeUnion | OAS3.ParameterNode,
-    required?: boolean,
   ): ValidationRule[] {
     const schema = this.parseSchema(def);
-    if (!schema) {
-      return required
-        ? [
-            {
-              kind: 'ValidationRule',
-              id: 'Required',
-            },
-          ]
-        : [];
-    }
+    if (!schema) return [];
 
     const localRules = this.ruleFactories
       .map((f) => f(schema))
       .filter((x): x is ValidationRule => !!x);
 
-    if (schema.nodeType !== 'ArraySchema' || !schema.items)
-      return required
-        ? [
-            {
-              kind: 'ValidationRule',
-              id: 'Required',
-            },
-            ...localRules,
-          ]
-        : localRules;
+    if (schema.nodeType !== 'ArraySchema' || !schema.items) return localRules;
 
     const itemsSchema = OAS3.resolveSchema(this.schema.node, schema.items);
     if (!itemsSchema) return [];
@@ -1942,15 +1995,7 @@ export class OAS3Parser {
 
     const rules = [...localRules, ...itemRules];
 
-    return required
-      ? [
-          {
-            kind: 'ValidationRule',
-            id: 'Required',
-          },
-          ...rules,
-        ]
-      : rules;
+    return rules;
   }
 
   private parseObjectRules(def: OAS3.SchemaNodeUnion): ObjectValidationRule[] {
@@ -2057,23 +2102,6 @@ const stringFormatFactory: ValidationRuleFactory = (def) => {
         loc: range(def.format),
       },
       loc: propRange(def, 'format')!,
-    };
-  } else {
-    return;
-  }
-};
-
-const stringEnumFactory: ValidationRuleFactory = (def) => {
-  if (OAS3.isString(def) && Array.isArray(def.enum)) {
-    return {
-      kind: 'ValidationRule',
-      id: 'StringEnum',
-      values: def.enum.map((n) => ({
-        kind: 'StringLiteral',
-        value: n.value,
-        loc: range(n),
-      })),
-      loc: propRange(def, 'enum'),
     };
   } else {
     return;
@@ -2264,7 +2292,6 @@ const objectAdditionalPropertiesFactory: ObjectValidationRuleFactory = (
 };
 
 const factories = [
-  stringEnumFactory,
   stringFormatFactory,
   stringMaxLengthFactory,
   stringMinLengthFactory,
