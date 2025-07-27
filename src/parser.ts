@@ -1822,6 +1822,7 @@ export class OAS3Parser {
           value: {
             kind: 'PrimitiveValue',
             typeName: { kind: 'PrimitiveLiteral', value: 'string' },
+            isOptional: { kind: 'TrueLiteral', value: true },
             rules: [],
           },
         },
@@ -1831,6 +1832,7 @@ export class OAS3Parser {
           value: {
             kind: 'PrimitiveValue',
             typeName: { kind: 'PrimitiveLiteral', value: 'untyped' },
+            isOptional: { kind: 'TrueLiteral', value: true },
             rules: [],
           },
         },
@@ -1861,6 +1863,7 @@ export class OAS3Parser {
         value: {
           kind: 'PrimitiveValue',
           typeName: { kind: 'PrimitiveLiteral', value: 'string' },
+          isOptional: { kind: 'TrueLiteral', value: true },
           rules: [],
         },
       };
@@ -1875,6 +1878,7 @@ export class OAS3Parser {
           isArray: typeOrPrimitive.isArray,
           default: typeOrPrimitive.default,
           constant: typeOrPrimitive.constant,
+          isOptional: { kind: 'TrueLiteral', value: true },
           rules: typeOrPrimitive.rules,
         },
         loc: schemaOrRef ? range(schemaOrRef) : undefined,
@@ -1887,6 +1891,7 @@ export class OAS3Parser {
           kind: 'ComplexValue',
           typeName: typeOrPrimitive.typeName,
           isArray: typeOrPrimitive.isArray,
+          isOptional: { kind: 'TrueLiteral', value: true },
           rules: typeOrPrimitive.rules,
         },
         loc: schemaOrRef ? range(schemaOrRef) : undefined,
@@ -1910,6 +1915,7 @@ export class OAS3Parser {
         value: {
           kind: 'PrimitiveValue',
           typeName: { kind: 'PrimitiveLiteral', value: 'untyped' },
+          isOptional: { kind: 'TrueLiteral', value: true },
           rules: [],
         },
       };
@@ -1922,6 +1928,7 @@ export class OAS3Parser {
           kind: 'PrimitiveValue',
           typeName: typeOrPrimitive.typeName,
           isArray: typeOrPrimitive.isArray,
+          isOptional: { kind: 'TrueLiteral', value: true },
           rules: typeOrPrimitive.rules,
           default: typeOrPrimitive.default,
           constant: typeOrPrimitive.constant,
@@ -1936,6 +1943,7 @@ export class OAS3Parser {
           kind: 'ComplexValue',
           typeName: typeOrPrimitive.typeName,
           isArray: typeOrPrimitive.isArray,
+          isOptional: { kind: 'TrueLiteral', value: true },
           rules: typeOrPrimitive.rules,
         },
         loc: range(schemaOrRef),
