@@ -83,7 +83,7 @@ function propRange(
 
 export class OAS3Parser {
   constructor(schema: string) {
-    this.schema = new OAS3.OpenAPINode(parse(schema), {
+    this.schema = new OAS3.OpenAPINode(parse(0, schema), {
       root: undefined,
       parentKey: undefined,
     });
