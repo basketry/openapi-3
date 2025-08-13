@@ -1,6 +1,6 @@
 {
   "name": "@basketry/openapi-3",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Basketry parser for OpenAPI 3.x service definitions",
   "main": "./lib/index.js",
   "scripts": {
