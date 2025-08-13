@@ -8,6 +8,7 @@ import * as OAS3 from './types';
 import {
   BooleanLiteral,
   ComplexValue,
+  DisjunctionKindLiteral,
   encodeRange,
   Enum,
   EnumMember,
@@ -1226,6 +1227,11 @@ export class OAS3Parser {
             typeName.value,
             schemaOrRef,
             schemaOrRef.oneOf,
+            {
+              kind: 'DisjunctionKindLiteral',
+              value: 'exclusive',
+              loc: schemaOrRef.keyRange('oneOf'),
+            },
             undefined,
           );
           if (nullableMember) {
@@ -1236,6 +1242,11 @@ export class OAS3Parser {
             typeName.value,
             schemaOrRef,
             schemaOrRef.anyOf,
+            {
+              kind: 'DisjunctionKindLiteral',
+              value: 'inclusive',
+              loc: schemaOrRef.keyRange('oneOf'),
+            },
             undefined,
           );
           if (nullableMember) {
@@ -1576,9 +1587,29 @@ export class OAS3Parser {
       if (node.nodeType !== 'ObjectSchema') continue;
 
       if (node.oneOf) {
-        this.preParseAsUnion(name, node, node.oneOf, nameLoc);
+        this.preParseAsUnion(
+          name,
+          node,
+          node.oneOf,
+          {
+            kind: 'DisjunctionKindLiteral',
+            value: 'exclusive',
+            loc: node.keyRange('oneOf'),
+          },
+          nameLoc,
+        );
       } else if (node.anyOf) {
-        this.preParseAsUnion(name, node, node.anyOf, nameLoc);
+        this.preParseAsUnion(
+          name,
+          node,
+          node.anyOf,
+          {
+            kind: 'DisjunctionKindLiteral',
+            value: 'inclusive',
+            loc: node.keyRange('anyOf'),
+          },
+          nameLoc,
+        );
       } else {
         types.push(this.parseAsType(name, node, nameLoc, defLoc));
       }
@@ -1591,7 +1622,7 @@ export class OAS3Parser {
     name: string,
     node: OAS3.SchemaNodeUnion,
     memberNodes: (OAS3.RefNode | OAS3.SchemaNodeUnion)[],
-    // TODO: parse disjunction
+    disjunction: DisjunctionKindLiteral,
     nameLoc: string | undefined,
   ): MemberValue | undefined {
     const members: MemberValue[] = memberNodes
@@ -1622,7 +1653,7 @@ export class OAS3Parser {
 
       return nullable;
     } else {
-      this.parseAsUnion(name, node, members, nameLoc);
+      this.parseAsUnion(name, node, members, disjunction, nameLoc);
       return undefined;
     }
   }
@@ -1631,7 +1662,7 @@ export class OAS3Parser {
     name: string,
     node: OAS3.SchemaNodeUnion,
     members: MemberValue[],
-    // TODO: parse disjunction
+    disjunction: DisjunctionKindLiteral,
     nameLoc: string | undefined,
   ): void {
     if (node.nodeType === 'ObjectSchema' && node.discriminator?.propertyName) {
@@ -1680,6 +1711,7 @@ export class OAS3Parser {
         kind: 'SimpleUnion',
         name: { kind: 'StringLiteral', value: name, loc: nameLoc },
         members,
+        disjunction,
         loc: range(node),
         meta: this.parseMeta(node),
       });

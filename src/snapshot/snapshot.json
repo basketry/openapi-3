@@ -2912,7 +2912,8 @@
           "typeName": { "kind": "StringLiteral", "value": "partB" },
           "rules": []
         }
-      ]
+      ],
+      "disjunction": { "kind": "DisjunctionKindLiteral", "value": "exclusive" }
     },
     {
       "kind": "SimpleUnion",
@@ -2928,7 +2929,8 @@
           "typeName": { "kind": "StringLiteral", "value": "partB" },
           "rules": []
         }
-      ]
+      ],
+      "disjunction": { "kind": "DisjunctionKindLiteral", "value": "exclusive" }
     },
     {
       "kind": "DiscriminatedUnion",
