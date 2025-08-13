@@ -8,6 +8,9 @@
     {
       "kind": "Interface",
       "name": { "kind": "StringLiteral", "value": "pet" },
+      "description": [
+        { "kind": "StringLiteral", "value": "Everything about your Pets" }
+      ],
       "methods": [
         {
           "kind": "Method",
@@ -1055,6 +1058,9 @@
     {
       "kind": "Interface",
       "name": { "kind": "StringLiteral", "value": "store" },
+      "description": [
+        { "kind": "StringLiteral", "value": "Access to Petstore orders" }
+      ],
       "methods": [
         {
           "kind": "Method",
@@ -1314,6 +1320,9 @@
     {
       "kind": "Interface",
       "name": { "kind": "StringLiteral", "value": "user" },
+      "description": [
+        { "kind": "StringLiteral", "value": "Operations about user" }
+      ],
       "methods": [
         {
           "kind": "Method",

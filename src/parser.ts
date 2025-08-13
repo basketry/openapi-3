@@ -1,6 +1,6 @@
 import { major } from 'semver';
 import { singular } from 'pluralize';
-import { camel, kebab, pascal } from 'case';
+import { camel, kebab, pascal, snake } from 'case';
 
 import { AST, DocumentNode, NodeConstructor, parse } from '@basketry/ast';
 import * as OAS3 from './types';
@@ -199,13 +199,18 @@ export class OAS3Parser {
   }
 
   private parseInterfaces(): Interface[] {
-    return this.parserInterfaceNames().map((name) => ({
+    return this.parserInterfaceNames().map(({ name, description }) => ({
       kind: 'Interface',
-      name: { kind: 'StringLiteral', value: singular(name) },
-      methods: this.parseMethods(name),
+      name: {
+        kind: 'StringLiteral',
+        value: singular(name.value),
+        loc: name.loc,
+      },
+      description,
+      methods: this.parseMethods(name.value),
       protocols: {
         kind: 'InterfaceProtocols',
-        http: this.parseHttpProtocol(name),
+        http: this.parseHttpProtocol(name.value),
       },
     }));
   }
@@ -285,7 +290,9 @@ export class OAS3Parser {
         const operation = pathItem[verb] as OAS3.OperationNode | undefined;
         if (!operation) continue;
 
-        if (this.parseInterfaceName(path, operation) !== interfaceName) {
+        if (
+          this.parseInterfaceName(path, operation).name.value !== interfaceName
+        ) {
           continue;
         }
 
@@ -489,20 +496,44 @@ export class OAS3Parser {
     }
   }
 
-  private parserInterfaceNames(): string[] {
-    const interfaceNames = new Set<string>();
+  private parserInterfaceNames(): {
+    name: StringLiteral;
+    description: StringLiteral[] | undefined;
+  }[] {
+    const interfaceNames = new Map<
+      string,
+      { name: StringLiteral; description: StringLiteral[] | undefined }
+    >();
     for (const { path, operation } of this.allOperations()) {
-      interfaceNames.add(this.parseInterfaceName(path, operation));
+      const { name, description } = this.parseInterfaceName(path, operation);
+      interfaceNames.set(name.value, { name, description });
     }
-    return Array.from(interfaceNames);
+    return Array.from(interfaceNames.values());
   }
 
   private parseInterfaceName(
     path: string,
     operation: OAS3.OperationNode,
-  ): string {
+  ): { name: StringLiteral; description: StringLiteral[] | undefined } {
     const segments = path.split('/');
-    return operation.tags?.[0].value || segments[1] || segments[0] || 'default';
+
+    const tag = operation.tags?.[0];
+
+    const name: StringLiteral = tag
+      ? { kind: 'StringLiteral', value: tag.value, loc: range(tag) }
+      : {
+          kind: 'StringLiteral',
+          value: segments[1] || segments[0] || 'default',
+        };
+
+    const description = this.schema.tags?.find(
+      (t) => snake(t.name?.value ?? '') === snake(name.value),
+    )?.description;
+
+    return {
+      name,
+      description: this.parseDescription(description, undefined),
+    };
   }
 
   private parseDeprecated(node: {
@@ -524,7 +555,9 @@ export class OAS3Parser {
       const pathNode = this.resolve(pathsNode.read(path)!, OAS3.PathItemNode);
       const commonParameters = pathNode?.parameters ?? [];
 
-      if (this.parseInterfaceName(path, operation) !== interfaceName) {
+      if (
+        this.parseInterfaceName(path, operation).name.value !== interfaceName
+      ) {
         continue;
       }
 
