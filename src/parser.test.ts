@@ -1150,7 +1150,7 @@ describe('parser', () => {
               );
             });
 
-            it.skip('constant (3.0.x)', async () => {
+            it('constant (3.0.x)', async () => {
               // ARRANGE
               const oas = {
                 openapi: '3.0.1',
@@ -1195,7 +1195,7 @@ describe('parser', () => {
               );
             });
 
-            it.skip('constant (3.1.x)', async () => {
+            it('constant (3.1.x)', async () => {
               // ARRANGE
               const oas = {
                 openapi: '3.1.0',
@@ -1929,7 +1929,7 @@ describe('parser', () => {
               );
             });
 
-            it.skip('constant (3.0.x)', async () => {
+            it('constant (3.0.x)', async () => {
               // ARRANGE
               const oas = {
                 openapi: '3.0.1',
@@ -1974,7 +1974,7 @@ describe('parser', () => {
               );
             });
 
-            it.skip('constant (3.1.x)', async () => {
+            it('constant (3.1.x)', async () => {
               // ARRANGE
               const oas = {
                 openapi: '3.1.0',
@@ -2807,7 +2807,7 @@ describe('parser', () => {
               );
             });
 
-            it.skip('constant (3.0.x)', async () => {
+            it('constant (3.0.x)', async () => {
               // ARRANGE
               const oas = {
                 openapi: '3.0.1',
@@ -2852,7 +2852,7 @@ describe('parser', () => {
               );
             });
 
-            it.skip('constant (3.1.x)', async () => {
+            it('constant (3.1.x)', async () => {
               // ARRANGE
               const oas = {
                 openapi: '3.1.0',
