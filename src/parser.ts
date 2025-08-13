@@ -1222,19 +1222,25 @@ export class OAS3Parser {
           value: camel(`${parentName}_${localName}`),
         };
         if (schemaOrRef.oneOf) {
-          this.parseAsUnion(
+          const nullableMember = this.preParseAsUnion(
             typeName.value,
             schemaOrRef,
             schemaOrRef.oneOf,
             undefined,
           );
+          if (nullableMember) {
+            return { ...nullableMember, loc: range(schemaOrRef) };
+          }
         } else if (schemaOrRef.anyOf) {
-          this.parseAsUnion(
+          const nullableMember = this.preParseAsUnion(
             typeName.value,
             schemaOrRef,
             schemaOrRef.anyOf,
             undefined,
           );
+          if (nullableMember) {
+            return { ...nullableMember, loc: range(schemaOrRef) };
+          }
         } else {
           this.anonymousTypes.push({
             kind: 'Type',
@@ -1570,9 +1576,9 @@ export class OAS3Parser {
       if (node.nodeType !== 'ObjectSchema') continue;
 
       if (node.oneOf) {
-        this.parseAsUnion(name, node, node.oneOf, nameLoc);
+        this.preParseAsUnion(name, node, node.oneOf, nameLoc);
       } else if (node.anyOf) {
-        this.parseAsUnion(name, node, node.anyOf, nameLoc);
+        this.preParseAsUnion(name, node, node.anyOf, nameLoc);
       } else {
         types.push(this.parseAsType(name, node, nameLoc, defLoc));
       }
@@ -1581,13 +1587,14 @@ export class OAS3Parser {
     return types;
   }
 
-  private parseAsUnion(
+  private preParseAsUnion(
     name: string,
     node: OAS3.SchemaNodeUnion,
-    oneOf: (OAS3.RefNode | OAS3.SchemaNodeUnion)[],
+    memberNodes: (OAS3.RefNode | OAS3.SchemaNodeUnion)[],
+    // TODO: parse disjunction
     nameLoc: string | undefined,
-  ): void {
-    const members: MemberValue[] = oneOf
+  ): MemberValue | undefined {
+    const members: MemberValue[] = memberNodes
       .map((subDef, i) => this.parseType(subDef, `${i + 1}`, name))
       .filter(
         (
@@ -1599,6 +1606,34 @@ export class OAS3Parser {
         } & MemberValue => !!x,
       );
 
+    const nullMember = members.find(
+      (m) =>
+        m.kind === 'PrimitiveValue' &&
+        m.typeName.value === 'null' &&
+        !m.isArray,
+    );
+    const otherMember = members.find((m) => m.typeName.value !== 'null');
+
+    if (nullMember && otherMember && members.length === 2) {
+      const nullable: MemberValue = {
+        ...otherMember,
+        isNullable: { kind: 'TrueLiteral', value: true },
+      };
+
+      return nullable;
+    } else {
+      this.parseAsUnion(name, node, members, nameLoc);
+      return undefined;
+    }
+  }
+
+  private parseAsUnion(
+    name: string,
+    node: OAS3.SchemaNodeUnion,
+    members: MemberValue[],
+    // TODO: parse disjunction
+    nameLoc: string | undefined,
+  ): void {
     if (node.nodeType === 'ObjectSchema' && node.discriminator?.propertyName) {
       const { propertyName, mapping } = node.discriminator;
 
@@ -1730,7 +1765,7 @@ export class OAS3Parser {
               isArray: x.isArray,
               default: x.default,
               constant: this.parseConstant(prop, x),
-              // TODO: parse isNullable
+              isNullable: x.isNullable ?? this.parseNullable(resolvedProp),
               isOptional: requiredSet.has(name)
                 ? undefined
                 : {
@@ -1756,7 +1791,7 @@ export class OAS3Parser {
               kind: 'ComplexValue',
               typeName: x.typeName,
               isArray: x.isArray,
-              // TODO: parse isNullable
+              isNullable: x.isNullable ?? this.parseNullable(resolvedProp),
               isOptional: requiredSet.has(name)
                 ? undefined
                 : {
@@ -1773,6 +1808,12 @@ export class OAS3Parser {
       }
       return props;
     }
+  }
+
+  private parseNullable(node: OAS3.SchemaNodeUnion): TrueLiteral | undefined {
+    return node.nullable?.value
+      ? { kind: 'TrueLiteral', value: true }
+      : undefined;
   }
 
   private parseMapProperties(

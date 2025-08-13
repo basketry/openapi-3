@@ -1653,6 +1653,150 @@ describe('parser', () => {
               );
             });
           });
+
+          describe('nullable', () => {
+            // TODO: add tests for other primitive types
+            it('parses a string property with a 3.0.x oneOf with null', async () => {
+              // ARRANGE
+              const oas = {
+                openapi: '3.0.1',
+                info: { title: 'Test', version: '1.0.0', description: 'test' },
+                components: {
+                  schemas: {
+                    typeA: {
+                      type: 'object',
+                      properties: {
+                        foo: { oneOf: [{ type: 'string' }, { type: 'null' }] },
+                      },
+                    },
+                  },
+                },
+              };
+
+              // ACT
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
+
+              // ASSERT
+              expectService(service).toEqual(
+                partial<Service>({
+                  types: [
+                    {
+                      kind: 'Type',
+                      name: { value: 'typeA' },
+                      properties: exact([
+                        partial<Property>({
+                          kind: 'Property',
+                          name: { value: 'foo' },
+                          value: {
+                            kind: 'PrimitiveValue',
+                            typeName: { value: 'string' },
+                            isNullable: { value: true },
+                          },
+                        }),
+                      ]),
+                    },
+                  ],
+                }),
+              );
+            });
+
+            it('parses a string property with a 3.0.x anyOf with null', async () => {
+              // ARRANGE
+              const oas = {
+                openapi: '3.0.1',
+                info: { title: 'Test', version: '1.0.0', description: 'test' },
+                components: {
+                  schemas: {
+                    typeA: {
+                      type: 'object',
+                      properties: {
+                        foo: { anyOf: [{ type: 'string' }, { type: 'null' }] },
+                      },
+                    },
+                  },
+                },
+              };
+
+              // ACT
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
+
+              // ASSERT
+              expectService(service).toEqual(
+                partial<Service>({
+                  types: [
+                    {
+                      kind: 'Type',
+                      name: { value: 'typeA' },
+                      properties: exact([
+                        partial<Property>({
+                          kind: 'Property',
+                          name: { value: 'foo' },
+                          value: {
+                            kind: 'PrimitiveValue',
+                            typeName: { value: 'string' },
+                            isNullable: { value: true },
+                          },
+                        }),
+                      ]),
+                    },
+                  ],
+                }),
+              );
+            });
+
+            it('parses a string property with a 3.1.x nullable', async () => {
+              // ARRANGE
+              const oas = {
+                openapi: '3.0.1',
+                info: { title: 'Test', version: '1.0.0', description: 'test' },
+                components: {
+                  schemas: {
+                    typeA: {
+                      type: 'object',
+                      properties: {
+                        foo: { type: 'string', nullable: true },
+                      },
+                    },
+                  },
+                },
+              };
+
+              // ACT
+              const { service } = await parser(
+                JSON.stringify(oas),
+                absoluteSourcePath,
+              );
+
+              // ASSERT
+              expectService(service).toEqual(
+                partial<Service>({
+                  types: [
+                    {
+                      kind: 'Type',
+                      name: { value: 'typeA' },
+                      properties: exact([
+                        partial<Property>({
+                          kind: 'Property',
+                          name: { value: 'foo' },
+                          value: {
+                            kind: 'PrimitiveValue',
+                            typeName: { value: 'string' },
+                            isNullable: { value: true },
+                          },
+                        }),
+                      ]),
+                    },
+                  ],
+                }),
+              );
+            });
+          });
         });
 
         describe('number', () => {
