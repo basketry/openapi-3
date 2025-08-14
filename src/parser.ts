@@ -1793,14 +1793,29 @@ export class OAS3Parser {
     parentName?: string,
   ): Property[] {
     if (allOf) {
-      return allOf.flatMap((subDef) => {
-        const resolved = this.resolve(subDef, OAS3.ObjectSchemaNode);
-        if (!resolved) return [];
+      const intersectedProperties = allOf
+        .flatMap((subDef) => {
+          const resolved = this.resolve(subDef, OAS3.ObjectSchemaNode);
+          if (!resolved) return [];
 
-        const p = resolved.properties;
-        const r = safeConcat(resolved.required, required);
-        return this.parseProperties(p, r, resolved.allOf, parentName);
-      });
+          const p = resolved.properties;
+          const r = safeConcat(resolved.required, required);
+          return this.parseProperties(p, r, resolved.allOf, parentName);
+        })
+        .reverse();
+
+      const seenNames: Set<string> = new Set();
+      const uniqueProperties: Property[] = [];
+      for (const property of intersectedProperties) {
+        if (!seenNames.has(property.name.value)) {
+          seenNames.add(property.name.value);
+          uniqueProperties.push(property);
+        }
+      }
+
+      const result = uniqueProperties.reverse();
+
+      return result;
     } else {
       const requiredSet = new Set<string>(required?.map((r) => r.value) || []);
       const props: Property[] = [];
