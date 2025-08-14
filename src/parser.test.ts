@@ -7,6 +7,7 @@ import {
   ReturnValue,
   Service,
   StringLiteral,
+  Type,
   validate,
   Violation,
 } from 'basketry';
@@ -6252,6 +6253,304 @@ describe('parser', () => {
           });
         });
       });
+    });
+  });
+
+  describe('intersections', () => {
+    it('creates types from an allOf with $refs', async () => {
+      // ARRANGE
+      const oas = {
+        openapi: '3.0.1',
+        info: { title: 'Test', version: '1.0.0', description: 'test' },
+        components: {
+          schemas: {
+            intersection: {
+              allOf: [
+                { $ref: '#/components/schemas/typeA' },
+                { $ref: '#/components/schemas/typeB' },
+              ],
+            },
+            typeA: {
+              type: 'object',
+              properties: {
+                propFromA: { type: 'string', example: 'exampleValueA' },
+              },
+            },
+            typeB: {
+              type: 'object',
+              properties: {
+                propFromB: { type: 'number', example: 42 },
+              },
+            },
+          },
+        },
+      };
+
+      // ACT
+      const { service } = await parser(JSON.stringify(oas), absoluteSourcePath);
+
+      // ASSERT
+      expectService(service).toEqual(
+        partial<Service>({
+          types: exact([
+            partial<Type>({
+              kind: 'Type',
+              name: { value: 'intersection' },
+              properties: exact([
+                partial<Property>({
+                  kind: 'Property',
+                  name: { value: 'propFromA' },
+                  value: {
+                    kind: 'PrimitiveValue',
+                    typeName: { value: 'string' },
+                  },
+                }),
+                partial<Property>({
+                  kind: 'Property',
+                  name: { value: 'propFromB' },
+                  value: {
+                    kind: 'PrimitiveValue',
+                    typeName: { value: 'number' },
+                  },
+                }),
+              ]),
+            }),
+            partial<Type>({
+              kind: 'Type',
+              name: { value: 'typeA' },
+              properties: exact([
+                partial<Property>({
+                  kind: 'Property',
+                  name: { value: 'propFromA' },
+                  value: {
+                    kind: 'PrimitiveValue',
+                    typeName: { value: 'string' },
+                  },
+                }),
+              ]),
+            }),
+            partial<Type>({
+              kind: 'Type',
+              name: { value: 'typeB' },
+              properties: exact([
+                partial<Property>({
+                  kind: 'Property',
+                  name: { value: 'propFromB' },
+                }),
+              ]),
+            }),
+          ]),
+        }),
+      );
+    });
+
+    it('creates type from an allOf without $refs', async () => {
+      // ARRANGE
+      const oas = {
+        openapi: '3.0.1',
+        info: { title: 'Test', version: '1.0.0', description: 'test' },
+        components: {
+          schemas: {
+            intersection: {
+              allOf: [
+                {
+                  type: 'object',
+                  properties: {
+                    propFromA: { type: 'string', example: 'exampleValueA' },
+                  },
+                },
+                {
+                  type: 'object',
+                  properties: {
+                    propFromB: { type: 'number', example: 42 },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      };
+
+      // ACT
+      const { service } = await parser(JSON.stringify(oas), absoluteSourcePath);
+
+      // ASSERT
+      expectService(service).toEqual(
+        partial<Service>({
+          types: exact([
+            partial<Type>({
+              kind: 'Type',
+              name: { value: 'intersection' },
+              properties: exact([
+                partial<Property>({
+                  kind: 'Property',
+                  name: { value: 'propFromA' },
+                  value: {
+                    kind: 'PrimitiveValue',
+                    typeName: { value: 'string' },
+                  },
+                }),
+                partial<Property>({
+                  kind: 'Property',
+                  name: { value: 'propFromB' },
+                  value: {
+                    kind: 'PrimitiveValue',
+                    typeName: { value: 'number' },
+                  },
+                }),
+              ]),
+            }),
+          ]),
+        }),
+      );
+    });
+
+    it('creates type from an allOf with duplicate properties', async () => {
+      // ARRANGE
+      const oas = {
+        openapi: '3.0.1',
+        info: { title: 'Test', version: '1.0.0', description: 'test' },
+        components: {
+          schemas: {
+            intersection: {
+              allOf: [
+                {
+                  type: 'object',
+                  properties: {
+                    zprop1: { type: 'string' },
+                  },
+                },
+                {
+                  type: 'object',
+                  properties: {
+                    zprop1: { type: 'string' },
+                    aprop2: { type: 'string' },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      };
+
+      // ACT
+      const { service } = await parser(JSON.stringify(oas), absoluteSourcePath);
+
+      // ASSERT
+      expectService(service).toEqual(
+        partial<Service>({
+          types: exact([
+            partial<Type>({
+              kind: 'Type',
+              name: { value: 'intersection' },
+              properties: exact([
+                partial<Property>({
+                  kind: 'Property',
+                  name: { value: 'zprop1' },
+                  value: {
+                    kind: 'PrimitiveValue',
+                    typeName: { value: 'string' },
+                  },
+                }),
+                partial<Property>({
+                  kind: 'Property',
+                  name: { value: 'aprop2' },
+                  value: {
+                    kind: 'PrimitiveValue',
+                    typeName: { value: 'string' },
+                  },
+                }),
+              ]),
+            }),
+          ]),
+        }),
+      );
+    });
+
+    it('creates a type from an allOf keeping the last property by name', async () => {
+      // ARRANGE
+      const oas = {
+        openapi: '3.0.1',
+        info: { title: 'Test', version: '1.0.0', description: 'test' },
+        components: {
+          schemas: {
+            intersection: {
+              allOf: [
+                {
+                  type: 'object',
+                  properties: {
+                    zprop1: { type: 'string' },
+                    aprop2: { type: 'string' },
+                    bprop3: { type: 'string' },
+                  },
+                },
+                {
+                  type: 'object',
+                  properties: {
+                    cprop4: { type: 'string' },
+                  },
+                },
+                {
+                  type: 'object',
+                  properties: {
+                    zprop1: { type: 'string' },
+                    aprop2: { type: 'number' },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      };
+
+      // ACT
+      const { service } = await parser(JSON.stringify(oas), absoluteSourcePath);
+
+      // ASSERT
+      expectService(service).toEqual(
+        partial<Service>({
+          types: exact([
+            partial<Type>({
+              kind: 'Type',
+              name: { value: 'intersection' },
+              properties: exact([
+                partial<Property>({
+                  kind: 'Property',
+                  name: { value: 'bprop3' },
+                  value: {
+                    kind: 'PrimitiveValue',
+                    typeName: { value: 'string' },
+                  },
+                }),
+                partial<Property>({
+                  kind: 'Property',
+                  name: { value: 'cprop4' },
+                  value: {
+                    kind: 'PrimitiveValue',
+                    typeName: { value: 'string' },
+                  },
+                }),
+                partial<Property>({
+                  kind: 'Property',
+                  name: { value: 'zprop1' },
+                  value: {
+                    kind: 'PrimitiveValue',
+                    typeName: { value: 'string' },
+                  },
+                }),
+                partial<Property>({
+                  kind: 'Property',
+                  name: { value: 'aprop2' },
+                  value: {
+                    kind: 'PrimitiveValue',
+                    typeName: { value: 'number' },
+                  },
+                }),
+              ]),
+            }),
+          ]),
+        }),
+      );
     });
   });
 
