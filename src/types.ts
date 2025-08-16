@@ -1346,10 +1346,6 @@ export class TagNode extends DocumentNode {
 
 // Done
 export abstract class SchemaNode extends DocumentNode {
-  protected get unsupportedKeys(): ReadonlySet<string> {
-    return new Set(['nullable']);
-  }
-
   get description() {
     return this.getLiteral<string>('description');
   }
